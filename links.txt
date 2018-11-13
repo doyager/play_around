@@ -1,0 +1,40 @@
+
+
+Learning Rate:
+https://towardsdatascience.com/understanding-learning-rates-and-how-it-improves-performance-in-deep-learning-d0d4059c1c10
+
+Gradient Descent , epoch, iteration:
+https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9
+
+
+NN basics:
+http://adventuresinmachinelearning.com/neural-networks-tutorial/
+
+Regression Basics and types:
+https://www.analyticsvidhya.com/blog/2017/06/a-comprehensive-guide-for-linear-ridge-and-lasso-regression/
+
+
+tensorflow tutorial:
+
+1.
+http://adventuresinmachinelearning.com/python-tensorflow-tutorial/
+
+2.
+https://github.com/Kulbear/deep-learning-coursera/blob/master/Improving%20Deep%20Neural%20Networks%20Hyperparameter%20tuning%2C%20Regularization%20and%20Optimization/Tensorflow%20Tutorial.ipynb
+
+3. adanet tutorial
+
+https://github.com/tensorflow/adanet/tree/v0.1.0/adanet/examples/tutorials
+
+4. tensor processing units
+https://en.wikipedia.org/wiki/Tensor_processing_unit
+
+5.  distributed learning in tf
+https://towardsdatascience.com/paper-summary-horovod-fast-and-easy-distributed-deep-learning-in-tensorflow-5be535c748d1
+
+
+health care – ds:
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5977561/
+
+
