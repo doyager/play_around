@@ -9,6 +9,24 @@ range(0, 5)
 >>> list(range(5)) # list() call is not required in Python 2
 [0, 1, 2, 3, 4]
 
+
+#dictionary
+header_dict1 = {'1':['A','B','C'], '2':['D'], '3':['E']}
+>>> print(header_dict1)
+{'1': ['A', 'B', 'C'], '2': ['D'], '3': ['E']}
+
+# flatten dictionary
+
+>>> cat_cols1 = header_dict1.values()
+>>> print(cat_cols1)
+dict_values([['A', 'B', 'C'], ['D'], ['E']])
+>>> cat_cols2 = [item for sublist in cat_cols1 for item in sublist]
+>>> print(cat_cols2)
+['A', 'B', 'C', 'D', 'E']
+
+
+
+
 #create df with out index_col
 import pandas as pd
 data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky'],'Age':[28,34,29,42]}
