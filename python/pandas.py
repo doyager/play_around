@@ -26,6 +26,17 @@ dict_values([['A', 'B', 'C'], ['D'], ['E']])
 
 
 
+#process time and time
+import time
+
+start_time = time.time()
+    ####other process called ######
+print("\n process finished in %s minutes \n" % ((time.time() - start_time) / 60))
+
+
+
+
+
 
 #create df with out index_col
 import pandas as pd
@@ -50,6 +61,24 @@ print (df)
 >>>
 >>> df.shape[0] #gives only no of rows
 4
+
+#show columns
+
+>>> df.columns
+Index(['Age', 'Name'], dtype='object')
+
+# save df as pkl
+
+df.to_pickle("/Users/mac/workspace/df.pkl")
+
+# save df as csv
+
+df.to_csv("/Users/mac/workspace/df.csv")
+
+
+
+
+
 
 
 #drop drop_duplicates
