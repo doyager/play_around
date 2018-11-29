@@ -121,7 +121,7 @@ import pandas as pd
 
 uid = ""
 pwd = ""
-dbcname = "DWPROD1COP1.CORP.ANTHEM.COM"
+dbcname = "machine.com.company"
 odbc_string = "DRIVER={Teradata};DBCNAME=" + dbcname + ";UID=" + uid + ";PWD=" + pwd + ";QUIETMODE=YES;Authentication=LDAP;"
 conn = pyodbc.connect(odbc_string)
 query = """select * from test"""
