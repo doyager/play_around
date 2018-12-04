@@ -76,6 +76,27 @@ df.to_pickle("/Users/mac/workspace/df.pkl")
 df.to_csv("/Users/mac/workspace/df.csv")
 
 
+#change column types
+ df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
+>>> df
+   A  B
+0  4  9
+1  4  9
+2  4  9
+>>> df.dtypes
+A    int64
+B    int64
+dtype: object
+>>> df['A']=df['A'].apply(str)
+>>> df
+   A  B
+0  4  9
+1  4  9
+2  4  9
+>>> df.dtypes
+A    object
+B     int64
+dtype: object
 
 
 
