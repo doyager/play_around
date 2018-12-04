@@ -98,6 +98,28 @@ A    object
 B     int64
 dtype: object
 
+##############
+# save and read csv
+
+#save to csv
+
+pd.DataFrame({'Name':['Tom', 'Jack', 'Steve', 'Ricky', 'Ricky'],'Age':[28,34,29,42,42]}).to_csv('/Users/mac/df.txt')
+
+data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky', 'Ricky'],'Age':[28,34,29,42,42]}
+pd.DataFrame(data).to_csv('/Users/mac/df1.txt')
+
+# read from csv
+data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky', 'Ricky'],'Age':[28,34,29,42,42]}
+pd.DataFrame(data).to_csv('/Users/mac/df1.txt')
+
+df2=pd.read_csv('/Users/mac/df1.txt')
+df2
+   Unnamed: 0  Age   Name
+0           0   28    Tom
+1           1   34   Jack
+2           2   29  Steve
+3           3   42  Ricky
+4           4   42  Ricky
 
 ###############
 #sum row values and sum col values
