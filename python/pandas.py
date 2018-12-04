@@ -36,7 +36,8 @@ print("\n process finished in %s minutes \n" % ((time.time() - start_time) / 60)
 
 
 
-
+###################
+## pandas
 
 #create df with out index_col
 import pandas as pd
@@ -56,6 +57,9 @@ print (df)
 1   34   Jack
 2   29  Steve
 3   42  Ricky
+
+######
+## shape - gives rows, cols
 >>> df.shape  #gives (rows,cols)
 (4, 2)
 >>>
@@ -67,6 +71,11 @@ print (df)
 >>> df.columns
 Index(['Age', 'Name'], dtype='object')
 
+# access col 'A' first value
+ df['A'][0] # 1st value
+ df['A'][1] #2nd value
+
+#########
 # save df as pkl
 
 df.to_pickle("/Users/mac/workspace/df.pkl")
