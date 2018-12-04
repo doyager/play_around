@@ -126,7 +126,57 @@ dtype: int64
 2    13
 dtype: int64
 
-   
+###############
+#joins
+df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
+df1 = pd.DataFrame([[4, 10],] * 3, columns=['A', ' C'])
+df
+   A  B
+0  4  9
+1  4  9
+2  4  9
+>>> df1
+   A   C
+0  4  10
+1  4  10
+2  4  10
+>>> df3 = pd.merge(df,df1,on='A', how='inner')
+>>> df3
+   A  B   C
+0  4  9  10
+1  4  9  10
+2  4  9  10
+3  4  9  10
+4  4  9  10
+5  4  9  10
+6  4  9  10
+7  4  9  10
+8  4  9  10
+>>> df4 = pd.merge(df,df1,on='A', how='left')
+>>> df4
+   A  B   C
+0  4  9  10
+1  4  9  10
+2  4  9  10
+3  4  9  10
+4  4  9  10
+5  4  9  10
+6  4  9  10
+7  4  9  10
+8  4  9  10
+>>> df4 = pd.merge(df,df1,on='A', how='right')
+>>> df4
+   A  B   C
+0  4  9  10
+1  4  9  10
+2  4  9  10
+3  4  9  10
+4  4  9  10
+5  4  9  10
+6  4  9  10
+7  4  9  10
+8  4  9  10
+
 
 #################    
 # apply lambda functions
