@@ -100,6 +100,27 @@ dtype: object
 
 
 
+    
+# apply lambda functions
+>>> df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
+>>> df.apply(lambda x: x**2)
+    A   B
+0  16  81
+1  16  81
+2  16  81
+>>> df.apply(lambda x: x*x)
+    A   B
+0  16  81
+1  16  81
+2  16  81
+>>> df.apply(lambda x: x**3)
+    A    B
+0  64  729
+1  64  729
+2  64  729
+
+
+
 
 
 #drop drop_duplicates
