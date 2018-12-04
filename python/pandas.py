@@ -99,8 +99,36 @@ B     int64
 dtype: object
 
 
+###############
+#sum row values and sum col values
+df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
+>>> df
+   A  B
+0  4  9
+1  4  9
+2  4  9
+>>> df.apply(np.sum,axis=0) #df.sum(0)
+A    12
+B    27
+dtype: int64
+>>> df.apply(np.sum,axis=1) #df.sum(1)
+0    13
+1    13
+2    13
+dtype: int64
+>>> df.sum(0)
+A    12
+B    27
+dtype: int64
+>>> df.sum(1)
+0    13
+1    13
+2    13
+dtype: int64
 
-    
+   
+
+#################    
 # apply lambda functions
 >>> df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
 >>> df.apply(lambda x: x**2)
