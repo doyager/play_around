@@ -120,6 +120,45 @@ dtype: object
 2  64  729
 
 
+##################
+# pandas dataframe df vs series
+
+# Series is a one-dimensional labeled array capable of holding any data type. To read data in form of panda Series:
+import pandas as pd
+ds = pd.Series(data, index=index)
+
+#DataFrame is a 2-dimensional labeled data structure with columns of potentially different types.
+import pandas as pd
+df = pd.DataFrame(data, index=index)
+In both of the above index is list
+
+#for example: I have a csv file with following data:
+,country,popuplation,area,capital
+BR,Brazil,10210,12015,Brasile
+RU,Russia,1025,457,Moscow
+IN,India,10458,457787,New Delhi
+
+#To read above data as series and data frame:
+
+import pandas as pd
+file_data = pd.read_csv("file_path", index_col=0)
+d = pd.Series(file_data.country, index=['BR','RU','IN'] or index =  file_data.index)
+#output:
+>>> d
+BR           Brazil
+RU           Russia
+IN            India
+
+df = pd.DataFrame(file_data.area, index=['BR','RU','IN'] or index = file_data.index )
+#output:
+>>> df
+      area
+BR   12015
+RU     457
+IN  457787
+##################
+
+
 
 
 
