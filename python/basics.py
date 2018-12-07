@@ -1,5 +1,67 @@
+"""
+Contents:
 
-############ Pickle
+1.Axis
+2. Read and write Pickle
+3. open file ,types of opening .. r and rb
+
+
+"""
+############ 1.Axis
+
+"""
+It's perhaps simplest to remember it as 0=down and 1=across.
+
+This means:
+
+Use axis=0 to apply a method down each column, or to the row labels (the index).
+Use axis=1 to apply a method across each row, or to the column labels.
+
+So, concerning the method in the question, df.mean(axis=1), seems to be correctly defined.
+It takes the mean of entries horizontally across columns, that is, along each individual row.
+On the other hand, df.mean(axis=0) would be an operation acting vertically downwards across rows.
+
+Similarly, df.drop(name, axis=1) refers to an action on column labels, because they intuitively 
+go across the horizontal axis. Specifying axis=0 would make the method act on rows instead.
+
+"""
+#axis=0
+#creatind df with axis = 0 , this wil apply repeat function vertically, meanind adding rows , so rows will be 5
+>>> import numpy as np
+>>> import pandas as pd
+>>> df_key = pd.DataFrame({'id':[0],'VAL':['no_val']})
+>>> df_key
+      VAL  id
+0  no_val   0
+>>> df_repeat =  pd.DataFrame(np.repeat(df_key.values,"5",axis=0),columns=['id_new','VAR_new'])
+>>> df_repeat
+   id_new VAR_new
+0  no_val       0
+1  no_val       0
+2  no_val       0
+3  no_val       0
+4  no_val       0
+>>> df_repeat.shape
+(5, 2)
+
+
+#axis=1
+#creating df with axis =1, this will apply the repeat function horizonatlly , meaning adding more cols ie.. 5 * no of cols in df_key
+>>> import numpy as np
+>>> import pandas as pd
+>>> df_key = pd.DataFrame({'id':[0],'VAL':['no_val']})
+>>> df_key
+      VAL  id
+0  no_val   0
+>>> df_repeat_axis_is_1 =  pd.DataFrame(np.repeat(df_key.values,"5",axis=1))
+>>> df_repeat_axis_is_1
+        0       1       2       3       4  5  6  7  8  9
+0  no_val  no_val  no_val  no_val  no_val  0  0  0  0  0
+>>> df_repeat_axis_is_1.shape
+(1, 10)
+
+
+############ 2.Pickle
 """
 Pickling:
 
@@ -35,7 +97,8 @@ print(emp)
 
 
 
-###############
+############### 3. open files
+
 #open files and modes
 
 #To open a text file, use:
