@@ -58,6 +58,33 @@ print (df)
 2   29  Steve
 3   42  Ricky
 
+# create df - method 3
+df = pd.DataFrame([[4, 9],] * 3, columns=['A', 'B'])
+>>> df
+   A  B
+0  4  9
+1  4  9
+2  4  9
+
+# create df - method 4
+import pandas ad pd
+import numpy as np
+
+>>> df_repeat =  pd.DataFrame(np.repeat(df_key.values,"10",axis=0),columns=['id_new','VAR_new'])
+>>> df_repeat
+   id_new VAR_new
+0  no_val       0
+1  no_val       0
+2  no_val       0
+3  no_val       0
+4  no_val       0
+5  no_val       0
+6  no_val       0
+7  no_val       0
+8  no_val       0
+9  no_val       0
+
+
 ######
 ## shape - gives rows, cols
 >>> df.shape  #gives (rows,cols)
@@ -129,6 +156,80 @@ df2
 2           2   29  Steve
 3           3   42  Ricky
 4           4   42  Ricky
+
+###############
+#print only particular col 
+
+>>> df_repeat =  pd.DataFrame(np.repeat(df_key.values,"10",axis=0),columns=['id_new','VAR_new'])
+>>> df_repeat
+   id_new VAR_new
+0  no_val       0
+1  no_val       0
+2  no_val       0
+3  no_val       0
+4  no_val       0
+5  no_val       0
+6  no_val       0
+7  no_val       0
+8  no_val       0
+9  no_val       0
+
+#all rows for col 'VAR_new'
+>>> df_repeat['VAR_new']
+0    0
+1    0
+2    0
+3    0
+4    0
+5    0
+6    0
+7    0
+8    0
+9    0
+
+#rows 2 and 3 , which is from index 1:3
+>>> df_repeat['VAR_new'][1:3]
+1    0
+2    0
+
+###############
+#replace only particular col val using value from other Data frame
+
+>>> df_repeat =  pd.DataFrame(np.repeat(df_key.values,"10",axis=0),columns=['id_new','VAR_new'])
+>>> df_key = pd.DataFrame({'row': [0,0,0,0], 'VAR': ['No_VAR','No_VAR1','no_VAR2','no_VAR3']})
+>>> df_key
+       VAR  row
+0   No_VAR    0
+1  No_VAR1    0
+2  no_VAR2    0
+3  no_VAR3    0
+>>> df_repeat['VAR_new'][1:3]
+1    0
+2    0
+Name: VAR_new, dtype: object
+
+        >>> df_key['VAR'][1:3]
+1    No_VAR1
+2    no_VAR2
+Name: VAR, dtype: object
+>>> df_repeat['VAR_new'][1:3]=df_key['VAR'][1:3]
+>>> df_repeat['VAR_new'][1:3]
+1    No_VAR1
+2    no_VAR2
+Name: VAR_new, dtype: object
+>>> df_repeat
+   id_new  VAR_new
+0  no_val        0
+1  no_val  No_VAR1
+2  no_val  no_VAR2
+3  no_val        0
+4  no_val        0
+5  no_val        0
+6  no_val        0
+7  no_val        0
+8  no_val        0
+9  no_val        0
+
 
 ###############
 #sum row values and sum col values
