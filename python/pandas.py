@@ -102,6 +102,24 @@ Index(['Age', 'Name'], dtype='object')
  df['A'][0] # 1st value
  df['A'][1] #2nd value
 
+
+########
+#replace missing values 
+
+#Pandas provides the fillna() function for replacing missing values with a specific value. 
+#Let's apply that with Mean Imputation.
+
+import pandas as pd
+import numpy as np
+
+train_url = "http://s3.amazonaws.com/assets.datacamp.com/course/Kaggle/train.csv"
+train = pd.read_csv(train_url)
+print("***** Train_Set *****")
+print(train.describe())
+train.isna().head()
+# Fill missing values with mean column values in the train set
+train.fillna(train.mean(), inplace=True)
+
 #########
 # save df as pkl
 
