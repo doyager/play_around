@@ -208,6 +208,17 @@ input_nbr.corr(method='pearson')
 
 input_nbr.corr(method='spearman')
 
+# NaN values in corr matrix 
+"""
+
+Because you have a lot the same values in one column, then it is logical that you get NaN for the correlation
+
+cor(i,j) = cov(i,j)/[stdev(i)*stdev(j)]
+If the values of the ith or jth variable do not vary, then the respective standard deviation will be zero and
+so will the denominator of the fraction. Thus, the correlation will be NaN.
+
+"""
+
 ---------------------
 # complete example for "get only top n correlations values and drop reduandant values "
 import pandas as pd
