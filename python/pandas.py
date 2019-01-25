@@ -208,6 +208,66 @@ input_nbr.corr(method='pearson')
 
 input_nbr.corr(method='spearman')
 
+---------------------
+# complete example for "get only top n correlations values and drop reduandant values "
+import pandas as pd
+d = {'x1': [1, 4, 4, 5, 6], 
+     'x2': [0, 0, 8, 2, 4], 
+     'x3': [2, 8, 8, 10, 12], 
+     'x4': [-1, -4, -4, -4, -5]}
+df = pd.DataFrame(data = d)
+print("Data Frame")
+print(df)
+print()
+
+print("Correlation Matrix")
+print(df.corr())
+print()
+
+#calculate redundant paris of values
+def get_redundant_pairs(df):
+    '''Get diagonal and lower triangular pairs of correlation matrix'''
+    pairs_to_drop = set()
+    cols = df.columns
+    for i in range(0, df.shape[1]):
+        for j in range(0, i+1):
+            pairs_to_drop.add((cols[i], cols[j]))
+    return pairs_to_drop
+#drop redundant pairs and retur only top n corr values 
+def get_top_abs_correlations(df, n=5):
+    au_corr = df.corr().abs().unstack()
+    labels_to_drop = get_redundant_pairs(df)
+    au_corr = au_corr.drop(labels=labels_to_drop).sort_values(ascending=False)
+    return au_corr[0:n]
+
+print("Top Absolute Correlations")
+print(get_top_abs_correlations(df, 3))
+That gives the following output:
+
+Data Frame
+   x1  x2  x3  x4
+0   1   0   2  -1
+1   4   0   8  -4
+2   4   8   8  -4
+3   5   2  10  -4
+4   6   4  12  -5
+
+Correlation Matrix
+          x1        x2        x3        x4
+x1  1.000000  0.399298  1.000000 -0.969248
+x2  0.399298  1.000000  0.399298 -0.472866
+x3  1.000000  0.399298  1.000000 -0.969248
+x4 -0.969248 -0.472866 -0.969248  1.000000
+
+Top Absolute Correlations
+x1  x3    1.000000
+x3  x4    0.969248
+x1  x4    0.969248
+dtype: float64
+
+
+---------------------
+
 
 #########
 # save df as pkl
