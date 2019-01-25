@@ -201,6 +201,14 @@ mpg_data['mpg'].corr(mpg_data['weight'])
 #eg: correlation on all columns
 mpg_data.drop(['model_year', 'origin'], axis=1).corr(method='spearman')
 
+#eg:
+input_nbr = input.select_dtypes(['number'])
+
+input_nbr.corr(method='pearson')
+
+input_nbr.corr(method='spearman')
+
+
 #########
 # save df as pkl
 
