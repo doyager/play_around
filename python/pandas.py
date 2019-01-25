@@ -93,6 +93,33 @@ import numpy as np
 >>> df.shape[0] #gives only no of rows
 4
 
+## size
+df.size
+#8
+
+## info - gives all column data types , object types , counts of non-null for each col
+df.info()
+
+# view options
+# print options - to view full data 
+
+#to print all rows ie. max 100
+pd.set_option('display.max_rows', 100) 
+print(pd.get_option("display.max_rows"))
+#o/p : 100
+# to n number of columns , so to view all the data
+pd.set_option('display.max_columns',100)
+print(pd.get_option("display.max_columns"))
+#o/p: 100
+
+pd.set_option('precision', 5)
+
+
+
+## print column names
+print(df.columns.values)
+
+
 #show columns
 
 >>> df.columns
@@ -105,6 +132,11 @@ Index(['Age', 'Name'], dtype='object')
 
 ########
 #replace missing values 
+# nulls
+# count nulls
+
+#total null count per column
+print(input.isna().sum())
 
 #Pandas provides the fillna() function for replacing missing values with a specific value. 
 #Let's apply that with Mean Imputation.
@@ -119,6 +151,27 @@ print(train.describe())
 train.isna().head()
 # Fill missing values with mean column values in the train set
 train.fillna(train.mean(), inplace=True)
+
+
+#########
+#correlation annalysis
+
+# method: Spearman, Pearson, or Kendall. 
+#If no method is specified, Pearson is used by default. 
+
+import pandas as pd
+path = 'http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data'
+
+mpg_data = pd.read_csv(path, delim_whitespace=True, header=None,
+            names = ['mpg', 'cylinders', 'displacement','horsepower',
+            'weight', 'acceleration', 'model_year', 'origin', 'name'],
+            na_values='?')
+
+#eg : corr between two specific columsn
+mpg_data['mpg'].corr(mpg_data['weight'])
+
+#eg: correlation on all columns
+mpg_data.drop(['model_year', 'origin'], axis=1).corr(method='spearman')
 
 #########
 # save df as pkl
