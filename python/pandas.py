@@ -71,6 +71,8 @@ import pandas ad pd
 import numpy as np
 
 >>> df_repeat =  pd.DataFrame(np.repeat(df_key.values,"10",axis=0),columns=['id_new','VAR_new'])
+
+# print data frame
 >>> df_repeat
    id_new VAR_new
 0  no_val       0
@@ -152,6 +154,26 @@ train.isna().head()
 # Fill missing values with mean column values in the train set
 train.fillna(train.mean(), inplace=True)
 
+
+#########
+
+#drop columns
+
+# drop categorical columns
+list=pd.DataFrame(df.categorical).columns
+df= df.drop(list,axis=1)
+df
+
+
+#to view only numberic columsn , arrays & strings are not returend
+input._get_numeric_data()
+# o/p : full data displayed on screen , all numeric cols data of size [1000 rows x 28 columns]
+input.select_dtypes(['number'])
+#o/p: [1000 rows x 28 columns]
+#i.e. full data displayed on screen , all numeric cols data of size [1000 rows x 28 columns]
+input.select_dtypes([np.number])
+#o/p: [1000 rows x 28 columns]
+#i.e. full data displayed on screen , all numeric cols data of size [1000 rows x 28 columns]
 
 #########
 #correlation annalysis
