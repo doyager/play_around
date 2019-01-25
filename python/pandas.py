@@ -99,6 +99,9 @@ import numpy as np
 df.size
 #8
 
+# print datatypes of each columns
+df.dtypes
+
 ## info - gives all column data types , object types , counts of non-null for each col
 df.info()
 
@@ -165,7 +168,10 @@ df= df.drop(list,axis=1)
 df
 
 
-#to view only numberic columsn , arrays & strings are not returend
+###########
+# view only numeric columns data
+
+#to view only numberic columsn[int64 and float64 are displayed] , [object,arrays & strings are not returend]
 input._get_numeric_data()
 # o/p : full data displayed on screen , all numeric cols data of size [1000 rows x 28 columns]
 input.select_dtypes(['number'])
