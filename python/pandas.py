@@ -95,9 +95,15 @@ import numpy as np
 >>> df.shape[0] #gives only no of rows
 4
 
-## size
+## size - all values [null & non null] included
 df.size
 #8
+
+### unique values per column
+df.nunique()
+
+##  count only non - null values :
+df.count()
 
 # print datatypes of each columns
 df.dtypes
