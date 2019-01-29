@@ -1,7 +1,11 @@
 
 # window functions
 
+# moving avg over 4 rows 
 # moving average over 4 rows including current one [i.e. last 3 records and current one]
+# so for first 3 rows in the result data set , for row 1 - it is avg of only first col , for row 2 - avg of row1 & row 2
+# for row 3 - avg of row 1,2,3 and from row 4 - it will have the avg for four rows - row 1,2,3,4 
+# for row 5 - avg of row 2,3,4 and row 5
 
 from groceries
 select id, revenue, day,
