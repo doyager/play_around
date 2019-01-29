@@ -115,3 +115,16 @@ id | product | day | rank
 08 banan . 2017-01-04 4
 
 Note: with same order id 3 , this two records have same rank
+
+# rank and limit the rank
+select * from (
+	select user_id, value, desc, 
+	rank() over ( partition by user_id order by value desc) as rank 
+	from test4 ) t where rank < 3;
+The output looks like this:
+
+OK
+1	2	hallo	1
+1	1	hallo	2
+2	11	hallo4	1
+2	10	hallo3	2
