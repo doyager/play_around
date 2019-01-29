@@ -48,6 +48,29 @@ In addition, you must use below HDFS commands to create /tmp and /user/hive/ware
 Hadoop installation
 #####################
 
+Link  : https://datashark.academy/how-to-setup-apache-hadoop-cluster-on-a-mac-or-linux-computer/
+
+
+ - Next we need to generate secured public and private keys for remote logins as follows:
+
+    In your terminal, type following command
+
+    $> ssh-keygen –t rsa –P ‘’
+    This will generate keys under /home/<user>/.ssh folder.
+
+    To let hadoop access remote nodes, we need to add public keys. In our case, since its 
+    same machine, so we will just copy public key to the list of authorized keys as
+
+-  copy authorized keys 
+      $> cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+      
+
+  - Now you should be able to connect to server without it prompting for credentials. 
+        Type following in the terminal to test the connectivity
+      $> ssh localhost
+      Last login: Jan 31 21:40:28 2018
+
+
     - install hadoop
       Link  : https://datashark.academy/how-to-setup-apache-hadoop-cluster-on-a-mac-or-linux-computer/
 
