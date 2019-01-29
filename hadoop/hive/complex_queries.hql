@@ -68,3 +68,50 @@ partition by day
 )
 as running_count;
 
+# row_number(), this will give a row number within every partition 
+#row number alwasy assigns unique value within partiiton even if the values are same
+# here row_number will reset for ever date ie.. day , as day is our partition
+# every record has unique row_number within a partition
+
+from groceries
+select id,product,day,
+row_number() over (partition by day order by id)
+as row_number;
+
+o/p:
+
+id | product | day | row_number
+01 banan . 2017-01-01 1
+02 banan . 2017-01-02 1
+03 banan . 2017-01-02 2
+03 apple . 2017-01-02 3
+04 banan . 2017-01-03 1
+05 banan . 2017-01-04 1
+06 banan . 2017-01-04 2
+07 banan . 2017-01-04 3
+08 banan . 2017-01-04 4
+
+
+# rank() , rank function
+# ranks are NOT unique over a window
+# rank window funciton works exactly likerow_number() except that two rows with the same order id will have the same rank
+# observe the result for day 2
+from groceries
+select id,product,day,
+rank() over (partition by day order by id)
+as rank;
+
+o/P:
+
+id | product | day | rank
+01 banan . 2017-01-01 1
+02 banan . 2017-01-02 1
+03 banan . 2017-01-02 2
+03 apple . 2017-01-02 2
+04 banan . 2017-01-03 1
+05 banan . 2017-01-04 1
+06 banan . 2017-01-04 2
+07 banan . 2017-01-04 3
+08 banan . 2017-01-04 4
+
+Note: with same order id 3 , this two records have same rank
