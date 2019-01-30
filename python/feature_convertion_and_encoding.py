@@ -85,3 +85,81 @@ In other words, the various versions of OHC are all the same for this analysis. 
 use the str accessor plus np.where to create a new column the indicates whether or not the car has an OHC engine.
 """
 obj_df["OHC_Code"] = np.where(obj_df["engine_type"].str.contains("ohc"), 1, other=0)
+
+
+
+
+#BackwardDifferenceEncoder :
+
+#scikit-learn contrib package call categorical-encoding which implements many of these approaches
+
+import pandas as pd
+import numpy as np
+
+# Define the headers since the data does not have any
+headers = ["symboling", "normalized_losses", "make", "fuel_type", "aspiration",
+           "num_doors", "body_style", "drive_wheels", "engine_location",
+           "wheel_base", "length", "width", "height", "curb_weight",
+           "engine_type", "num_cylinders", "engine_size", "fuel_system",
+           "bore", "stroke", "compression_ratio", "horsepower", "peak_rpm",
+           "city_mpg", "highway_mpg", "price"]
+
+# Read in the CSV file and convert "?" to NaN
+df = pd.read_csv("http://mlr.cs.umass.edu/ml/machine-learning-databases/autos/imports-85.data",
+                  header=None, names=headers, na_values="?" )
+import category_encoders as ce
+
+# Get a new clean dataframe
+obj_df = df.select_dtypes(include=['object']).copy()
+
+# Specify the columns to encode then fit and transform
+encoder = ce.backward_difference.BackwardDifferenceEncoder(cols=["engine_type"])
+encoder.fit(obj_df, verbose=1)
+
+# Only display the first 8 columns for brevity
+encoder.transform(obj_df).iloc[:,0:7].head()
+"""
+col_engine_type_0	col_engine_type_1	col_engine_type_2	col_engine_type_3	col_engine_type_4	col_engine_type_5	col_engine_type_6
+0	1.0	0.142857	0.285714	0.428571	0.571429	0.714286	-0.142857
+1	1.0	0.142857	0.285714	0.428571	0.571429	0.714286	-0.142857
+2	1.0	0.142857	0.285714	0.428571	0.571429	0.714286	0.857143
+3	1.0	-0.857143	-0.714286	-0.571429	-0.428571	-0.285714	-0.142857
+4	1.0	-0.857143	-0.714286	-0.571429	-0.428571	-0.285714
+"""
+
+
+
+
+
+######################################################################################
+# polynomial encoding, 
+#we get a different distribution of values used to encode the columns:
+
+import pandas as pd
+import numpy as np
+
+# Define the headers since the data does not have any
+headers = ["symboling", "normalized_losses", "make", "fuel_type", "aspiration",
+           "num_doors", "body_style", "drive_wheels", "engine_location",
+           "wheel_base", "length", "width", "height", "curb_weight",
+           "engine_type", "num_cylinders", "engine_size", "fuel_system",
+           "bore", "stroke", "compression_ratio", "horsepower", "peak_rpm",
+           "city_mpg", "highway_mpg", "price"]
+
+# Read in the CSV file and convert "?" to NaN
+df = pd.read_csv("http://mlr.cs.umass.edu/ml/machine-learning-databases/autos/imports-85.data",
+                  header=None, names=headers, na_values="?" )
+# Get a new clean dataframe
+obj_df = df.select_dtypes(include=['object']).copy()
+encoder = ce.polynomial.PolynomialEncoder(cols=["engine_type"])
+encoder.fit(obj_df, verbose=1)
+encoder.transform(obj_df).iloc[:,0:7].head()
+
+"""
+col_engine_type_0	col_engine_type_1	col_engine_type_2	col_engine_type_3	col_engine_type_4	col_engine_type_5	col_engine_type_6
+0	1.0	-5.669467e-01	5.455447e-01	-4.082483e-01	0.241747	-1.091089e-01	0.032898
+1	1.0	-5.669467e-01	5.455447e-01	-4.082483e-01	0.241747	-1.091089e-01	0.032898
+2	1.0	3.779645e-01	3.970680e-17	-4.082483e-01	-0.564076	-4.364358e-01	-0.197386
+3	1.0	1.347755e-17	-4.364358e-01	1.528598e-17	0.483494	8.990141e-18	-0.657952
+4	1.0	1.347755e-17	-4.364358e-01	1.528598e-17	0.483494	8.990141e-18
+"""
