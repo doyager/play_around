@@ -6,6 +6,18 @@ To convert this kind of categorical text data into model-understandable numerica
 So all we have to do, to label encode the first column, is import the LabelEncoder class from the sklearn library, 
 fit and transform the first column of the data, and then replace the existing text data with the new encoded data. 
 Let’s have a look at the code.
+
+encoding categorical values is to use a technique called label encoding. Label encoding is simply 
+converting each value in a column to a number. For example, the body_style column contains 5 different values.
+We could choose to encode it like this:
+
+convertible -> 0
+hardtop -> 1
+hatchback -> 2
+sedan -> 3
+wagon -> 4
+
+
 """
 from sklearn.preprocessing import LabelEncoder
 labelencoder = LabelEncoder()
