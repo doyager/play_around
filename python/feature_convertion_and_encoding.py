@@ -54,6 +54,7 @@ and the other two columns will have ‘0’s.
 from sklearn.preprocessing import OneHotEncoder
 onehotencoder = OneHotEncoder(categorical_features = [0])
 x = onehotencoder.fit_transform(x).toarray()
+"""
 As you can see in the constructor, we specify which column has to be one hot encoded, [0] in this case. 
 Then we fit and transform the array ‘x’ with the onehotencoder object we just created. And that’s it, we now
 have three new columns in our dataset:
@@ -61,3 +62,26 @@ have three new columns in our dataset:
 As you can see, we have three new columns with 1s and 0s, depending on the country that 
 the rows represent.
 """
+
+
+#Custom Binary Encoding
+"""
+Depending on the data set, you may be able to use some combination of label encoding and one hot encoding
+to create a binary column that meets your needs for further analysis.
+
+In this particular data set, there is a column called engine_type that contains several different values:
+
+obj_df["engine_type"].value_counts()
+ohc      148
+ohcf      15
+ohcv      13
+l         12
+dohc      12
+rotor      4
+dohcv      1
+Name: engine_type, dtype: int64
+For the sake of discussion, maybe all we care about is whether or not the engine is an Overhead Cam (OHC) or not. 
+In other words, the various versions of OHC are all the same for this analysis. If this is the case, then we could
+use the str accessor plus np.where to create a new column the indicates whether or not the car has an OHC engine.
+"""
+obj_df["OHC_Code"] = np.where(obj_df["engine_type"].str.contains("ohc"), 1, other=0)
