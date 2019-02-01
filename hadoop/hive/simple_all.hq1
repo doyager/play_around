@@ -70,3 +70,28 @@ with q1 as (select ndc, metric_qty, count(*) as cnt from dv_db.clm_test group by
 | 37826  | 1.0                 | 1       | 3     |
 | 37826  | 0.800000011920929   | 1       | 3     |
 +------------+---------------------+---------+-------+--+
+
+set mapred.job.queue.name = root.team1;
+with
+q1 as (select ndc, metric_dec_qty, count(*) as cnt from dv_db.clm_test group by ndc, metric_dec_qty)
+,q2 as (select * , rank() over (partition by ndc  order by cnt desc)as rank from q1)
+select * from q2 where rank < 2;
+
+
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 16.14 sec   HDFS Read: 8018 HDFS Write: 204 SUCCESS
+INFO  : Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 13.75 sec   HDFS Read: 8020 HDFS Write: 18 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 29 seconds 890 msec
+INFO  : Completed executing command(queryId=hive_20190201150707_4378a030-c67f-4c87-9c9e-00675587b5ab); Time taken: 88.005 seconds
+INFO  : OK
+DEBUG : Shutting down query with
+q1 as (select ndc, metric_dec_qty, count(*) as cnt from dv_db.clm_test group by ndc, metric_qty)
+,q2 as (select * , rank() over (partition by ndc  order by cnt desc)as rank from q1)
+select * from q2 where rank < 2
++------------+--------------------+---------+----------+--+
+|   q2.ndc   | q2.metric_qty  | q2.cnt  | q2.rank  |
++------------+--------------------+---------+----------+--+
+| 378262 | 0.5                | 5       | 1        |
++------------+--------------------+---------+----------+--+
+
+
+
