@@ -71,6 +71,8 @@ with q1 as (select ndc, metric_qty, count(*) as cnt from dv_db.clm_test group by
 | 37826  | 0.800000011920929   | 1       | 3     |
 +------------+---------------------+---------+-------+--+
 
+
+# CTW with rank() and filter rank 
 set mapred.job.queue.name = root.team1;
 with
 q1 as (select ndc, metric_dec_qty, count(*) as cnt from dv_db.clm_test group by ndc, metric_dec_qty)
@@ -92,6 +94,20 @@ select * from q2 where rank < 2
 +------------+--------------------+---------+----------+--+
 | 378262 | 0.5                | 5       | 1        |
 +------------+--------------------+---------+----------+--+
+
+# CTW with rank() and filter rank - more data 
+set mapred.job.queue.name = root.team1;
+with
+q1 as (select ndc, metric_dec_qty, count(*) as cnt from dv_db.clm_test group by ndc, metric_dec_qty)
+,q2 as (select * , rank() over (partition by ndc  order by cnt desc)as rank from q1)
+select * from q2 where rank < 2; 
+
++------------+---------------------+---------+----------+--+
+|   q2.ndc   |  q2.metric_qty  | q2.cnt  | q2.rank  |
++------------+---------------------+---------+----------+--+
+| 378261  | 0.4  | 5       | 1        |
+| 378262  | 0.5                 | 5       | 1        |
++------------+---------------------+---------+----------+--+
 
 
 
