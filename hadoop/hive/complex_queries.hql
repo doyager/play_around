@@ -128,3 +128,33 @@ OK
 1	1	hallo	2
 2	11	hallo4	1
 2	10	hallo3	2
+
+
+
+# common table expression :
+
+A Common Table Expression (CTE) is a temporary result set derived from a simple query specified in a WITH clause, 
+which immediately precedes a SELECT or INSERT keyword.  The CTE is defined only within the execution scope of a 
+single statement.  One or more CTEs can be used in a Hive SELECT, INSERT, CREATE TABLE AS SELECT, or 
+CREATE VIEW AS SELECT statement.
+
+CTE in Select Statements
+with q1 as ( select key from src where key = '5')
+select *
+from q1;
+ 
+-- from style
+with q1 as (select * from src where key= '5')
+from q1
+select *;
+  
+-- chaining CTEs
+with q1 as ( select key from q2 where key = '5'),
+q2 as ( select key from src where key = '5')
+select * from (select key from q1) a;
+  
+-- union example
+with q1 as (select * from src where key= '5'),
+q2 as (select * from src s2 where key = '4')
+select * from q1 union all select * from q2;
+
