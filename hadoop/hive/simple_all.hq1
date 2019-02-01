@@ -1,0 +1,45 @@
+
+
+
+beeline -u "jdbc:hive2://machine.company.com:10000/default;principal=hive/_HOST@DEVAD.company.COM;ssl=true"
+set mapred.job.queue.name = root.team1_yarn;
+
+
+DROP TABLE IF EXISTS dv_db.clm_test;
+CREATE TABLE IF NOT EXISTS dv_db.clm_test  (
+ndc             int,
+metric_qty         float ,
+col1             string,
+col2             string,
+col3             string
+);
+
+select * from dv_db.clm_test;
+
+INSERT INTO TABLE dv_db.clm_test VALUES ( 0037826, 0.5, "A1","B1","C1"),
+( 0037826, 0.5, "A2","B2","C2"),
+( 0037826, 0.5, "A3","B3","C3"),
+( 0037826, 0.5, "A4","B4","C4"),
+( 0037826, 0.5, "A5","B5","C5"),
+( 0037826, 0.6, "A6","B6","C6"),
+( 0037826, 0.6, "A7","B7","C7"),
+( 0037826, 0.6, "A8","B8","C8"),
+( 0037826, 1.0, "A9","B9","C9"),
+( 0037826, 0.8, "A10","B10","C10");
+
+
+select * from dv_db.clm_test;
+
+#
+select ndc, metric_qty, count(*) as cnt
+from dv_db.clm_test
+group by ndc, metric_qty
+order by ndc, cnt desc;
+
+|    ndc     |   metric_qty    | cnt  |
++------------+---------------------+------+--+
+| 37826  | 0.5                 | 5    |
+| 37826  | 0.6000000238418579  | 3    |
+| 37826  | 1.0                 | 1    |
+| 37826  | 0.800000011920929   | 1    |
++------------+---------------------+------+--+
