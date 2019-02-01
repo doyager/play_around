@@ -174,3 +174,43 @@ with q1 as (select ndc, metric_qty, count(*) as cnt from dv_db.clm_test group by
 | 37826  | 0.800000011920929   | 1       | 3     |
 +------------+---------------------+---------+-------+--+
 
+
+# multiple CTE
+
+A single scan.
+
+Note:
+- a single stage
+- a single TableScan
+- predicate: (((i = 1) and (j = 2)) and (k = 3)) (type: boolean)
+
+create table t (i int,j int,k int);
+
+explain 
+with    t1 as (select i,j,k from t  where i=1)
+       ,t2 as (select i,j,k from t1 where j=2)
+       ,t3 as (select i,j,k from t2 where k=3) 
+
+select * from t3
+;
+Explain
+STAGE DEPENDENCIES:
+  Stage-0 is a root stage
+
+STAGE PLANS:
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+      Processor Tree:
+        TableScan
+          alias: t
+          Statistics: Num rows: 1 Data size: 0 Basic stats: PARTIAL Column stats: NONE
+          Filter Operator
+            predicate: (((i = 1) and (j = 2)) and (k = 3)) (type: boolean)
+            Statistics: Num rows: 1 Data size: 0 Basic stats: PARTIAL Column stats: NONE
+            Select Operator
+              expressions: 1 (type: int), 2 (type: int), 3 (type: int)
+              outputColumnNames: _col0, _col1, _col2
+              Statistics: Num rows: 1 Data size: 0 Basic stats: PARTIAL Column stats: NONE
+              ListSink
+	      
