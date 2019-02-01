@@ -158,3 +158,19 @@ with q1 as (select * from src where key= '5'),
 q2 as (select * from src s2 where key = '4')
 select * from q1 union all select * from q2;
 
+# CTE With rank 
+
+
+# CTE with rank() function : common tbt expression with windowing function rank 
+with q1 as (select ndc, metric_qty, count(*) as cnt from dv_db.clm_test group by ndc, metric_qty)
+ select * , rank() over (partition by ndc order by cnt desc)as rank from q1;
+
+ +------------+---------------------+---------+-------+--+
+|   q1.ndc   |  q1.metric_qty  | q1.cnt  | rank  |
++------------+---------------------+---------+-------+--+
+| 37826  | 0.5                 | 5       | 1     |
+| 37826  | 0.6000000238418579  | 3       | 2     |
+| 37826  | 1.0                 | 1       | 3     |
+| 37826  | 0.800000011920929   | 1       | 3     |
++------------+---------------------+---------+-------+--+
+
