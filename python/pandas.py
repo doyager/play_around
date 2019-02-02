@@ -225,7 +225,7 @@ so will the denominator of the fraction. Thus, the correlation will be NaN.
 
 """
 
----------------------
+###########
 # complete example for "get only top n correlations values and drop reduandant values "
 import pandas as pd
 d = {'x1': [1, 4, 4, 5, 6], 
@@ -283,8 +283,56 @@ x1  x4    0.969248
 dtype: float64
 
 
----------------------
+###########
 
+# get_dummies , converts categorical values into dummy/indicator variables
+
+import pandas as pd
+
+>>> s = pd.Series(list('abca'))
+>>> pd.get_dummies(s)
+   a  b  c
+0  1  0  0
+1  0  1  0
+2  0  0  1
+3  1  0  0
+>>> s1 = ['a', 'b', np.nan]
+>>> pd.get_dummies(s1)
+   a  b
+0  1  0
+1  0  1
+2  0  0
+>>> pd.get_dummies(s1, dummy_na=True)
+   a  b  NaN
+0  1  0    0
+1  0  1    0
+2  0  0    1
+>>> df = pd.DataFrame({'A': ['a', 'b', 'a'], 'B': ['b', 'a', 'c'],
+...                    'C': [1, 2, 3]})
+>>> pd.get_dummies(df, prefix=['col1', 'col2'])
+   C  col1_a  col1_b  col2_a  col2_b  col2_c
+0  1       1       0       0       1       0
+1  2       0       1       1       0       0
+2  3       1       0       0       0       1
+>>> pd.get_dummies(pd.Series(list('abcaa')))
+   a  b  c
+0  1  0  0
+1  0  1  0
+2  0  0  1
+3  1  0  0
+4  1  0  0
+>>> pd.get_dummies(pd.Series(list('abcaa')), drop_first=True)
+   b  c
+0  0  0
+1  1  0
+2  0  1
+3  0  0
+4  0  0
+>>> pd.get_dummies(pd.Series(list('abc')), dtype=float)
+     a    b    c
+0  1.0  0.0  0.0
+1  0.0  1.0  0.0
+2  0.0  0.0  1.0
 
 #########
 # save df as pkl
