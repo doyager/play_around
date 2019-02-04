@@ -142,3 +142,20 @@ fh.close()
 open("hello.txt","rb")
 
 ############
+          
+ #extract zip file       
+ import zipfile
+zip_ref = zipfile.ZipFile(zip_path, 'r')
+zip_ref.extractall(directory_to_extract_to)
+zip_ref.close()
+
+print ("#" * 50)
+######################
+          
+  # download files 
+import wget
+          
+url='https://github.com/google/guava'
+sample_data_dir="/Users/mac/workspace/personal/test_area/predict_lang/data/sample/"
+
+wget.download(url, sample_data_dir)
