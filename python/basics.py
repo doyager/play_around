@@ -142,9 +142,23 @@ fh.close()
 open("hello.txt","rb")
 
 ############
+# delete file
           
- #extract zip file       
- import zipfile
+import os
+if os.path.exists("demofile.txt"):
+  os.remove("demofile.txt")
+else:
+  print("The file does not exist")
+#######################
+# delete directory
+          
+import os
+os.rmdir("myfolder")
+
+#######################
+          
+#extract zip file       
+import zipfile
 zip_ref = zipfile.ZipFile(zip_path, 'r')
 zip_ref.extractall(directory_to_extract_to)
 zip_ref.close()
@@ -152,7 +166,7 @@ zip_ref.close()
 print ("#" * 50)
 ######################
           
-  # download files 
+# download files 
 import wget
           
 url='https://github.com/google/guava'
