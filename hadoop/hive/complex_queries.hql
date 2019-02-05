@@ -199,6 +199,15 @@ select * from q2 where rank < 2
 +------------+--------------------+---------+----------+--+
 
 
+# CTE with rank and filter rank and sum per each group 
+#to find the most frequent value per group and even the total sum of all values consider per group and printing the
+# top rank in each group
+
+with q1 as (select ndc, metric_dec_qty, count(*) as cnt from "+input_db+"."+input_table+" group by ndc, metric_dec_qty) 
+,q2 as (select * , rank() over (partition by ndc  order by cnt desc)as rank from q1)
+, q3 as (select *, sum(cnt) over (partition by ndc order by ndc) as total_cnt from q2)
+select * from q3 where rank < 2
+
 
 # multiple CTE
 
