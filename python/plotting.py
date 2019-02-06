@@ -49,6 +49,8 @@ print("code_languages stats: ")
 counter=collections.Counter(code_languages)
 print(counter)
 # o/p: Counter({'c': 6, 'py': 4, 'js': 3, 'java': 2})
+# we can even assign the value to dictornray 
+# counter={'c': 28290, 'js': 15360, 'java': 3177, 'py': 2407}
 
 
 
