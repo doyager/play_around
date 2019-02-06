@@ -29,3 +29,36 @@ axs[0].bar(names, values)
 axs[1].scatter(names, values)
 axs[2].plot(names, values)
 fig.suptitle('Categorical Plotting')
+
+
+
+
+# Categorical plotting - Example with data
+
+import matplotlib.pyplot as plt
+import collections
+
+
+code_languages =[ "java","java","js","js","js","c","c","c","c","c","c","py","py","py","py"]
+#print(code_lines)
+print(code_languages)
+print("count : "+str(count))
+
+#to convert code_languages list to key values pair of counts
+print("code_languages stats: ")
+counter=collections.Counter(code_languages)
+print(counter)
+# o/p: Counter({'c': 6, 'py': 4, 'js': 3, 'java': 2})
+
+
+
+
+names = list(counter.keys())
+values = list(counter.values())
+
+fig, axs = plt.subplots(1, 3, figsize=(9, 3), sharey=True)
+axs[0].bar(names, values)
+axs[1].scatter(names, values)
+axs[2].plot(names, values)
+fig.suptitle('Count per Group Plotting')
+plt.show()  # this will finally show the graph
