@@ -18,7 +18,7 @@
 
     # go line number
     
-      #press Esc and then Shift-g 
+      #press Esc , then press line number and then Shift-g 
       
     # go to last column of the line
     
