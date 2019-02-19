@@ -15,10 +15,20 @@
 
 #vi 
 
+    # to view list of all setting
+    
+      # : set all
+      
+   # to view list of all setting we have ,
+      # : set
+
     # set line number 
     
       # press : and say "set number" and enter 
       #:set number   
+      
+      # to remove line numbers
+      # :set nonumber
 
     # go line number
     
@@ -38,6 +48,22 @@
         # Cntrl + End
         # 
 
+
+    # search 
+
+          # to search 
+            #/<search item>
+          # to go next item 
+            # press n
+          # to go previous item
+            # press N i.e. Shift + n
+          # go to first occurance
+            # ggn
+          # go to last occurance
+            # GN i.. shift + g + n
+          # clear last search highlighting 
+              # :noh
+       
     # find and replace
 
     :%s/search_string/replacement_string/g
