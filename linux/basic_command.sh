@@ -37,6 +37,10 @@
     # go to last column of the line
     
        # shift + 4 or press $
+       
+    # go to nth character on a line
+      # go to that particular line and press char number "example 256 character" and | and press enter
+      # 256| and press enter
       
    # go to first line
    
