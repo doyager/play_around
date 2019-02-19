@@ -15,6 +15,10 @@
 
 #vi 
 
+    # set line number 
+    
+      # press : and say "set number" and enter 
+      #:set number   
 
     # go line number
     
