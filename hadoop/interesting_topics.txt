@@ -1,0 +1,16 @@
+
+
+
+
+# fair and capacity schedulers
+
+Fair scheduling is a method of assigning resources to jobs such that all jobs get, on average, an equal share of
+resources over time. When there is a single job running, that job uses the entire cluster. When other jobs are 
+submitted, tasks slots that free up are assigned to the new jobs, so that each job gets roughly the same amount of CPU time. Unlike the default Hadoop scheduler, which forms a queue of jobs, this lets short jobs finish in reasonable time while not starving long jobs. It is also a reasonable way to share a cluster between a number of users. Finally, fair sharing can also work with job priorities - the priorities are used as weights to determine the fraction of total compute time that each job should get.
+
+The CapacityScheduler is designed to allow sharing a large cluster while giving each organization a minimum 
+capacity guarantee. The central idea is that the available resources in the Hadoop Map-Reduce cluster are partitioned 
+among multiple organizations who collectively fund the cluster based on computing needs. There is an added benefit that
+an organization can access any excess capacity no being used by others. This provides elasticity for the organizations 
+in a cost-effective manner.
+
