@@ -130,6 +130,31 @@ OK
 2	10	hallo3	2
 
 
+# cummulative sum :
+
+select
+name,
+amount,
+ SUM(amount)
+over
+ (
+ order by name
+ rows between unbounded preceding and current row
+ ) cumulative_Sum
+from test;
+Output:
+
+name	amount	cumulative sum
+abc	100	100
+abc	200	300
+bcd	100	400
+bcd	100	500
+bcd	100	600
+cde	400	1000
+cde	400	1400
+efg	600	2000
+efg	600	2600
+
 
 # common table expression :
 
