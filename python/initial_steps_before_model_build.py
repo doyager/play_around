@@ -1,6 +1,34 @@
 
 
 
+#calculate no of numeric fields / print numeric fields
+
+        import pandas as pd
+        import numpy as np
+
+        df = pd.DataFrame({'A': range(7, 10),
+                           'B': np.random.rand(3),
+                           'C': ['foo','bar','baz'],
+                           'D': ['who','what','when']})
+        df
+        #    A         B    C     D
+        # 0  7  0.704021  foo   who
+        # 1  8  0.264025  bar  what
+        # 2  9  0.230671  baz  when
+
+        df_numerics_only = df.select_dtypes(include=[np.number])
+        df_numerics_only
+        #    A         B
+        # 0  7  0.704021
+        # 1  8  0.264025
+        # 2  9  0.230671
+
+        colnames_numerics_only = df.select_dtypes(include=[np.number]).columns.tolist()
+        colnames_numerics_only
+        # ['A', 'B']
+
+
+
 
 
 # replace / fill missing values 
