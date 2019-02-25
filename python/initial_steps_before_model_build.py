@@ -26,6 +26,11 @@
         colnames_numerics_only = df.select_dtypes(include=[np.number]).columns.tolist()
         colnames_numerics_only
         # ['A', 'B']
+        
+        # method 2
+        input_nbr = input_1M_tmp.select_dtypes(['number'])
+
+       
 
 
 
