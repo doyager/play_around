@@ -29,6 +29,12 @@
 
 
 
+# rename column name 
+
+                input_1M = pd.read_csv("/Users/mac/test_444.csv")
+
+                #new col names
+                input_1M.columns = ['ckey', 'col2','co13']
 
 
 # replace / fill missing values 
