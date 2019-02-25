@@ -112,7 +112,19 @@ df.dropna(axis=1)
 # Only drop columns which have at least 90% non-NaNs
 df.dropna(thresh=int(df.shape[0] * .9), axis=1)
 
+# Drop records based on column values 
 
+
+import pandas as pd
+data = {'name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy'],
+        'year': [2012, 2012, 2013, 2014, 2014],
+        'reports': [4, 24, 31, 2, 3]}
+df = pd.DataFrame(data, index = ['Cochice', 'Pima', 'Santa Cruz', 'Maricopa', 'Yuma'])
+# name not equal to Tina
+df[df.name != 'Tina']
+
+# name either TINA or Jason
+df[(df.name == 'Tina') | (df.name == 'Jason')]
 
 '''
 Imp links :
