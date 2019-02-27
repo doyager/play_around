@@ -1,5 +1,6 @@
 
-
+# print all info about dataframe
+print(df_flights.info())
 
 #calculate no of numeric fields / print numeric fields
 
