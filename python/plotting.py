@@ -64,3 +64,37 @@ axs[1].scatter(names, values)
 axs[2].plot(names, values)
 fig.suptitle('Count per Group Plotting')
 plt.show()  # this will finally show the graph
+
+
+
+# bar graph & pie chart for same data
+
+
+    #bar graph
+          import pandas as pd
+          import numpy as np
+          import copy
+          %matplotlib inline
+          df_flights = pd.read_csv('https://raw.githubusercontent.com/ismayc/pnwflights14/master/data/flights.csv')
+          cat_df_flights = df_flights.select_dtypes(include=['object']).copy()
+
+          %matplotlib inline
+          import seaborn as sns
+          import matplotlib.pyplot as plt
+          carrier_count = cat_df_flights['carrier'].value_counts()
+          sns.set(style="darkgrid")
+          sns.barplot(carrier_count.index, carrier_count.values, alpha=0.9)
+          plt.title('Frequency Distribution of Carriers')
+          plt.ylabel('Number of Occurrences', fontsize=12)
+          plt.xlabel('Carrier', fontsize=12)
+          plt.show()
+          
+     #pie chart
+
+          labels = cat_df_flights['carrier'].astype('category').cat.categories.tolist()
+          counts = cat_df_flights['carrier'].value_counts()
+          sizes = [counts[var_cat] for var_cat in labels]
+          fig1, ax1 = plt.subplots()
+          ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True) #autopct is show the % on plot
+          ax1.axis('equal')
+          plt.show()
