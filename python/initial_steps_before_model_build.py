@@ -134,6 +134,17 @@ df_nonNUm = df_flights.select_dtypes(include=['object']).copy()
                                 np.where(df['bar'] == 1, 'One',
                                   np.where(df['bar'] == 2, 'Two', 'Three')))
 
+                                        
+ # EDA - Exploratory Data analysis
+                                        
+    # frequency districbution , sum of each value type per column
+                                     print(cat_df_flights['carrier'].value_counts())
+                                       # AS    62460
+                                       # WN    23355
+                                       # OO    18710
+                                       # DL    16716
+                                        
+                                        
 # Drop fields
 
 # Drop any rows which have any nans
