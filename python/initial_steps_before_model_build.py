@@ -143,6 +143,10 @@ df_nonNUm = df_flights.select_dtypes(include=['object']).copy()
                                        # WN    23355
                                        # OO    18710
                                        # DL    16716
+     
+    # distinct values per column - dist count
+                                       print(cat_df_flights['carrier'].value_counts().count())
+                                       
                                         
                                         
 # Drop fields
