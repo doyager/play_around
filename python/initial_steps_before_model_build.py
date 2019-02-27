@@ -2,6 +2,21 @@
 # print all info about dataframe
 print(df_flights.info())
 
+# to create copy of data
+cat_df_flights_lc = cat_df_flights.copy()
+
+# mark category variables 
+"""it's a good practice to typecast categorical features to a category dtype
+because they make the operations on such columns much faster than the object dtype
+
+"""
+      cat_df_flights_lc['carrier'] = cat_df_flights_lc['carrier'].astype('category')
+      cat_df_flights_lc['origin'] = cat_df_flights_lc['origin'].astype('category')                                                              
+
+      print(cat_df_flights_lc.dtypes)
+      #carrier    category
+      #tailnum      object
+      #origin     category
 
 # null counts 
                 # print all nulls in the df
