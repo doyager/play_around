@@ -2,6 +2,12 @@
 # print all info about dataframe
 print(df_flights.info())
 
+
+# filter all non - numneric columns
+
+df_nonNUm = df_flights.select_dtypes(include=['object']).copy()
+
+
 #calculate no of numeric fields / print numeric fields
 
         import pandas as pd
