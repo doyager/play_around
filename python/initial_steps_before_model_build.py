@@ -3,6 +3,19 @@
 print(df_flights.info())
 
 
+# null counts 
+                # print all nulls in the df
+                print(df_flights.isnull().values.sum())
+                #o/p : 248
+                
+                # print column - wise null counts 
+                print(df_flights.isnull().sum())
+                        # o/p:
+                        #carrier      0
+                        #tailnum    248
+                        #origin       0
+                        #dest         0
+
 # filter all non - numneric columns
 
 df_nonNUm = df_flights.select_dtypes(include=['object']).copy()
