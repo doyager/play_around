@@ -86,11 +86,13 @@ final case class Body(id: Int,
                       color: String)
  
 val ds = df.as[Body]
-The matching between the DataFrames columns and the fields of the case class is done by name and the types should match. In summary, this introduces a contract and narrows down possible sources of error. For example, one immediate benefit is that we can access fields via the dot operator and get additional IDE support:
+#The matching between the DataFrames columns and the fields of the case class is done by name and the types should match. 
+#In summary, this introduces a contract and narrows down possible sources of error. For example, one immediate benefit is 
+#that we can access fields via the dot operator and get additional IDE support:
 
 val colors = ds.map(_.color) // Compiles!
 ds.map(_.colour)             // Typo - WON'T compile!
-Further, we can use this feature and the newly added type-safe aggregation functions to write queries with compile time safety:
+#Further, we can use this feature and the newly added type-safe aggregation functions to write queries with compile time safety:
 
 import org.apache.spark.sql.expressions.scalalang.typed.{
   count => typedCount, 
@@ -104,7 +106,8 @@ ds.groupByKey(body => body.color)
   .withColumnRenamed("value", "group")
   .alias("Summary by color level")
   .show()
-If we wanted to compute the volume of all bodies, this would be quite straightforward in the DataFrame API. Two solutions come to mind:
+#If we wanted to compute the volume of all bodies, this would be quite straightforward in the DataFrame API.
+#Two solutions come to mind:
 
 // 1. Solution: Using a user-defined function and appending the results as column
 val volumeUDF = udf {
