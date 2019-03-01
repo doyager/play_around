@@ -62,7 +62,74 @@ have three new columns in our dataset:
 As you can see, we have three new columns with 1s and 0s, depending on the country that 
 the rows represent.
 """
+#########
+# one hot examples 
 
+# one hot coding
+
+tmp_df = input_1M[['gender']].tail(20)
+temp_df
+
+       gender
+999980      M
+999981      M
+999982      F
+999983      F
+999984      M
+# apply on complete data set 
+          tmp_df = pd.get_dummies(tmp_df, prefix=['gender'], drop_first=True)
+                  gender_M
+         999980         1
+         999981         1
+         999982         0
+         999983         0
+         999984         1
+         999985         1
+
+
+
+# apply on few columns from all columns [apply on one col of two columns]
+      tmp_df = input_1M[['gender','formulary_status']].tail(20)
+
+      tmp_df = pd.get_dummies(tmp_df, prefix=['gender'], columns=['gender'],drop_first=True)
+
+      >>> tmp_df
+             formulary_status  gender_M
+      999980            FRMLY         1
+      999981            FRMLY         1
+      999982            FRMLY         0
+      999983            FRMLY         0
+      999984            FRMLY         1
+      999985            FRMLY         1
+      999986            FRMLY         0
+
+ # apply on few columns from all columns [apply on 2 of 3 cols]
+         tmp_df = input_1M[['gender','formulary_status','generic_cd']].tail(20)
+
+         tmp_df = pd.get_dummies(tmp_df, prefix=['gender','formulary_status'], columns=['gender','formulary_status'],drop_first=True)
+
+         tmp_df
+
+                generic_cd  gender_M  formulary_status_NONF
+         999950          G         1                      0
+         999951          G         0                      0
+         999952          G         1                      0
+         999953          G         0                      0
+         999954          G         0                      0
+         999955          G         1                      0
+         999956          G         0                      0
+         999957          B         1                      1
+
+# apply on list of columns , when list is big 
+
+        len(df.columns) = 50
+        non_dummy_cols = ['A','B','C'] 
+        # Takes all 47 other columns
+        dummy_cols = list(set(df.columns) - set(non_dummy_cols))
+        df = pd.get_dummies(df, columns=dummy_cols)
+
+
+##################################################
 
 #Custom Binary Encoding
 """
