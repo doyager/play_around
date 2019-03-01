@@ -86,6 +86,13 @@ import numpy as np
 8  no_val       0
 9  no_val       0
 
+# print only seledted column top 5 recrods , select k cols and show top n
+df_repeat['id_new'].head(3) .   # . df_repeat['col1','colk'].head(n)
+
+   id_new
+0  no_val      
+1  no_val       
+2  no_val       
 
 ######
 ## shape - gives rows, cols
