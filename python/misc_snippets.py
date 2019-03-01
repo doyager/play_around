@@ -4,6 +4,8 @@
 #####################################
 
 
+
+
 # calculate age from str date , age udf 
         from datetime import datetime
         from datetime import date
@@ -30,6 +32,68 @@
         3       1969-04-13 00:00:00.0   49
         4       1992-03-13 00:00:00.0   26
         """
+
+
+# create and assign age group bins 
+
+
+
+                # create ages dataframe with dummuy values 
+                df_ages = pd.DataFrame({'age': np.random.randint(20, 100, 40)})
+                df_ages.head()
+                age
+                0	37
+                1	37
+                2	84
+                3	99
+                4	93
+
+                #create age bins 
+                age_ranges = ["{0} - {1}".format(age, age + 9) for age in range(20, 100, 10)]
+                age_ranges
+                ['20 - 29',
+                 '30 - 39',
+                 '40 - 49',
+                 '50 - 59',
+                 '60 - 69',
+                 '70 - 79',
+                 '80 - 89',
+                 '90 - 99']
+
+                #  count of items in the age_ranges lis
+                count_unique_age_ranges = len(age_ranges)
+                count_unique_age_ranges
+                8
+
+                df_ages['age_range'] = pd.cut(x=df_ages['age'], bins=count_unique_age_ranges, labels=age_ranges)
+
+                df_ages.head()
+                age	age_range
+                0	37	30 - 39
+                1	37	30 - 39
+                2	84	80 - 89
+                3	99	90 - 99
+                4	93	90 - 99
+
+                age_by_decade = ["{0}s".format(age) for age in range(20, 100, 10)]
+                age_by_decade
+                ['20s', '30s', '40s', '50s', '60s', '70s', '80s', '90s']
+                #Create a variable count_unique_age_decades that's the count of items in the age_by_decade list above.
+
+                count_unique_age_decades = len(age_by_decade)
+                count_unique_age_decades
+                8
+
+                df_ages['age_by_decade'] = pd.cut(x=df_ages['age'], bins=count_unique_age_decades, labels=age_by_decade)
+                Preview the first 5 rows of df_ages.
+
+                df_ages.head()
+                age	age_range	age_by_decade
+                0	37	30 - 39	30s
+                1	37	30 - 39	30s
+                2	84	80 - 89	80s
+                3	99	90 - 99	90s
+                4	93	90 - 99	90s
 
 
 #####################################
