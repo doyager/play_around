@@ -95,7 +95,36 @@
                 3	99	90 - 99	90s
                 4	93	90 - 99	90s
 
+# calculate tenure in years, tenure period , multiple columns udf 
+               
+        from datetime import datetime
+        from datetime import 
+        from dateutil.relativedelta import relativedelta
 
+                def member_tenure(row):
+                    #born = datetime.strptime(born, "YYYY-MM-DD HH:MM:SS.s").date()
+                    start_dt = datetime.strptime(row['mbr_enrlmnt_dt'], "%Y-%m-%d %H:%M:%S.%f").date()
+                    end_dt = datetime.strptime( row['mbr_term_dt'], "%Y-%m-%d %H:%M:%S.%f").date()
+                    today = date.today()
+                    from dateutil.relativedelta import relativedelta
+                    #difference_in_years = relativedelta(end_date, start_date).years
+                    if end_dt < today :
+                        return relativedelta(end_dt, start_dt).years #end_dt - start_dt
+                    else:
+                        return relativedelta(today, start_dt).years
+                        #today.year - start_dt.year - ((today.month, today.day) < (start_dt.month, start_dt.day))
+
+                input_1M['member_tenure'] = input_1M.apply(member_tenure , axis=1)
+
+                input_1M[['mbr_term_dt', 'mbr_enrlmnt_dt','member_tenure']].tail(4)
+
+                                  mbr_term_dt         mbr_enrlmnt_dt  member_tenure
+                999997  2088-12-31 00:00:00.0  2018-01-01 00:00:00.0              1
+                999998  2018-10-31 00:00:00.0  2017-11-01 00:00:00.0              0
+                999999  2080-12-31 00:00:00.0  2018-01-01 00:00:00.0              1
+                999996  2018-09-30 00:00:00.0  2017-10-01 00:00:00.0              0
+
+                                                
 #####################################
 # .            ERRORS
 #####################################
