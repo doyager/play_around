@@ -1,3 +1,8 @@
+#Index
+
+#window functions
+# common table expression
+
 
 # window functions
 
@@ -273,3 +278,14 @@ STAGE PLANS:
               Statistics: Num rows: 1 Data size: 0 Basic stats: PARTIAL Column stats: NONE
               ListSink
 	      
+	      
+	      
+# OFFSET 
+
+	# offset by 10 and select next 5 only
+
+		SELECT Id, ProductName, UnitPrice, Package
+		FROM Product
+		ORDER BY UnitPrice DESC
+		OFFSET 10 ROWS
+		FETCH NEXT 5 ROWS ONLY
