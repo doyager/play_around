@@ -11,6 +11,8 @@
   # to give all sub dir and files under a path
   du -kh
   
+  # disk space free home
+  df -khu /home/mac
   
 
 #vi 
