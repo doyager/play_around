@@ -1,3 +1,169 @@
+
+Hive :   It is an OLAP , and doest support OLTP 
+
+
+hive vs rdbms
+
+
+) AVRO:-
+
+It is row major format.
+Its primary design goal was schema evolution.
+In the avro format, we store schema separately from data. Generally avro schema file (.avsc) is maintained.
+
+
+2) ORC
+
+Column oriented storage format.
+Originally it is Hive's Row Columnar file. Now improved as Optimized RC (ORC)
+Schema is with the data, but as a part of footer.
+Data is stored as row groups and stripes.
+Each stripe maintains indexes and stats about data it stores.
+
+3) Parquet
+
+Similar to ORC. Based on google dremel
+Schema stored in footer
+Column oriented storage format
+Has integrated compression and indexes
+
+Space or compression wise I found them pretty close to each other
+
+Around 10 GB of CSV data compressed to 1.1 GB of ORC with ZLIB compression and same data to 1.2 GB of Parquet GZIP. Both file formats with SNAPPY compression, used around 1.6 GB of space.
+
+Conversion speed wise ORC was little better it took 9 min where as parquet took 10 plus min.
+
+
+Hive default delimiter
+
+ctrl a character:
+The default delimiter  '\u001'
+
+sort by vs order by vs distribute by vs cluster by :
+
+SORT BY : Hive uses to sort the rows before feeding the rows to a reducer
+		Hive uses the columns in SORT BY to sort the rows before feeding the rows to a reducer. 
+		The sort order will be dependent on the column types. If the column is of numeric type, 
+		then the sort order is also in numeric order. If the column is of string type, then the sort
+		order will be lexicographical order.  [lexicographical order.]
+
+		Numeric - number oder 
+		string - lexicographical order
+
+
+		Ordering : It orders data at each of ‘N’ reducers , but each reducer can have overlapping ranges of data.
+
+		Outcome : N or more sorted files with overlapping ranges.
+
+
+		Let’s understand with an example of below query:-
+
+		MySQL
+
+		hive> SELECT emp_id, emp_salary FROM employees SORT BY emp_salary DESC;
+		
+
+
+ORDER BY . :  ORDER BY guarantees total ordering of data, but for that it has to be passed on to a single reducer, 
+
+		This is similar to ORDER BY in SQL Language.
+
+		In Hive, ORDER BY guarantees total ordering of data, but for that it has to be passed on to a single reducer, 
+		which is normally performance intensive and therefore in strict mode, hive makes it compulsory to use LIMIT 
+		with ORDER BY so that reducer doesn’t get overburdened.
+
+		Ordering : Total Ordered data.
+
+		Outcome : Single output i.e. fully ordered.
+
+		For example :
+
+		MySQL
+
+		hive> SELECT emp_id, emp_salary FROM employees ORDER BY emp_salary DESC;
+		1
+		hive> SELECT emp_id, emp_salary FROM employees ORDER BY emp_salary DESC;
+
+DISTRIBUTE BY : N reducers gets non-overlapping ranges of column, but doesn’t sort 
+
+		It ensures each of N reducers gets non-overlapping ranges of column, but doesn’t sort the output of each reducer. 
+		You end up with N or more unsorted files with non-overlapping ranges.
+
+		Example ( taken directly from Hive wiki ):-
+
+		We are Distributing By x on the following 5 rows to 2 reducer:
+
+
+			x1
+			x2
+			x4
+			x3
+			x1
+
+			Reducer 1
+			x1
+			x2
+			x1
+			Reducer 2
+			x4
+			x3
+
+
+Cluster By : is a short-cut for both Distribute By and Sort By.
+
+		CLUSTER BY x ensures each of N reducers gets non-overlapping ranges, then sorts by those ranges at the reducers.
+
+		Ordering : Global ordering between multiple reducers.
+
+		Outcome : N or more sorted files with non-overlapping ranges.
+
+		For the same example as above , if we use Cluster By x, the two reducers will further sort rows on x:
+
+		Reducer 1 :
+		x1
+		x1
+		x2
+
+
+		Reducer 2 :
+		x3
+		x4
+		
+		
+
+# find max date employee rrecord:
+
+
+       1. simple 
+	m
+	select t1.* from test t1
+	join (
+	  select id, max(modifed) maxModified from test
+	  group by id
+	) s
+	on t1.id = s.id and t1.modifed = s.maxModified
+	
+	2. window - row function
+	
+			SELECT t.id
+		    ,t.name
+		    ,t.age
+		    ,t.modified
+		FROM (
+		    SELECT id
+			,name
+			,age
+			,modified
+			,ROW_NUMBER() OVER (
+			    PARTITION BY id ORDER BY unix_timestamp(modified,'yyyy-MM-dd hh:mm:ss') DESC
+			    ) AS ROW_NUMBER   
+		    FROM test
+		    ) t
+		WHERE t.ROW_NUMBER <= 1;
+
+
+
+
 #Index
 
 #window functions
