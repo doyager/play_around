@@ -128,6 +128,32 @@ temp_df
         dummy_cols = list(set(df.columns) - set(non_dummy_cols))
         df = pd.get_dummies(df, columns=dummy_cols)
 
+# MultiLabelBinarizer
+            import pandas as pd
+            from sklearn.preprocessing import MultiLabelBinarizer
+
+            df = pd.DataFrame(
+                {'groups':
+                    [['a','b','c'],
+                    ['c'],
+                    ['b','c','e'],
+                    ['a','c'],
+                    ['b','e']]
+                }, columns=['groups'])
+
+            s = df['groups']
+
+            mlb = MultiLabelBinarizer()
+
+            pd.DataFrame(mlb.fit_transform(s),columns=mlb.classes_, index=df.index)
+            #Result:
+
+                a   b   c   e
+            0   1   1   1   0
+            1   0   0   1   0
+            2   0   1   1   1
+            3   1   0   1   0
+            4   0   1   0   1
 
 ##################################################
 
