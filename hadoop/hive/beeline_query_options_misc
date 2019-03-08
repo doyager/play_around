@@ -1,0 +1,49 @@
+
+
+
+# to run from file
+
+beeline --hiveconf mapred.job.queue.name=queue_name --silent=true 
+-u 'jdbc:hive2://<hs2-host>:10000/default;principal=hive/<hs2-host>@<REALM>' 
+--outputformat=csv2 --silent=true -f /home/mac/hivequeries/select_top_10.hql
+--incremental=true > output.csv
+
+
+# to run outside the beeline 
+
+beeline --hiveconf mapred.job.queue.name=queue_name --silent=true 
+-u 'jdbc:hive2://<hs2-host>:10000/default;principal=hive/<hs2-host>@<REALM>' 
+--outputformat=csv2 --silent=true -e 'select * from table_name' 
+--incremental=true > output.csv
+
+
+# to set queue 
+set mapred.job.queue.name = queue_name;   # inside hql file 
+
+--hiveconf mapred.job.queue.name=queue_name    # in beeline command
+
+# to remove headers in output
+
+--showHeader=false
+
+# to specify output file format 
+--outputformat=csv2
+# Possible opitons : csv2, xmlattr, dsv, tsv, xmlelements, csv, vertical, tsv2, table
+
+
+# silent mode :
+
+--silent=[true/false]	
+Reduce the amount of informational messages displayed (true) or not (false). 
+It also stops displaying the log messages for the query from HiveServer2 (Hive 0.14 and later) 
+and the HiveQL commands (Hive 1.2.0 and later). Default is false.
+
+Usage: beeline --silent=true
+
+
+
+# incremental load 
+      # error 1 : org.apache.thrift.TException :Error in calling method FetchResults 
+      
+Use –incremental=true option along with beeline command before you specify you query with -e option. 
+This will display the results as they are fetched which results in lower latency and better memory usage.
