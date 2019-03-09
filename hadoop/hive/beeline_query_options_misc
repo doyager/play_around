@@ -1,6 +1,17 @@
 
 
+# to run query in background even if terminal is killed
 
+nohup beeline --silent=true --showHeader=true --outputformat=dsv -f query.hql </dev/null > /tmp/output.log 2> /tmp/error.log &
+
+
+# double quotes around column values with special characters in it
+
+ --disable.quoting.for.sv=false
+ 
+  --disable.quoting.for.sv=True  # will not put double quotes even if special chars in col value
+  
+  
 # to run from file
 
 beeline --hiveconf mapred.job.queue.name=queue_name --silent=true 
@@ -27,8 +38,14 @@ set mapred.job.queue.name = queue_name;   # inside hql file
 --showHeader=false
 
 # to specify output file format 
---outputformat=csv2
-# Possible opitons : csv2, xmlattr, dsv, tsv, xmlelements, csv, vertical, tsv2, table
+            --outputformat=csv2
+            # Possible opitons : csv2, xmlattr, dsv, tsv, xmlelements, csv, vertical, tsv2, table
+
+            These three formats differ only with the delimiter between cells, which is comma for csv2, tab for tsv2, and 
+            configurable for dsv.
+
+            For the dsv format, the delimiter can be set with the delimiterForDSV option. The default delimiter is '|'.
+
 
 
 # silent mode :
