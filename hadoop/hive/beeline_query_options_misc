@@ -1,4 +1,10 @@
 
+# best options
+beeline --hiveconf mapred.job.queue.name=queue_name --silent=true 
+-u 'jdbc:hive2://<hs2-host>:10000/default;principal=hive/<hs2-host>@<REALM>' 
+--outputformat=dsv --silent=true -f /home/mac/hivequeries/select_top_10.hql
+--incremental=true > output.dsv
+
 
 # to run query in background even if terminal is killed
 
