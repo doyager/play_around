@@ -170,8 +170,24 @@ train.isna().head()
 # Fill missing values with mean column values in the train set
 train.fillna(train.mean(), inplace=True)
 
+##############
+
+# create column based on condition
+
+            data = {'name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy'], 
+                    'age': [42, 52, 36, 24, 73], 
+                    'preTestScore': [4, 24, 31, 2, 3],
+                    'postTestScore': [25, 94, 57, 62, 70]}
+            df = pd.DataFrame(data, columns = ['name', 'age', 'preTestScore', 'postTestScore'])
+            # Create a new column called df.elderly where the value is yes
+            # if df.age is greater than 50 and no if not
+            df['elderly'] = np.where(df['age']>=50, 'yes', 'no')
 
 #########
+
+
+
+
 
 #drop columns
 
