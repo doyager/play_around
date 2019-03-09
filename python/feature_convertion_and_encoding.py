@@ -23,6 +23,14 @@ from sklearn.preprocessing import LabelEncoder
 labelencoder = LabelEncoder()
 x[:, 0] = labelencoder.fit_transform(x[:, 0])
 
+# on only particular column
+
+from sklearn.preprocessing import LabelEncoder
+
+lb_make = LabelEncoder()
+obj_df["make_code"] = lb_make.fit_transform(obj_df["make"]) . #this will only label encode make column 
+obj_df[["make", "make_code"]].head(11)
+
 """
 That’s all label encoding is about. But depending on the data, label encoding introduces a new problem. 
 For example, we have encoded a set of country names into numerical data. This is actually categorical data and 
