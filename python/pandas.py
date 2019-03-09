@@ -210,6 +210,14 @@ input.select_dtypes([np.number])
 #o/p: [1000 rows x 28 columns]
 #i.e. full data displayed on screen , all numeric cols data of size [1000 rows x 28 columns]
 
+
+##########
+# trim 
+
+    # trim based on column dtype
+    
+    data_frame_trimmed = data_frame.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
+    
 #########
 #correlation annalysis
 
