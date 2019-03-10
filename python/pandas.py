@@ -183,6 +183,59 @@ train.fillna(train.mean(), inplace=True)
             # if df.age is greater than 50 and no if not
             df['elderly'] = np.where(df['age']>=50, 'yes', 'no')
 
+            
+
+            
+            
+ # create OTHERS column based on frequency , bundle all low freq columns to OTHERS category 
+
+
+                    valCount = df['Jobrol'].value_counts()
+
+                    valCount
+
+                    Sales Executive          7
+                    Research Scientist       7
+                    Laboratory Technician    5
+                    Manager                  1
+                    Human Resources          1
+
+                    
+                    # method 1
+                    need = df['Jobrol'].value_counts().index[:3]
+                    df['Jobrol'] = np.where(df['Jobrol'].isin(need), df['Jobrol'], 'OTHER')
+
+                    valCount = df['Jobrol'].value_counts()
+                    print (valCount)
+                    Research Scientist       7
+                    Sales Executive          7
+                    Laboratory Technician    5
+                    OTHER                    2
+                    Name: Jobrol, dtype: int64
+                    
+                    # method 2:
+                    
+                    #Another solution:
+
+                    N = 3
+                    s = df['Jobrol'].value_counts()
+                    valCount = s.iloc[:N].append(pd.Series(s.iloc[N:].sum(), index=['OTHER']))
+                    print (valCount)
+                    Research Scientist       7
+                    Sales Executive          7
+                    Laboratory Technician    5
+                    OTHER                    2
+                    dtype: int64
+    
+                    #method 3:
+                    df['Jobrol'] = df['Jobrol'].astype('category')
+
+                    others = df['Jobrol'].value_counts().index[3:]
+                    label = 'Other'
+
+                    df['Jobrol'] = df['Jobrol'].cat.add_categories([label])
+                    df['Jobrol'] = df['Jobrol'].replace(others, label)
+    
 #########
 
 
