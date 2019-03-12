@@ -163,7 +163,66 @@ df_nonNUm = df_flights.select_dtypes(include=['object']).copy()
                                        print(cat_df_flights['carrier'].value_counts().count())
                                        
                                         
+
                                         
+# add new fields 
+                                        
+                                        
+                    # add new filed called "OTHERS" for less frequent values 
+                                        
+                                        
+                                         # method 0 : tested !! - working 
+                                """
+                                #Intial :
+                                >>> input_1M_tmp2['member_relationship_cd'].value_counts()
+                                18    849381
+                                01    122356
+                                19     27272
+                                02       698
+                                22       159
+                                29        93
+                                17        21
+                                53         9
+                                G8         8
+
+
+                                #Add "other" as new  category :
+
+
+                                >>> input_1M_tmp2_tmp['member_relationship_cd'].value_counts()
+                                18       849381
+                                01       122356
+                                19        27272
+                                02          698
+                                22          159
+                                29           93
+                                17           21
+                                53            9
+                                G8            8
+                                OTHER         0
+
+                                #value counts after the converge action , Converge to other category
+                                >>> input_1M_tmp2_tmp['member_relationship_cd'].value_counts()
+                                18       849381
+                                01       122356
+                                19        27272
+                                OTHER       988
+                                G8            0
+                                53            0
+                                29            0
+                                22            0
+                                17            0
+                                02            0
+                                """
+
+                        #member_relationship_cd
+                        input_1M_tmp2_tmp['member_relationship_cd'] = input_1M_tmp2_tmp['member_relationship_cd'].astype('category')
+                        relationship_other_label = 'OTHER'
+                        #capture all  categories other than top 3
+                        relationship_others = input_1M_tmp2_tmp['member_relationship_cd'].value_counts().index[3:]
+                        input_1M_tmp2_tmp['member_relationship_cd'] = input_1M_tmp2_tmp['member_relationship_cd'].cat.add_categories([relationship_other_label])
+                        input_1M_tmp2_tmp['member_relationship_cd'] = input_1M_tmp2_tmp['member_relationship_cd'].replace(relationship_others, relationship_other_label)
+
 # Drop fields
 
 # Drop any rows which have any nans
