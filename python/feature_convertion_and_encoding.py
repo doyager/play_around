@@ -94,6 +94,29 @@ temp_df
          999984         1
          999985         1
 
+###############################################################
+# apply 
+#1) one - hot 
+#2) drop categorie not required
+#3) rename one-hot col names to better names for understanding
+
+                  #1
+                  input_1M_tmp2 = pd.get_dummies(input_1M_tmp2, prefix=['member_relationship_cd'], columns=['member_relationship_cd'],drop_first=False)
+
+                  #02
+                  one_hot_coding_unwanted_category_columns_2 = [ 'member_relationship_cd_02','member_relationship_cd_22','member_relationship_cd_29','member_relationship_cd_17','member_relationship_cd_53','member_relationship_cd_G8']
+
+                  input_1M_tmp2 = input_1M_tmp2.drop(one_hot_coding_unwanted_category_columns_2, axis=1)
+
+                  #03
+                  col_rename_dic_2={'member_relationship_cd_01':'member_relationship_cd_01_spouse',
+                  'member_relationship_cd_18':'member_relationship_cd_18_self',
+                  'member_relationship_cd_19':'member_relationship_cd_19_child',
+                  'member_relationship_cd_OTHER':'member_relationship_cd_OTHER'}
+
+                  input_1M_tmp2=input_1M_tmp2.rename(columns =col_rename_dic_2)
+        
+###############################################################
 
 
 # apply on few columns from all columns [apply on one col of two columns]
