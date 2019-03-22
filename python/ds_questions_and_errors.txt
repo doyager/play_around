@@ -1,0 +1,50 @@
+
+
+
+###################
+# . Questions
+###################
+
+
+
+
+1. K means fit vs fit_predict
+
+In order to use 'predict' you must used the 'fit' method first. So using 'fit()' and then 'predict()' is
+definitely the same as using 'fit_predict()'. However, one could benefit from using only 'fit()' 
+in such cases where you need to know the initialization parameters of your models rather 
+than if you use 'fit_predict()', where you will just obtained the labeling results
+of running your model on the data.
+
+
+
+
+
+###################################
+# Errors
+##################################
+
+
+
+1.    memory error with  silhouette_score
+  
+  
+           silhouette_avg = silhouette_score(X_np, cluster_labels)
+python3(48549,0x7fff8fe69380) malloc: *** mach_vm_map(size=379372547317760) failed (error code=3)
+*** error: can't allocate region
+*** set a breakpoint in malloc_error_break to debug
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/metrics/cluster/unsupervised.py", line 101, in silhouette_score
+    return np.mean(silhouette_samples(X, labels, metric=metric, **kwds))
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/metrics/cluster/unsupervised.py", line 169, in silhouette_samples
+    distances = pairwise_distances(X, metric=metric, **kwds)
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/metrics/pairwise.py", line 1247, in pairwise_distances
+    return _parallel_pairwise(X, Y, func, n_jobs, **kwds)
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/metrics/pairwise.py", line 1090, in _parallel_pairwise
+    return func(X, Y, **kwds)
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/metrics/pairwise.py", line 246, in euclidean_distances
+    distances = safe_sparse_dot(X, Y.T, dense_output=True)
+  File "/Users/mac/workspace/softwares/installed/anaconda3/anaconda3/lib/python3.6/site-packages/sklearn/utils/extmath.py", line 140, in safe_sparse_dot
+    return np.dot(a, b)
+MemoryError
