@@ -677,6 +677,26 @@ df
 7  4  9  10
 8  4  9  10
 
+#join on index and column
+
+# input_7M_tmp2 - df with index
+# results - df with column
+
+
+import pickle
+
+file = "kmeans_run1_20_clusters.pkl"
+best_kmeans = pickle.load(file)
+cluster_labels = best_kmeans.labels_
+results = pd.DataFrame([input_7M_tmp2.index,cluster_labels]).T
+results.columns = ['main_index', 'cluster_index']  #renaming column name
+
+# this will give input df with labeled cluster values
+input_labled = pd.merge(input_7M_tmp2, results, left_index=True, right_on='main_index')
+
+
+######################
+# 
 
 #################    
 # apply lambda functions
