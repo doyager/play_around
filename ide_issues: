@@ -1,0 +1,16 @@
+
+
+
+Scala IDE :
+
+
+      Error 1:
+
+      ENTRY org.eclipse.e4.ui.workbench.swt 4 2 2017-07-10 14:34:58.379
+      !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.e4.ui.workbench.swt".
+      !STACK 0
+      java.lang.AssertionError: assertion failed
+
+      Fix:
+
+      Deleting file workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi seems to work well without side effects.
