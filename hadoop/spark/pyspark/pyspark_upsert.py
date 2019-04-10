@@ -35,7 +35,7 @@ pyspark - shell
 
 
 
- pyspark --queue pbm_yarn --master yarn --packages com.databricks:spark-csv_2.10:1.3.0
+ pyspark --queue yarn_dev --master yarn --packages com.databricks:spark-csv_2.10:1.3.0
 
 
 df = sqlContext.sql("select * from  "+input_db+"."+input_table)
