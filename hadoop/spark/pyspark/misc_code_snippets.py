@@ -1,4 +1,19 @@
 
+#create df
+
+
+
+#method 1:
+
+
+      from pyspark.sql import Row
+      l = [('Ankit',25),('Jalfaizy',22),('saurabh',20),('Bala',26)]
+      rdd = sc.parallelize(l)
+      people = rdd.map(lambda x: Row(name=x[0], age=int(x[1])))
+      schemaPeople = sqlContext.createDataFrame(people)
+
+
+
 
 
 # udf with multile input columns
