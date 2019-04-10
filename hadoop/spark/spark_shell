@@ -85,6 +85,12 @@ pyspark --queue root.dev_team --master yarn
 
 
 
+
+            df_final.registerTempTable("final_tbl")
+            
+            # rank data based on cnt value in a group (ndc)
+            df_final_new = sqlContext.sql( "select * , rank() over (partition by ndc  order by cnt desc)as rank_new from final_tbl")
+
 ##########################
 # . scala based
 ###########################
