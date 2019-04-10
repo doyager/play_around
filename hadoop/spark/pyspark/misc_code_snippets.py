@@ -66,3 +66,9 @@ df2.show()
 # |  eric|Developer|144000|128333.33333333333|
 # | henry|Developer|110000|128333.33333333333| 
 # +------+---------+------+------------------+
+
+
+#cast str to decimal
+
+dframe.withColumn("c_number", dframe.col("c_a").cast("decimal(38,0)"))
+
