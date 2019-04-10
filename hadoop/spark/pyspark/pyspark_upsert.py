@@ -80,3 +80,14 @@ df_final.registerTempTable("final_tbl")
 #ranking on cnt
 df_final_new = sqlContext.sql( "select * , rank() over (partition by ndc  order by cnt desc)as rank from final_tbl")
 df_final_new.show()
+
++-----------+--------------+-----+---------+----+                               
+|        ndc|metric_dec_qty|  cnt|total_cnt|rank|
++-----------+--------------+-----+---------+----+
+|4778|          0.14| 3576|     6002|   1|
+|4778|         0.143| 2426|     6002|   2|
+|  0037|         0.286| 9132|     9996|   1|
+|4777|         0.143| 6706|     8598|   1|
+|  0038|         0.286|11382|    12191|   1|
+|  0039|         0.286| 4122|     4542|   1|
++-----------+--------------+-----+---------+----+
