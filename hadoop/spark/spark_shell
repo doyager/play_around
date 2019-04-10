@@ -7,13 +7,24 @@
 # start shell
 pyspark --queue root.dev_team --master yarn
 
+# start shell in local
+/bin/pyspark --master local[4] --packages com.databricks:spark-csv_2.10:1.3.0
 
 
+# create df in local mode , hence we say file:// in path 
+
+    /bin/pyspark --master local[4] --packages com.databricks:spark-csv_2.10:1.3.0
+    rank_new = sqlContext.load(source="com.databricks.spark.csv", path = 'file:///home/mac/test_data/rank_store_new.csv', header = True,inferSchema = True)
+    rank_new.show()
 
 
+    #sample data
 
-
-
+    ndc,metric_dec_qty,cnt,rank,total_cnt
+    4778,0.143,2226,1,2802
+    0037,0.286,4566,1,4998
+    4778,0.143,3353,1,4299
+    0037,0.286,4122,1,4542
 
 ##########################
 # . scala based
