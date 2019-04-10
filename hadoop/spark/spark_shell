@@ -41,6 +41,33 @@ pyspark --queue root.dev_team --master yarn
     0037,0.286,4122,1,4542
 
 
+        # upsert logic 
+
+        updated_records = " select * from historic_data a left  join ( select ndc as ndc_new, metric_dec_qty as metric_dec_qty_new,cnt as cnt_new,rank as rank_new,total_cnt as total_cnt_new from new_data) b on (a.ndc = b.ndc_new and a.metric_dec_qty = b.metric_dec_qty_new)"
+        df_updated = sqlContext.sql(updated_records)
+        df_updated.show()
+
+
+        df_unchanged = df_updated.where(col("ndc_new").isNull()).select("ndc", "metric_dec_qty", "cnt", "rank", "total_cnt")
+        df_unchanged.show()
+
+        # filtering unchanged and adding up cnts to update the fields
+        df_updated_new = df_updated.where(col("ndc_new").isNotNull()).selectExpr('ndc','metric_dec_qty + metric_dec_qty_new as metric_dec_qty','cnt + cnt_new as cnt_en','rank','total_cnt + total_cnt_new as total_cnt')
+
+        new_records = " select * from historic_data a right  join ( select ndc as ndc_new, metric_dec_qty as metric_dec_qty_new,cnt as cnt_new,rank as rank_new,total_cnt as total_cnt_new from new_data) b on (a.ndc = b.ndc_new and a.metric_dec_qty = b.metric_dec_qty_new)"
+        df_new = sqlContext.sql(new_records)
+        df_new = df_new.where(col("ndc").isNull()).selectExpr("ndc_new as ndc", "metric_dec_qty_new as metric_dec_qty", "cnt_new as cnt", "rank_new as rank", "total_cnt_new as total_cnt")
+        df_new.show()
+
+
+
+        df_updated_new.show()
+        df_unchanged.show()
+        df_new.show()
+
+
+        df_final = df_updated_new.union(df_unchanged).union(df_new)
+
 
 
 
