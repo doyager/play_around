@@ -1,0 +1,25 @@
+
+##########################
+# . pyspark - python
+###########################
+
+
+# start shell
+pyspark --queue root.dev_team --master yarn
+
+
+
+
+
+
+
+
+
+##########################
+# . scala based
+###########################
+
+
+
+#start shell
+spark-shell --queue root.dev_team --master yarn
