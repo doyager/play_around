@@ -79,7 +79,7 @@ done
 
 log_file="./logs/run_op.txt"
 
-echo "Parameter,"$hostname1","$hostname2",Result" > $log_file
+echo "FileName,Parameter,"$hostname1","$hostname2",IsDiff" >> $log_file
 
 #comparing two file values and writing to log file
 for key in "${!keyval_file1[@]}"
@@ -93,7 +93,7 @@ do
 	else
 	result="False"
 	fi 
-echo $key","$val1","$val2","$result >> $log_file
+echo $file1_name","$key","$val1","$val2","$result >> $log_file
 done
 
 
