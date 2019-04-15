@@ -1,5 +1,22 @@
 
 
+#reading file content
+file1_content=$(cat $file1)
+
+# read file content and drop empty lines and drop lines starting with #
+file1_content=$(grep . $file1 | grep "^[^#]")
+
+
+
+#grep cmds
+
+      # will drop/filter empty line
+      grep . input.txt  
+
+      # will drop/filter lines starting with #
+      grep "^[^#]" input.txt
+
+
 
 
 
