@@ -17,7 +17,11 @@ file1_content=$(grep . $file1 | grep "^[^#]")
       grep "^[^#]" input.txt
 
 
+#tr cmd
 
+      #delete spaces / white spaces
+      
+      cat input.txt | tr -d " "
 
 
 # disk space 
