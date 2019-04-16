@@ -1,0 +1,23 @@
+
+#clone
+git clone  https://username@bitbucket.company.com/scm/master-project/child-project.git
+
+#push
+git push
+
+#fetch
+git fetch
+
+
+#list branch
+git branch -a 
+
+
+#create branch locally
+git branch <branch-name>
+eg: git branch test-story
+
+
+#delete branch locally
+git branch -d <branhc-name>
+eg: git branch -d test-story
