@@ -1,0 +1,18 @@
+
+
+# load and divide and roound up to 3 decimals
+spark.sql("select * , bround((metric_qty / days), 3) as metric_dec_qty_enriched from db1.table2")
+
+
+
+# left join 
+
+updated_records " select * from historic_data a left  join ( select ndc as ndc_new,  metric_dec_qty_enriched as metric_dec_qty_new,cnt as cnt_new,rank as rank_new,total_cnt as total_cnt_new from new_data) b on (a.ndc = b.ndc_new and a.metric_dec_qty = b.metric_dec_qty_new)"
+ spark.sql(updated_records)
+ 
+#right join 
+ new_records = "select * from historic_data a right  join ( select ndc as ndc_new, metric_dec_qty_enriched as metric_dec_qty_new,cnt as cnt_new,rank as rank_new,total_cnt as total_cnt_new from new_data) b on (a.ndc = b.ndc_new and a.metric_dec_qty = b.metric_dec_qty_new)"
+ spark.sql(new_records)
+    
+#rank over partition
+spark.sql("select * , rank() over (partition by col1  order by cnt desc)as rank from final_union_tbl")
