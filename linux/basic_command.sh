@@ -7,6 +7,11 @@ file1_content=$(cat $file1)
 file1_content=$(grep . $file1 | grep "^[^#]")
 
 
+#search file
+find <path> name=<file-name>
+
+find . name=<file.txt>
+
 
 #grep cmds
 
