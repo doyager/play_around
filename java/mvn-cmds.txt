@@ -1,0 +1,6 @@
+
+# to build the project while skipping the tests
+mvn clean install -Dmaven.test.skip=true
+
+#to make project ready to eclipse import , it builds all req eclipse files
+mvn eclipse:eclipse
