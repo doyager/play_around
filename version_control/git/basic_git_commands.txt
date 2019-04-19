@@ -13,6 +13,15 @@ git fetch
 git branch -a 
 
 
+#create branch locally and push to remote server
+
+git checkout -b <new_feature_branch_name> #creates new branch
+git push -u origin new_feature_branch_name #to push to server
+
+eg:  git checkout -b agent-enhancments-301
+     git push -u origin agent-enhancments-301
+
+
 #create branch locally
 git branch <branch-name>
 eg: git branch test-story
