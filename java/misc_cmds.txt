@@ -1,0 +1,11 @@
+
+
+
+
+
+
+
+# view logs using pid for a backend java process
+ps -aux | grep java-agent-jar-name
+
+tail -f /proc/<pid>/fd/1
