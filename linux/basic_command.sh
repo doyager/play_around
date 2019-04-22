@@ -29,6 +29,11 @@ find . name=<file.txt>
       cat input.txt | tr -d " "
 
 
+# view logs using process id 
+
+ps -aux | grep java-agent
+tail -f /proc/<pid>/fd/1
+
 # disk space 
 
   #at parent dir level , -s sums up
