@@ -1,0 +1,48 @@
+
+
+
+ # sql plus through script and output into csv file 
+ 
+
+           # query file :  query.sql
+
+           set echo off
+           set headsep off
+           set pagesize 0
+           set trimspool off
+           set feedback off
+           
+           select emp_name||','||emp_dep from employee
+
+
+           # shell wrapper , sql_runner.sh
+
+           sqlplus  -s system/smart_2015 <<EOF >./output.csv
+
+           @./query.sql
+
+           EOF
+
+
+           #run command
+           ./sql_runner.sh
+           
+           
+   # sql plus , query execution output into a variable 
+   
+         # query file :  query.sql
+
+           set echo off
+           set headsep off
+           set pagesize 0
+           set trimspool off
+           set feedback off
+
+           select emp_name||','||emp_dep from employee
+
+        #shell script
+        result=$(sqlplus -s system/smar_2016 <<EOF
+                  @./query.sql
+                  EOF)
+                  echo "#############result##############"
+                  echo "$result"
