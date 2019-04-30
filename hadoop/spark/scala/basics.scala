@@ -1,3 +1,7 @@
+#shell start command :
+
+spark2-shell --queue dv_que1 --executor-cores 4 --num-executors 10 --executor-memory 10G --driver-memory 5G --conf spark.dynamicAllocation.enabled=true --conf spark.dynamicAllocation.maxExecutors=10
+
 #create data frame :
 
 
@@ -48,6 +52,16 @@
           ("word", StringType, true)
         )
       )
+
+
+#method 4:
+
+
+
+                val values = List(List("1", "One","A") ,List("2", "Two","B") ,List("3", "Three","C"),List("4","Four","D")).map(x =>(x(0), x(1),x(2)))
+                val newNames = Seq("x1", "x2", "x3")
+                import spark.implicits._
+                val df = values.toDF(newNames: _*)
 
 
 
