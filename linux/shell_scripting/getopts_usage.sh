@@ -25,14 +25,15 @@ while getopts ":r:d:p:" opt; do
 
     ?) echo "Invalid option -$OPTARG"
         usage
-        echo -e " Test Job Usage: \n Full Run : \n bash ./main.sh -r <run-type> \n E.g. bash ./main.sh -r fullRun \n\n Specific Run bash ./main.sh -r <run-type> -i<analytic-ids> \n E.g. bash ./main.sh -r specificRun -i 81,82"
+        exit 1 #as we wish to exit in case of wrong options
     ;;
   esac
 done
 
 if [ $OPTIND -eq 1 ]; then
-        echo "No options were passed!!!"
+        echo -e "No options were passed!!!"
         usage
+        exit 1 #exit in case of no options passed
 fi
 
 echo "runtype : $RUNTYPE"
