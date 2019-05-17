@@ -1,15 +1,15 @@
 
 
 
-
-spark-shell-open-command:
+################################
+#spark-shell-open-command:
 
   spark2-shell --master yarn --deploy-mode client --driver-cores 4 --driver-memory 4G --jars spark-cobol-0.4.2.jar,scodec-core_2.11-1.10.3.jar,scodec-bits_2.11-1.1.4.jar,cobol-parser-0.4.2.jar
 
 
-spark-code:
-#place scheam file in hdfs
-#place dat [ Data file ] in hdfs
+#spark-code:
+        #place scheam file in hdfs
+        #place dat [ Data file ] in hdfs
 
   val df = spark.read.format("cobol").option("copybook", "test3_copybook.cob").load("TRAN2.AUG31.DATA.dat")
   df.show(false)
@@ -17,12 +17,12 @@ spark-code:
 
 Output:
 
-  +-------------------------------------------------------+
-  |TRANSDATA                                              |
-  +-------------------------------------------------------+
-  |[GBP, S9276511, Delta Pivovar, 0021213441, 0, 988.91]  |
-  |[CAD, S9276511, Robotrd Inc., 0039801988, 1, 713.22]   |
-  |[CAD, S9276511, ECSRONO, 0039567812, 0, 59.80]         |
+  +-------------------------------------------------------+                                   
+  |TRANSDATA                                              |                               
+  +-------------------------------------------------------+                                             
+  |[GBP, S9276511, Delta Pivovar, 0021213441, 0, 988.91]  |                                          
+  |[CAD, S9276511, Robotrd Inc., 0039801988, 1, 713.22]   |                                                      
+  |[CAD, S9276511, ECSRONO, 0039567812, 0, 59.80]         |                                                        
   |[USD, S9276511, Xingzhoug, 8822278911, 0, 428.65]      |
   |[CHF, S9276511, Joan Q & Z, 0039887123, 1, 292.00]     |
   |[ZAR, S9276511, Joan Q & Z, 0039887123, 0, 873.44]     |
