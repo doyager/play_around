@@ -3,6 +3,7 @@
 
 ################################
 #spark-shell-open-command:
+#################################
 
   spark2-shell --master yarn --deploy-mode client --driver-cores 4 --driver-memory 4G --jars spark-cobol-0.4.2.jar,scodec-core_2.11-1.10.3.jar,scodec-bits_2.11-1.1.4.jar,cobol-parser-0.4.2.jar
 
