@@ -8,9 +8,8 @@
   spark2-shell --master yarn --deploy-mode client --driver-cores 4 --driver-memory 4G --jars spark-cobol-0.4.2.jar,scodec-core_2.11-1.10.3.jar,scodec-bits_2.11-1.1.4.jar,cobol-parser-0.4.2.jar
 
 
-#spark-code:
-        #place scheam file in hdfs
-        #place dat [ Data file ] in hdfs
+##################spark-code:#############################
+##### 1. place scheam file in hdfs ####### 2. place dat [ Data file ] in hdfs
 
   val df = spark.read.format("cobol").option("copybook", "test3_copybook.cob").load("TRAN2.AUG31.DATA.dat")
   df.show(false)
