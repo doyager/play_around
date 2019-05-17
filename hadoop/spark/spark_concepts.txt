@@ -1,4 +1,21 @@
 
+# client mode vs cluster mode:
+
+                A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines (e.g. Master node in a standalone EC2 cluster). In this setup, client mode is appropriate. In client mode, the driver is launched directly within the spark-submit process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
+
+                Alternatively, if your application is submitted from a machine far from the worker machines (e.g. locally on your laptop), it is common to usecluster mode to minimize network latency between the drivers and the executors. Note that cluster mode is currently not supported for Mesos clusters. Currently only YARN supports cluster mode for Python applications." -- Submitting Applications
+
+                What I understand from this is that both strategies use the cluster to distribute tasks; the difference is where the "driver program" runs: locally with spark-submit, or, also in the cluster.
+
+                When you should use either of them is detailed in the quote above, but I also did another thing: for big jars, I used rsync to copy them to the cluster (or even to master node) with 100 times the network speed, and then submitted from the cluster. This can be better than "cluster mode" for big jars. Note that client mode does not probably transfer the jar to the master. At that point the difference between the 2 is minimal.
+
+                -> Probably client mode is better when the driver program is idle most of the time, to make full use of cores on the local machine and perhaps avoid transferring the jar to the master (even on loopback interface a big jar takes quite a bit of seconds). And with client mode you can transfer (rsync) the jar on any cluster node.
+
+                -> On the other hand, if the driver is very intensive, in cpu or I/O, cluster mode may be more appropriate, to better balance the cluster (in client mode, the local machine would run both the driver and as many workers as possible, making it over loaded and making it that local tasks will be slower, making it such that the whole job may end up waiting for a couple of tasks from the local machine).
+
+                Conclusion :
+                To sum up, if I am in the same local network with the cluster, I would use the client mode and submit it from my laptop. If the cluster is far away, I would either submit locally with cluster mode, or rsync the jar to the remote cluster and submit it there, in client or cluster mode, depending on how heavy the driver program is on resources.*
+                AFAIK With the driver program running in the cluster, it is less vulnerable to remote disconnects crashing the driver and the entire spark job.This is especially useful for long running jobs such as stream processing type workloads.
 
 # Dynamic allocation
 
