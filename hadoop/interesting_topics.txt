@@ -14,3 +14,49 @@ among multiple organizations who collectively fund the cluster based on computin
 an organization can access any excess capacity no being used by others. This provides elasticity for the organizations 
 in a cost-effective manner.
 
+
+
+# Hadoop is OLAP or OLTP?
+ Hadoop is OLAP!!!
+ 
+            - Since we use Hadoop to process the analysis of big data & this is done by batch wise on historical data which is loaded in the HDFS( Hadoop distributed file system). Hadoop doesn't provide any random access to the data stored in it's file. So we can't use Hadoop as an OLTP database which is characterized by INSERT -UPDATE- DELETE. hadoop provides access to historical data to carry out an analysis.
+
+            Hence, we can conclude that hadoop is purely an OLAP (online analytical processing).
+
+            The OLAP system does not contain present data but it contains historical or old data. OLAP data is being analyzed in order to generate reports.
+
+
+
+             OLAP & OLTP are the techniques of data Warehousing.
+
+            OLTP which is Online transaction processing and
+
+            OLAP which is Online Analytical Processing .
+
+            The difference between both is that OLAP is the reporting engine while OLTP is purely a business process engine.
+
+            To give you a clear idea about both, I would like to give you an example which explains OLAP & OLTP in Layman terms.
+
+            When you go to any big retail store like big Bazaar, Hypercity and after shopping is done you go to payment counter. When the receipt is printed for your name. We think only one transaction happens there that is give and take.
+
+            well , that wasn't the only task happened there. If we had to list down the tasks they would be
+
+            Invoice or receipt is generated.
+            Storage of this data in the database.
+            Items which you purchased were inserted in the database against invoice number.
+            If payement is done by credit card , loyalty points are automatically credited on the card number .
+            Stock of those items you purchased automatically reduced from inventory.
+            If stock became below desided level , probably auto ordered to the vendor or from the warehouse (most big retail stores has this auto ordering system)
+            Order number is generated & tagged against the order number.
+            And so many advance task you can add to this list which were triggered at the back end. These tasks are called transactions and the system that is used for processing is called OLTP (online transaction processing)
+
+            Now let's assume there would be 10 transactions for each customer & roughly they get 500 customers daily so total would be 500*10 = 5000 transactions daily for one store. Assuming there are 10 stores , 5000* 10 = 50000 will be the number. At national level this number will go to huge amount. And this is for one day. If we multiply by 30 that would give monthly transactions in millions.
+
+            That's a good number to carry out an analysis & the system which is used to process the analysis is called OLAP (online analytical processing). OLAP is used to analyze the data stored in the data warehouse. This analysis can be useful for sales ,revenue and other operations of the store.
+
+            Since we use Hadoop to process the analysis of big data & this is done by batch wise on historical data which is loaded in the HDFS( Hadoop distributed file system). Hadoop doesn't provide any random access to the data stored in it's file. So we can't use Hadoop as an OLTP database which is characterized by INSERT -UPDATE- DELETE. hadoop provides access to historical data to carry out an analysis.
+
+            Hence, we can conclude that hadoop is purely an OLAP (online analytical processing).
+
+
+
