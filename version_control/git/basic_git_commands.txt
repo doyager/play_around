@@ -12,6 +12,24 @@ git fetch
 #list branch
 git branch -a 
 
+# undo changes:
+
+
+     #Discard all local changes, but save them for possible re-use later
+     
+     git stash
+
+
+     # undo changes to a file on local file system: [ Changes will be permanently removed]
+     
+          git checkout -- <file-name>
+          
+          
+
+     #Discard all local changes to all files permanently
+
+          git reset --hard
+
 
 #create branch locally and push to remote server
 
