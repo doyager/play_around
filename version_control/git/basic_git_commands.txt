@@ -12,6 +12,16 @@ git fetch
 #list branch
 git branch -a 
 
+#switch branch
+git checkout <branch-name>
+use git branch , to verify star beside your current branch
+
+#push from detached head 
+git push origin HEAD:name-of-your-branch
+or
+git branch new-branch-name
+git push -u origin new-branch-name
+
 # undo changes:
 
 
