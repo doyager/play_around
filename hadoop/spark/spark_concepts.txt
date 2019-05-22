@@ -1,4 +1,15 @@
 
+#Window functions
+org.apache.spark.sql.expressions.Window
+
+ // PARTITION BY country ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+   Window.partitionBy("country").orderBy("date")
+     .rowsBetween(Window.unboundedPreceding, Window.currentRow)
+
+   // PARTITION BY country ORDER BY date ROWS BETWEEN 3 PRECEDING AND 3 FOLLOWING
+   Window.partitionBy("country").orderBy("date").rowsBetween(-3, 3)
+   
+   
 # client mode vs cluster mode:
 
                 A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines (e.g. Master node in a standalone EC2 cluster). In this setup, client mode is appropriate. In client mode, the driver is launched directly within the spark-submit process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
