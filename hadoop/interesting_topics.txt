@@ -14,6 +14,33 @@ among multiple organizations who collectively fund the cluster based on computin
 an organization can access any excess capacity no being used by others. This provides elasticity for the organizations 
 in a cost-effective manner.
 
+#vcores:
+
+            -
+               A VCPU is a core. Your CPU, if Hyperthreaded, doubles your amount of physical cores. 
+
+               Example: You a Quad Core Xeon Processor Socket. It has 4 cores, but it is presented as 8 cores because of hyperthreading.
+               
+               lscpu
+ 
+Thread(s) per core:    2
+
+
+            -
+                  VCores are virtual machine cores in the Hadoop cluster which is required to process your task (or simply an ability of CPU to compute the job in the cluster). There are some set of configurations which require these virtual cores to be set for all default applications as follows:
+
+                  mapreduce.map.cpu.vcores - The number of virtual cores required for each map task.
+
+                  mapreduce.reduce.cpu.vcores - The number of virtual cores required for each reduce task.
+
+            -
+                     “Core” in context of multithreading is a CPU concept - how processes can be run on system in tandem. This can be physical threads of execution added physical power by multiple cores on board and could be coupled with Hyperthreading (Intel)/CoolThreads(Solaris) - with virtual light weight threads on top of physical cores which share hardware resources giving performance boost by better management of logical cores.
+
+                     Abstraction is moved further into application space using Java Multithreading capabilities into Hadoop/YARN in form of vCores for improving resource utilization -
+
+                     Hadoop it can be used to configure threads at Mapper/Reduce job level in mapred-site.xml, where as
+                     YARN it is more to manage maximum/minimum threads being used by containers generally by rule executor-cores*num-executors +1 in yarn-site.xml
+
 
 
 # Hadoop is OLAP or OLTP?
