@@ -1,4 +1,44 @@
 
+#vi 
+
+    # to view list of all setting
+    
+      # : set all
+      
+   # to view list of all setting we have ,
+      # : set
+
+    # set line number 
+    
+      # press : and say "set number" and enter 
+      #:set number   
+      
+      # to remove line numbers
+      # :set nonumber
+
+    # go line number
+    
+      #press Esc , then press line number and then Shift-g 
+      
+    # go to last column of the line
+    
+       # shift + 4 or press $
+       
+    # go to nth character on a line
+      # go to that particular line and press char number "example 256 character" and | and press enter
+      # 256| and press enter
+      
+   # go to first line
+   
+        # press gg
+        
+   # go to last line
+   
+        # Shift + G
+        # Cntrl + End
+        # 
+
+
 
 #reading file content
 file1_content=$(cat $file1)
@@ -46,45 +86,11 @@ tail -f /proc/<pid>/fd/1
   df -khu /home/mac
   
 
-#vi 
+# no of threads per core
 
-    # to view list of all setting
-    
-      # : set all
-      
-   # to view list of all setting we have ,
-      # : set
+            lscpu
 
-    # set line number 
-    
-      # press : and say "set number" and enter 
-      #:set number   
-      
-      # to remove line numbers
-      # :set nonumber
-
-    # go line number
-    
-      #press Esc , then press line number and then Shift-g 
-      
-    # go to last column of the line
-    
-       # shift + 4 or press $
-       
-    # go to nth character on a line
-      # go to that particular line and press char number "example 256 character" and | and press enter
-      # 256| and press enter
-      
-   # go to first line
-   
-        # press gg
-        
-   # go to last line
-   
-        # Shift + G
-        # Cntrl + End
-        # 
-
+            Thread(s) per core:    2
 
     # search 
 
