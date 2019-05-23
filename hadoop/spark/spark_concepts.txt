@@ -10,6 +10,36 @@ org.apache.spark.sql.expressions.Window
    Window.partitionBy("country").orderBy("date").rowsBetween(-3, 3)
    
    
+ 
+ 
+ 
+ # repartition vs partitionByKey
+
+       -
+                    If you run repartition(COL) you change the partitioning during calculations - you will get spark.sql.shuffle.partitions (default: 200) partitions. If you then call .write you will get one directory with many files.
+
+                   If you run .write.partitionBy(COL) then as the result you will get as many directories as unique values in COL. This speeds up futher data reading (if you filter by partitioning column) and saves some space on storage (partitioning column is removed from data files).
+       -
+                Watch out: I believe the accepted answer is not quite right! I'm glad you ask this question, because the behavior of these similarly-named functions differs in important and unexpected ways that are not well documented in the official spark documentation.
+
+               The first part of the accepted answer is correct: calling df.repartition(COL, numPartitions=k) will create a dataframe with k partitions using a hash-based partitioner. COL here defines the partitioning key--it can be a single column or a list of columns. The hash-based partitioner takes each input row's partition key, hashes it into a space of k partitions via something like partition = hash(partitionKey) % k. This guarantees that all rows with the same partition key end up in the same partition. However, rows from multiple partition keys can also end up in the same partition (when a hash collision between the partition keys occurs) and some partitions might be empty.
+
+               In summary, the unintuitive aspects of df.repartition(COL, numPartitions=k) are that
+
+               partitions will not strictly segregate partition keys
+               some of your k partitions may be empty, whereas others may contain rows from multiple partition keys
+               The behavior of df.write.partitionBy is quite different, in a way that many users won't expect. Let's say that you want your output files to be date-partitioned, and your data spans over 7 days. Let's also assume that df has 10 partitions to begin with. When you run df.write.partitionBy('day'), how many output files should you expect? The answer is 'it depends'. If each partition of your starting partitions in df contains data from each day, then the answer is 70. If each of your starting partitions in df contains data from exactly one day, then the answer is 10.
+
+               How can we explain this behavior? When you run df.write, each of the original partitions in df is written independently. That is, each of your original 10 partitions is sub-partitioned separately on the 'day' column, and a separate file is written for each sub-partition.
+
+               I find this behavior rather annoying and wish there were a way to do a global repartitioning when writing dataframes.
+
+
+   
+   
+   
+   
+   
 # client mode vs cluster mode:
 
                 A common deployment strategy is to submit your application from a gateway machine that is physically co-located with your worker machines (e.g. Master node in a standalone EC2 cluster). In this setup, client mode is appropriate. In client mode, the driver is launched directly within the spark-submit process which acts as a client to the cluster. The input and output of the application is attached to the console. Thus, this mode is especially suitable for applications that involve the REPL (e.g. Spark shell).
