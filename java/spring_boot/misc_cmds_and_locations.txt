@@ -1,0 +1,21 @@
+
+
+
+# tomcat server 
+
+      -start up:
+      cd /opt/apache-tomcat-9.0.10/bin
+      ./startup.sh
+
+      -shutdown:
+      cd /opt/apache-tomcat-9.0.10/bin
+      ./shutdown.sh
+
+      -log file:
+      tail -f /apps/apache-tomcat-9.0.10/logs/catalina.out
+
+      -clean up log before startup:
+      rm /apps/apache-tomcat-9.0.10/logs/catalina.out
+
+      -apps jars location:
+      cd /apps/apache-tomcat-9.0.10/webapps
