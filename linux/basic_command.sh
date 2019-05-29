@@ -20,6 +20,11 @@
     
       #press Esc , then press line number and then Shift-g 
       
+    # go first char & got last char  MAC
+    
+    cntrl + a   - first char
+    contrl + e   - last char 
+    
     # go to last column of the line
     
        # shift + 4 or press $
