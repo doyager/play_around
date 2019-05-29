@@ -1,4 +1,17 @@
 
+#hive vs hbase:
+
+
+
+
+#spark 1.6 vs spark 2
+
+
+
+
+# rdd vs dataframe vs dataset 
+
+
 
 # groubykey vs reduce by key 
 
