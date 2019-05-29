@@ -1,7 +1,7 @@
 
 #hive vs hbase:
 
-
+what happens when you upload a file to hdfs ? walkthrough fsimage edits etc
 managed v unmanaged table 
 secondary namenode vs stand by namenode 
 managed table vs unmanaged talbe 
