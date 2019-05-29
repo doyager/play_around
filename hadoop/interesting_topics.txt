@@ -2,6 +2,23 @@
 #hive vs hbase:
 
 
+managed v unmanaged table 
+secondary namenode vs stand by namenode 
+managed table vs unmanaged talbe 
+how spark supports puthon  , how psakr understand python given it is a jvm kind of Language
+apply vs unapply in scala 
+kafka offset management ,how does it happen ?
+rebalancing kafka 
+diff between cache and presist spark 
+hadoop journel
+hadoop fsimage and edit log 
+who manages fsimage
+catalyst optimizer - spark ??
+advantage of case class in scala 
+
+
+
+
 
 
 #spark 1.6 vs spark 2
