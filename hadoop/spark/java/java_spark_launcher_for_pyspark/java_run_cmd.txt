@@ -1,0 +1,7 @@
+
+
+java -jar Java-Playgrounds-0.0.1-SNAPSHOT-jar-with-dependencies.jar com.company.test.pysparktest.PySparkLauncherTest
+
+(or)
+
+java -jar Java-Playgrounds-0.0.1-SNAPSHOT-jar-with-dependencies.jar com.company.test.pysparktest.PySparkLauncherTest /home/mac/test_area/pyspark_basic_standalone.py
