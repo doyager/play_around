@@ -17,7 +17,17 @@ catalyst optimizer - spark ??
 advantage of case class in scala 
 
 
+ When is it a good idea to set Spark locality wait to zero?
+https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-idea-to-set-Spark-locality-wait-to-zero-
+.setConf("spark.task.maxFailures", "2")
+              .setConf("spark.kryoserializer.buffer", "1024")
+              .setConf("spark.kryoserializer.buffer.max", "2047")
+              .setConf("spark.yarn.maxAppAttempts", "1")
+              .setConf("spark.schedular.mode", "FAIR")
+              .setConf("spark.locality.wait", "1m")
 
+
+.setConf("spark.dynamicAllocation.enabled", "true")
 
 
 
