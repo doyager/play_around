@@ -31,12 +31,40 @@ https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-i
 
 
 
+
+
 #spark 1.6 vs spark 2
 
 
 
 
 # rdd vs dataframe vs dataset 
+
+
+
+# hive
+
+#list set commands
+
+# msckrepari - msck repair - metastore check command
+
+          However, users can run a metastore check command with the repair table option:
+          -which will update metadata about partitions to the Hive metastore for partitions for which such metadata doesn't already exist. 
+          - The default option for MSC command is ADD PARTITIONS. With this option, it will add any partitions that exist on HDFS but not in metastore to the metastore.
+          - The DROP PARTITIONS option will remove the partition information from metastore, that is already removed from HDFS. 
+          - The SYNC PARTITIONS option is equivalent to calling both ADD and DROP PARTITIONS
+
+           When there is a large number of untracked partitions, there is a provision to run MSCK REPAIR TABLE batch wise to avoid OOME (Out of Memory Error). By giving the configured batch size for the property hive.msck.repair.batch.size it can run in the batches internally. The default value of the property is zero, it means it will execute all the partitions at once. MSCK command without the REPAIR option can be used to find details about metadata mismatch metastore.
+
+          The equivalent command on Amazon Elastic MapReduce (EMR)'s version of Hive is:
+
+          ALTER TABLE table_name RECOVER PARTITIONS;
+
+          MSCK [REPAIR] TABLE table_name [ADD/DROP/SYNC PARTITIONS];
+
+          Recover Partitions (MSCK REPAIR TABLE)
+          Hive stores a list of partitions for each table in its metastore. If, however, new partitions are directly added to HDFS (say by using hadoop fs -put command) or removed from HDFS, the metastore (and hence Hive) will not be aware of these changes to partition information unless the user runs ALTER TABLE table_name ADD/DROP PARTITION commands on each of the newly added or removed partitions, respectively.
+
 
 
 
