@@ -79,6 +79,39 @@ find . name=<file.txt>
 ps -aux | grep java-agent
 tail -f /proc/<pid>/fd/1
 
+
+# get ipaddress 
+    
+    #1
+    # login to that particular machine 
+        ifconfig 
+        look for eth0 and inet under that , inet is the ipaddress
+        
+        Eg : ifconfig
+        eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 11.111.1.100  netmask 255.255.255.0  broadcast 11.111.6.255
+      
+     #2
+     # login in to the machine 
+      nslookup <hostname>
+      Eg: nslookup dev_discovery_node
+      
+        Name:	dev_discovery_node.company.com
+        Address: 11.111.1.100
+        
+       #3 
+       #login and ping to the same host 
+       ping <hostname>
+       
+       eg: hostname :  dev_discovery_node , ip : 11.111.1.100
+         ping dev_discovery_node
+        PING dev_discovery_node.compnay.com (11.111.1.100) 56(84) bytes of data.
+        64 bytes from dev_discovery_node.company.com (11.111.1.100): icmp_seq=1 ttl=64 time=0.018 ms
+        64 bytes from dev_discovery_node.company.com (11.111.1.100): icmp_seq=2 ttl=64 time=0.036 ms
+        64 bytes from dev_discovery_node.compnay.com (11.111.1.100): icmp_seq=3 ttl=64 time=0.036 ms
+        64 bytes from dev_discovery_node.company.com (11.111.1.100): icmp_seq=4 ttl=64 time=0.046 ms
+
+        
 # disk space 
 
   #at parent dir level , -s sums up
