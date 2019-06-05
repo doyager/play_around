@@ -80,6 +80,24 @@ ps -aux | grep java-agent
 tail -f /proc/<pid>/fd/1
 
 
+# To check fire wall connectivity 
+
+        #netcat
+            nc -v <destination_host> <destination_host_port>
+
+            To check firewall connection from serv1 to server2 on port 8089
+
+            - log on to server1
+            - the use command "nc -v server2 8089" 
+            - We have to get verbose messages saying connection sucess.
+
+
+            #netcat is a computer networking utility for reading from and writing to network connections using TCP or UDP.
+            #The command is designed to be a dependable back-end that can be used directly or easily 
+            #driven by other programs and scripts.
+
+
+
 # get ipaddress 
     
     #1
