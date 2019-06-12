@@ -24,6 +24,7 @@ git checkout new-branch-name
 git push -u origin new-branch-name
 
 
+
 # git rename branch
 
           
@@ -45,9 +46,20 @@ git push -u origin new-branch-name
           #Finally, push the <new_name> local branch and reset the upstream branch
 
           git push origin -u <new_name>
-         
+  
+  
+# delete file :
+          # git rm , deletes from both GIT and FS
+
+          git rm file1.txt
+          git commit -m "remove file1.txt"
+          git push origin branch_name 
 
 
+          # only from Git and NOT from File system 
+          git rm --cached file1.txt
+          git commit -m "remove file1.txt"
+          git push origin branch_name  
 
 # undo changes:
 
