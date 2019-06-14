@@ -175,3 +175,33 @@ tail -f /proc/<pid>/fd/1
         #The g character says, “perform the following operation globally in this file.” (Operate on all lines in this file.)
         #The forward slash characters enclose the pattern I’m trying to match. In this case I want to match blank lines, so I use the regular expression ^$. Here the ^ means “beginning of line,” and $ means “end of line,” so with no characters in between them, this vim regex means “blank line.” (If I had typed ^abc$, that would mean, “find a line with only the sequence of characters ‘abc’”.)
         #The d at the end of the command says, “When you find this pattern, delete the line.”
+        
+        
+        
+        
+        
+        
+        
+  # set default permission for files and dir under a path 
+  
+          From the article:
+
+        chmod g+s <directory>  //set gid 
+        setfacl -d -m g::rwx /<directory>  //set group to rwx default 
+        setfacl -d -m o::rx /<directory>   //set other
+        Next we can verify:
+
+        getfacl /<directory>
+        Output:
+
+        # file: ../<directory>/
+        # owner: <user>
+        # group: media
+        # flags: -s-
+        user::rwx
+        group::rwx
+        other::r-x
+        default:user::rwx
+        default:group::rwx
+        default:other::r-x
+
