@@ -17,6 +17,16 @@ catalyst optimizer - spark ??
 advantage of case class in scala 
 
 
+kafka - offset managment
+kafka - paralleslism vs concurrancy
+auxiliary constructor
+casaa=ndra nosql
+BloomMapFile
+pig - physical plan vs logical plan
+
+42.What is BloomMapFile used for? 
+The BloomMapFile is a class that extends MapFile. So its functionality is similar to MapFile. BloomMapFile uses dynamic Bloom filters to provide quick membership test for the keys. It is used in Hbase table format.
+
  When is it a good idea to set Spark locality wait to zero?
 https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-idea-to-set-Spark-locality-wait-to-zero-
 .setConf("spark.task.maxFailures", "2")
@@ -45,6 +55,28 @@ https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-i
 # hive
 
 #list set commands
+
+
+
+
+# mapreduce combiner 
+
+                  A Combiner, also known as a semi-reducer, is an optional class that operates by accepting the inputs from the Map class and thereafter passing the output key-value pairs to the Reducer class.
+
+                  The main function of a Combiner is to summarize the map output records with the same key. The output (key-value collection) of the combiner will be sent over the network to the actual Reducer task as input.
+
+                  Combiner
+                  The Combiner class is used in between the Map class and the Reduce class to reduce the volume of data transfer between Map and Reduce. Usually, the output of the map task is large and the data transferred to the reduce task is high.
+
+                  Here is a brief summary on how MapReduce Combiner works −
+
+                  A combiner does not have a predefined interface and it must implement the Reducer interface’s reduce() method.
+
+                  A combiner operates on each map output key. It must have the same output key-value types as the Reducer class.
+
+                  A combiner can produce summary information from a large dataset because it replaces the original Map output.
+
+                  Although, Combiner is optional yet it helps segregating data into multiple groups for Reduce phase, which makes it easier to process
 
 # msckrepari - msck repair - metastore check command
 
@@ -297,5 +329,19 @@ Thread(s) per core:    2
 
             Hence, we can conclude that hadoop is purely an OLAP (online analytical processing).
 
+# auxiliary constructor scala 
+Scala has two types of constructors:
 
+1. primary constructor
 
+2. auxiliary constructor (secondary constructor)
+
+A scala class can contain zero or more auxiliary constructors. The auxiliary constructor in Scala is used for constructor overloading and defined as a method usingthis  name.
+The auxiliary constructor must call either previously defined auxiliary constructors or primary constructors in the first line of its body. Hence, every auxiliary constructor invokes directly or indirectly to a primary constructor.
+
+We can call the primary constructor or other auxiliary constructor using this .
+
+# sharding
+What is sharding in nosql, in absolute layman's terms?
+
+A database is like a library: it holds many books. A big library does not fit into a single room. Multiple rooms and buildings are required for big libraries. Now for each couple of rooms, a special librarian person is designated to handle requests regarding those specific 2-3 rooms: requests to get books to read, or to return books. And there are other persons who get all those requests for the whole library, the big one, and they decide, ok, this book has this "hash" (sort of id), that means it must be in that building, and they forward to that building' chief. That guy looks again at the hash and decides, it must be in those rooms, let me ask 2 guys that surely know. So they get to the person actually controlling the room where indeed that book resides. Sharding is just partitioning (splitting) the data set (the set of books) into multiple smaller sets, that can be managed by a single computer.
