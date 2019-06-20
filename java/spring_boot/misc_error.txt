@@ -1,0 +1,20 @@
+
+
+
+#1
+
+Exception in thread "main" java.lang.UnsupportedClassVersionError: org/springframework/boot/loader/WarLauncher : Unsupported major.minor version 52.0
+        at java.lang.ClassLoader.defineClass1(Native Method)
+        at java.lang.ClassLoader.defineClass(ClassLoader.java:808)
+        at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+        at java.net.URLClassLoader.defineClass(URLClassLoader.java:443)
+   
+Fix :  use correct version of java , it was by default picking 1.7 java , but 1.8 has to be picked 
+
+
+Wrong :
+
+java -Dserver.port=8986 -jar
+
+correct:
+/usr/java/jdk1.8.0_181/bin/java -Dserver.port=8986 -jar
