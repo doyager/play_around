@@ -18,3 +18,12 @@ java -Dserver.port=8986 -jar
 
 correct:
 /usr/java/jdk1.8.0_181/bin/java -Dserver.port=8986 -jar
+
+
+
+
+#2
+
+
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'com.company.config.MessagingProducerConfig': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'kafka.bootstrap.server' in value "${kafka.bootstrap.server}"
+        at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380) ~[spring-beans-5.1.6.RELEASE.jar!/:5.1.6.RELEASE]
