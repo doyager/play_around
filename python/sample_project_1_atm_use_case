@@ -2,13 +2,45 @@
 
 Any ETL pipeling :
 
-- read data from mulitple sources
+- read data from mulitple sources eg 3 sources 
 - may be small validation eg , lenght, or format or datatype
 - join mulitple sources
 - understand how they have to be grouped , eg: atm use case , group on zip  code
 - aggregations , count or sum or min or max
 - sorting , may be ascending or desc
 - write to disk or file etc
+
+
+code:
+
+# 3 sources 
+
+state_zip_file = r'highscore.csv'
+state_zip = pd.read_csv(file)
+print(df)
+
+
+current_atm_loc__file = r'highscore.csv'
+all_atm = pd.read_csv(file)
+print(df)
+
+
+sun_Trust_loc_file = r'highscore.csv'
+suntrust_atm = pd.read_csv(file)
+print(df)
+
+
+#step 2 : no validaiton
+
+#step 3:
+print pd.merge(state_zip_file , current_atm_loc__file ,on='zip_code')
+
+#stet 4: gorup by 
+print df.groupby('zip_code').filter(lambda x: len(x) >= 50)
+print df.groupby('zip_code').filter(lambda x: len(x) <= 10 )
+
+
+
 
 atms use case - BI team need to draw heat maps and charts about ATMS concentration based on zip code or area or state
 both suntrust and other banks, based on which they will calculate the best place to open new ATM
