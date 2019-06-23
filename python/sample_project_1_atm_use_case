@@ -1,0 +1,168 @@
+
+
+Any ETL pipeling :
+
+- read data from mulitple sources
+- may be small validation eg , lenght, or format or datatype
+- join mulitple sources
+- understand how they have to be grouped , eg: atm use case , group on zip  code
+- aggregations , count or sum or min or max
+- sorting , may be ascending or desc
+- write to disk or file etc
+
+atms use case - BI team need to draw heat maps and charts about ATMS concentration based on zip code or area or state
+both suntrust and other banks, based on which they will calculate the best place to open new ATM
+
+- create pandas dataframe [ todo:  3 types ]
+import pandas as pd
+data = [1,2,3,4,5]
+df = pd.DataFrame(data)
+print df
+
+
+import numpy as np
+import pandas as pd
+
+# Set the seed for a reproducible sample
+np.random.seed(0)  
+
+df = pd.DataFrame(np.random.randn(5, 3), columns=list('ABC'))   # generationg 5 rows , 3columsn using random function in numpy 
+
+print(df)
+# Output:
+#           A         B         C
+# 0  1.764052  0.400157  0.978738
+# 1  2.240893  1.867558 -0.977278
+# 2  0.950088 -0.151357 -0.103219
+# 3  0.410599  0.144044  1.454274
+# 4  0.761038  0.121675  0.443863
+
+
+from pandas import DataFrame, read_csv
+import matplotlib.pyplot as plt
+import pandas as pd 
+
+file = r'highscore.csv'
+df = pd.read_csv(file)
+print(df)
+
+
+
+- reading csv files , delimited files 
+- joining with master data , pandas to sql or sqoop to certain to location , read using pandas  [Todo : read from sql using pandas ]
+- group by statemtns
+https://www.tutorialspoint.com/python_pandas/python_pandas_groupby.htm
+
+
+import pandas as pd
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+   'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+   'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+   'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+   'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+print df.groupby('Team')   [ todo: gorup by 2 or 3 cols ]
+
+- filters 
+
+https://www.tutorialspoint.com/python_pandas/python_pandas_groupby.htm
+
+import pandas as pd
+import numpy as np
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+   'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+   'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+   'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+   'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+print df.groupby('Team').filter(lambda x: len(x) >= 3)
+
+
+- aggregations, 2-3 aggregations  [sum , mean , min , max]
+			https://www.tutorialspoint.com/python_pandas/python_pandas_aggregations.htm
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(10, 4),
+   index = pd.date_range('1/1/2000', periods=10),
+   columns = ['A', 'B', 'C', 'D'])
+print df
+r = df.rolling(window=3,min_periods=1)
+print r[['A','B']].aggregate([np.sum,np.mean])
+
+
+- merging / joining 
+
+pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
+left_index=False, right_index=False, sort=True)
+
+Here, we have used the following parameters −
+
+left − A DataFrame object.
+
+right − Another DataFrame object.
+
+on − Columns (names) to join on. Must be found in both the left and right DataFrame objects.
+
+left_on − Columns from the left DataFrame to use as keys. Can either be column names or arrays with length equal to the length of the DataFrame.
+
+right_on − Columns from the right DataFrame to use as keys. Can either be column names or arrays with length equal to the length of the DataFrame.
+
+left_index − If True, use the index (row labels) from the left DataFrame as its join key(s). In case of a DataFrame with a MultiIndex (hierarchical), the number of levels must match the number of join keys from the right DataFrame.
+
+right_index − Same usage as left_index for the right DataFrame.
+
+how − One of 'left', 'right', 'outer', 'inner'. Defaults to inner. Each method has been described below.
+
+sort − Sort the result DataFrame by the join keys in lexicographical order. Defaults to True, setting to False will improve the performance substantially in many cases.
+
+
+example : joining  // default join type is innner 
+
+import pandas as pd
+left = pd.DataFrame({
+   'id1':[1,2,3,4,5],
+   'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
+   'subject_id':['sub1','sub2','sub4','sub6','sub5']})
+right = pd.DataFrame({
+	'id2':[1,2,3,4,5],
+   'Name': ['Billy', 'Brian', 'Bran', 'Bryce', 'Betty'],
+   'subject_id':['sub2','sub4','sub3','sub6','sub5']})
+print pd.merge(left,right,on='id') // left_on='id1' , right_on='id2'
+
+example 2; join on 2 cols
+import pandas as pd
+left = pd.DataFrame({
+   'id':[1,2,3,4,5],
+   'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
+   'subject_id':['sub1','sub2','sub4','sub6','sub5']})
+right = pd.DataFrame({
+	'id':[1,2,3,4,5],
+   'Name': ['Billy', 'Brian', 'Bran', 'Bryce', 'Betty'],
+   'subject_id':['sub2','sub4','sub3','sub6','sub5']})
+print pd.merge(left,right,on=['id','subject_id'])
+
+
+
+
+- sorting : [ asceding or desceding]
+
+
+import pandas as pd
+import numpy as np
+
+unsorted_df = pd.DataFrame(np.random.randn(10,2),index=[1,4,6,2,3,5,9,8,0,7],colu
+   mns = ['col2','col1'])
+
+sorted_df=unsorted_df.sort_index()
+print sorted_df
+
+
+- save
+
+df.to_csv(file_name, sep='\t')
