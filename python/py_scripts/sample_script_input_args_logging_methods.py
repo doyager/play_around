@@ -5,6 +5,11 @@ import logging.handlers
 import os
 from datetime import datetime
 
+
+## Usage :  
+## To run : python test_pymain.py agent1 06232019 ui-portal 10
+
+
 root = logging.getLogger()
 root.setLevel(logging.DEBUG)
 
