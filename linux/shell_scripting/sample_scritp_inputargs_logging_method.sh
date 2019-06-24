@@ -1,6 +1,12 @@
 #!/bin/sh
+
+
+#usage
+# to run : ./test_main.sh test_agent1 23062019 ui_portal 1m
+
 if [ "$#" -ne 4 ]; then
-  echo "Usage: 4 input params expected" >&2
+  echo "Usage: 4 input params expected !! <agent-name> <date> <portal> <sleep-duration>" >&2
+  echo "Eg: test_agent1 23062019 ui_portal 1m "
   exit 1
 fi
 
