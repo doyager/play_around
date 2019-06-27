@@ -18,6 +18,13 @@ use git branch , to verify star beside your current branch
 
 #push from detached head 
 git push origin HEAD:name-of-your-branch
+
+Eg :
+user1@machine :$ git branch
+* (HEAD detached at origin/feature/branch1)
+
+git push origin HEAD:feature/branch1
+
 or
 git branch new-branch-name
 git checkout new-branch-name
