@@ -1,6 +1,11 @@
 
 #hive vs hbase:
 
+
+where should be avro used?
+dataframe vs dataset?
+
+
 what happens when you upload a file to hdfs ? walkthrough fsimage edits etc
 managed v unmanaged table 
 secondary namenode vs stand by namenode 
