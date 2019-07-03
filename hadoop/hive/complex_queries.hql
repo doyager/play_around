@@ -129,7 +129,24 @@ Cluster By : is a short-cut for both Distribute By and Sort By.
 		x3
 		x4
 		
-		
+
+
+# group by , collect list , collect_set 
+
+		#set removes duplicates 
+		select student_name, concat_ws("|",collect_set(subj_name)) as subjs ,count(*) as cnt form student_tabl group by student_name;
+
+				#duplicates are removed
+				name , subjs ,count
+				mac , Science|social , 4
+
+		#list retains duplicates 
+		select student_name, concat_ws("|",collect_list(subj_name)) form student_tabl group by student_name;
+
+				name , subjs ,count
+				mac , Science|social|Science|social , 4
+
+
 
 # find max date employee rrecord:
 
