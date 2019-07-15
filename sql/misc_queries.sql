@@ -1,5 +1,12 @@
 
 
+-- listagg : 
+--concate column after group by 
+      select deptno, listagg(ename, ';' ) within group (order by ename) from scott.emp group by deptno order by deptno;
+
+          DEPTNO .  LISTAGG(ENAME,';')WITHINGROUP(ORDERBYENAME)
+              10   CLARK;KING;MILLER
+
 
 --Where clause on timestamp
 
