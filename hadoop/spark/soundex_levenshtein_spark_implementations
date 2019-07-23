@@ -1,0 +1,116 @@
+
+
+#Soundex
+#link https://medium.com/@mrpowers/fuzzy-matching-in-spark-with-soundex-and-levenshtein-distance-6749f5af8f28
+The Soundex phonetic algorithm indexes strings based on their English pronunciation. 
+The algorithm is use to identify homophones; words that are pronounced the same, but spelled differently.
+
+
+val actualDF = sourceDF.withColumn(
+  "w1_soundex",
+  soundex(col("word1"))
+).withColumn(
+  "w2_soundex",
+  soundex(col("word2"))
+)
+
+actualDF.show()
++-----+-----+----------+----------+
+|word1|word2|w1_soundex|w2_soundex|
++-----+-----+----------+----------+
+|   to|  two|      T000|      T000|
+|brake|break|      B620|      B620|
+| here| hear|      H600|      H600|
+| tree| free|      T600|      F600|
++-----+-----+----------+----------+
+
+"to" and "two" are both encoded as T000
+"brake" and "break" are both encoded as B620
+"here" and "hear" are both encoded as H600
+"tree" is encoded as T600 and "free" is encoded as F600 — the encodings are similar, but different
+
+The soundex algorithm is often used to compare first names that are spelled differently.
+
+
+Suppose we have the following sourceDF with some names that are pronounced the same, but spelled differently.
++-------+--------+
+|  name1|   name2|
++-------+--------+
+|  dylan|  dillon|
+|britney| britnee|
+|crystal|cristall|
+|    jim|    bill|
++-------+--------+
+
+val actualDF = sourceDF.withColumn(
+  "name1_name2_soundex_equality",
+  soundex(col("name1")) === soundex(col("name2"))
+)
+
+actualDF.show()
++-------+--------+----------------------------+
+|  name1|   name2|name1_name2_soundex_equality|
++-------+--------+----------------------------+
+|  dylan|  dillon|                        true|
+|britney| britnee|                        true|
+|crystal|cristall|                        true|
+|    jim|    bill|                       false|
++-------+--------+----------------------------+
+
+
+
+#levenshtein|:
+Levenshtein Distance
+The Levenshtein Distance is “a string metric for measuring the difference between two sequences.” 
+
+
+
+val actualDF = sourceDF.withColumn(
+  "word1_word2_levenshtein",
+  levenshtein(col("word1"), col("word2"))
+)
+
+actualDF.show()
++------+-------+-----------------------+
+| word1|  word2|word1_word2_levenshtein|
++------+-------+-----------------------+
+|  blah|   blah|                      0|
+|   cat|    bat|                      1|
+|  phat|    fat|                      2|
+|kitten|sitting|                      3|
++------+-------+-----------------------+
+
+
+val joinedDF = largeDF.join(
+  smallDF,
+  levenshtein(largeDF("firstname"), smallDF("name")) < 5
+)
+
+joinedDF.show()
++---------+---------+-------+------+
+|firstname|     city|   name| color|
++---------+---------+-------+------+
+|      bob|san diego|  bobby| black|
+|     phil|  seattle|phillip|   red|
+|     juan|   manila|juanito|yellow|
+|      joe|   newark|  bobby| black|
++---------+---------+-------+------+
+
+This code joins "bob" with "bobby" and "phil" with "phillip". 
+The Levenshtein distance of 5 is probably too big because this code also joins "joe" with "bobby".
+
+
+Let’s refactor this code to perform joins when the Levenshtein distance is less than 4.
+val joinedDF = largeDF.join(
+  smallDF,
+  levenshtein(largeDF("firstname"), smallDF("name")) < 4
+)
+
+joinedDF.show()
++---------+---------+-------+------+
+|firstname|     city|   name| color|
++---------+---------+-------+------+
+|      bob|san diego|  bobby| black|
+|     phil|  seattle|phillip|   red|
+|     juan|   manila|juanito|yellow|
++---------+---------+-------+------+
