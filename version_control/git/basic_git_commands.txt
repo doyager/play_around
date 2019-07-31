@@ -68,7 +68,14 @@ git push -u origin new-branch-name
           git commit -m "remove file1.txt"
           git push origin branch_name  
 
-# undo changes:
+# delete folder :
+
+                    git rm -r folder-name
+            #Commit the change:
+                    git commit -m "Remove duplicated directory"
+            #Push the change to your remote repository:
+                    git push origin master
+          
 
 
      #Discard all local changes, but save them for possible re-use later
