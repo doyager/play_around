@@ -1,7 +1,17 @@
 
-<h1> Kafka Architecture <h1>
+<h1> Kafka Architecture <!h1>
 
-<h3> Consumers Rule! <h3>
+
+
+"""
+In understanding Kafka consumers from an architectural and resourcing standpoint, <mark> it’s critical to note that 
+consumers and producers don’t run on Kafka brokers, but they do they require CPU and IO resources of their own. </mark>
+This is advantageous in offering the flexibility to run consumers however, wherever, and in whatever quantity
+is needed without concern for deployment to brokers or sharing their resources. However, a challenge 
+remains in that the best method for deploying and resourcing consumers and producers must be
+thoroughly thought out. An optimal strategy might be to enlist scalable and elastic
+microservices for the task.  """
+<h3> Consumers Rule! <!h3>
 
 A fundamental explanation of Kafka’s inner workings goes as follows: Every topic is associated with one
 or more partitions, which are spread over one or more brokers. Every partition gets replicated to those 
@@ -34,7 +44,7 @@ one_partition_to_one_consumer_only
 https://github.com/doyager/play_around/blob/master/images_for_readme/one_partition_to_one_consumer_only.png
 
 
-<h3>Manual Partition Assignment <h3>
+<h3>Manual Partition Assignment <!h3>
   
 In the previous examples, we subscribed to the topics we were interested in and let Kafka dynamically assign a fair 
 share of the partitions for those topics based on the active consumers in the group. However, in some cases you may 
@@ -54,5 +64,11 @@ the full list of partitions that you want to consume.
      TopicPartition partition0 = new TopicPartition(topic, 0);
      TopicPartition partition1 = new TopicPartition(topic, 1);
      consumer.assign(Arrays.asList(partition0, partition1));
+     
+     
+ "More consumers than partitions"
+ Another scenario is to have a more consumers in a group than partitions, with certain consumers remaining idle. 
+ Kafka is able to failover to such idle consumers in cases where an active consumer dies, or 
+ when a new partition is added:
  
 
