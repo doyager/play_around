@@ -3,6 +3,45 @@
 
 
 
+
+The Kafka Components – Universal Modeling Language (UML)
+
+Kafka’s main architectural components include
+Producers, 
+Topics,
+Consumers, 
+Consumer Groups, 
+Clusters, 
+Brokers, 
+Partitions,
+Replicas, 
+Leaders, and 
+Followers. 
+This simplified UML diagram describes the ways these components relate to one another:
+
+
+![](images/uml_diagram)
+
+
+
+
+It’s important to note the relationships between broker, replica, and partition components that are highlighted, such as:
+
+Kafka clusters can have one or more brokers.
+Brokers can host multiple replicas.
+Topics can have one or more partitions.
+A broker can host zero or one replica per partition.
+A partition has one leader replica and zero or more follower replicas.
+Each replica for a partition needs to be on a separate broker.
+Every partition replica needs to fit on a broker, and a partition can’t be divided over multiple brokers.
+Every broker can have one or more leaders, covering different partitions and topics.
+
+- Single Consumer can subscribe to multiple topics
+- Single producer can send to multiple topics
+- We can more consumers thatn the partitions and have some consumer lying idle , which can take over when an active
+consumer dies or which can fill in when new partitions are added
+- there are fewer consumers in a group that partitions, causing consumer A2 to be responsible for processing more messages than consumer A1:
+
 """
 In understanding Kafka consumers from an architectural and resourcing standpoint, <h5> it’s critical to note that 
 consumers and producers don’t run on Kafka brokers, but they do they require CPU and IO resources of their own. </h5>
