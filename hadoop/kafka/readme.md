@@ -1,7 +1,7 @@
 
+<h1> Kafka Architecture <h1>
 
-
-Consumers Rule!
+<h3> Consumers Rule! <h3>
 
 A fundamental explanation of Kafka’s inner workings goes as follows: Every topic is associated with one
 or more partitions, which are spread over one or more brokers. Every partition gets replicated to those 
@@ -14,10 +14,45 @@ well, but ensures read scalability.
 
 "" A partition is associated with only a single consumer instance per consumer group. ""
 
+
+![](images_for_readme/one_partition_to_one_consumer_only.png)
+
+![](images_for_readme/one_partition_to_one_consumer_only.png)
+
+
+Normally, a partition can only support a single consumer in a group. This limit can be overcome, however, 
+by manually connecting consumers to a specific partition in a topic, effectively overruling the dynamic 
+protocol for those consumers. Such consumers should be in different groups. This has no effect on consumers 
+that still connect dynamically:
+
+
+
 <img src="images_for_readme/one_partition_to_one_consumer_only.png" width="300">
 
 one_partition_to_one_consumer_only
 
 https://github.com/doyager/play_around/blob/master/images_for_readme/one_partition_to_one_consumer_only.png
 
+
+<h3>Manual Partition Assignment <h3>
+  
+In the previous examples, we subscribed to the topics we were interested in and let Kafka dynamically assign a fair 
+share of the partitions for those topics based on the active consumers in the group. However, in some cases you may 
+need finer control over the specific partitions that are assigned. For example:
+
+If the process is maintaining some kind of local state associated with that partition (like a local on-disk key-value store), then it should only get records for the partition it is maintaining on disk.
+
+If the process itself is highly available and will be restarted if it fails (perhaps using a cluster management framework 
+like YARN, Mesos, or AWS facilities, or as part of a stream processing framework). In this case there is no need
+for Kafka to detect the failure and reassign the partition since the consuming process will be restarted on another
+machine.
+To use this mode, instead of subscribing to the topic using subscribe, you just call assign(Collection) with 
+the full list of partitions that you want to consume.
+
+
+     String topic = "foo";
+     TopicPartition partition0 = new TopicPartition(topic, 0);
+     TopicPartition partition1 = new TopicPartition(topic, 1);
+     consumer.assign(Arrays.asList(partition0, partition1));
+ 
 
