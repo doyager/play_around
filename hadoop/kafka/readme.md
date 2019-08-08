@@ -111,3 +111,14 @@ the full list of partitions that you want to consume.
  when a new partition is added:
  
 
+
+
+<h2> Mirror Maker </h2>
+
+
+
+<h4> Best Practices </h4>
+It is a good idea to create any topics that are being mirrored on the destination cluster before starting Mirror Maker. 
+Mirror Maker can create the topics automatically but they may not retain the exact same configuration as the originals.
+
+If you are running multiple Mirror Maker instances, it is recommended that all instances share the same group-id in the consumer properties.
