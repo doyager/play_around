@@ -13,3 +13,11 @@ partitions, adding support for extra consumer instances requires that more parti
 well, but ensures read scalability.
 
 "" A partition is associated with only a single consumer instance per consumer group. ""
+
+<img src="images_for_readme/one_partition_to_one_consumer_only.png" width="300">
+
+one_partition_to_one_consumer_only
+
+https://github.com/doyager/play_around/blob/master/images_for_readme/one_partition_to_one_consumer_only.png
+
+
