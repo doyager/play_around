@@ -14,6 +14,8 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
+import org.json.JSONArray;
+
 public class GetAuthUsingHttpClient {
 
 /*
@@ -28,6 +30,11 @@ JyYXJ5LmV4ZWN1dGUiLCJxLmNjcXVldWVwcm9jZXNzaW1wcm92ZW1lbnQud3JpdGUiLCJjbGFpbS53cm
 cnkuY29uZmlnIiwicS5zZW50aW1lbnQud3JpdGUiLCJxLmNsYWltcy53cml0ZSIsInVzZXJzLnJlYWQiLCJ
 50ZXJ2ZW50aW9uLnF1ZXVlLjIud3J","success":true}
 
+**********  Token :eyJhbGciOiJIUzUxMuYXlhbiIsImxhc3ROYW1lIjoiTWFjaGF
+ybGEgU3JpIiwic3ViIjoiQUcwMzgxMiIsInBob25lIjoiKiIsImV4cCI6MTU2NTM3Mjk5MSwiaWF0IjoxNTY1
+lcnMud3JpdGUiLCJ3b3JraXRlbS53cml0ZSIsImxpYnJhcnkucmVhZCIsInByb2R1Y3RzLnJlYWQiLCJxLmNjQmx1ZVBsYW4ud3J
+JyYXJ5LmV4ZWN1dGUiLCJxLmNjcXVldWVwcm9jZXNzaW1wcm92ZW1lbnQud3JpdGUiLCJjbGFpbS53cml0ZSIsImxpYnJh
+cnkuY29uZmlnIiwicS5zZW50aW1lbnQud3JpdGUiLCJxLmNsYWltcy53cml0ZSIsInVzZXJzLnJlYWQiLCJ
 
 */
   public static void main(String[] args) {
@@ -61,6 +68,14 @@ cnkuY29uZmlnIiwicS5zZW50aW1lbnQud3JpdGUiLCJxLmNsYWltcy53cml0ZSIsInVzZXJzLnJlYWQi
       HttpEntity entity = response.getEntity();
       returnAuth = EntityUtils.toString(entity);
       System.out.println("********** returnAuth : " + returnAuth);
+      
+        
+      JSONObject obj = new JSONObject(returnAuth);
+      String token =  obj.getString("token"); 
+
+      System.out.println("**********  Token : " +token);
+      
+      
     } catch (UnsupportedEncodingException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -70,7 +85,10 @@ cnkuY29uZmlnIiwicS5zZW50aW1lbnQud3JpdGUiLCJxLmNsYWltcy53cml0ZSIsInVzZXJzLnJlYWQi
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
-    }
+    } catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
 }
 
