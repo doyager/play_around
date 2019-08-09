@@ -16,6 +16,9 @@ import org.apache.http.util.EntityUtils;
 
 import org.json.JSONArray;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class GetAuthUsingHttpClient {
 
 /*
@@ -74,6 +77,10 @@ cnkuY29uZmlnIiwicS5zZW50aW1lbnQud3JpdGUiLCJxLmNsYWltcy53cml0ZSIsInVzZXJzLnJlYWQi
       String token =  obj.getString("token"); 
 
       System.out.println("**********  Token : " +token);
+	    
+	 Map<String, String> map = objectMapper.readValue(returnAuth, new TypeReference<Map<String, String>>(){});
+      
+      System.out.println("**********  Map Token : " + map.get("token"));
       
       
     } catch (UnsupportedEncodingException e) {
