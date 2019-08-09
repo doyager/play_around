@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import org.json.JSONArray;
 
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Repository
 public class AuthRepository {
 
@@ -76,6 +80,10 @@ LnJlYWQiLCJjYXRhbG9nLnJlYWQiLCJxLnJ4Y2xhaW1zLndyaXRlIiwicHJvZHVjdHMud3JpdGUiLCJx
 			      String token =  obj.getString("token"); 
 
 			      System.out.println("**********  Token : " +token);
+				
+				 Map<String, String> map = objectMapper.readValue(returnAuth, new TypeReference<Map<String, String>>(){});
+      
+     				 System.out.println("**********  Map Token : " + map.get("token"));
 			} else if (responseEntity.getStatusCode().isError()) {
 
 				logger.info("submitRequest:  get Auth Token returned response error...returning empty result set");
