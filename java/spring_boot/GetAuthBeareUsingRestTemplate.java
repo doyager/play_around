@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import org.json.JSONArray;
 
 @Repository
 public class AuthRepository {
@@ -68,7 +69,13 @@ LnJlYWQiLCJjYXRhbG9nLnJlYWQiLCJxLnJ4Y2xhaW1zLndyaXRlIiwicHJvZHVjdHMud3JpdGUiLCJx
 
 				logger.info("submitRequest: get Auth Token returned response sucess");
 				System.out.println("********** Inside Success responseEntity.getBody " + responseEntity.getBody());
+				String returnAuth = responseEntity.getBody();		
+				
+				//Json parsing
+			      JSONObject obj = new JSONObject(returnAuth);
+			      String token =  obj.getString("token"); 
 
+			      System.out.println("**********  Token : " +token);
 			} else if (responseEntity.getStatusCode().isError()) {
 
 				logger.info("submitRequest:  get Auth Token returned response error...returning empty result set");
