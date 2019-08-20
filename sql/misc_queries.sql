@@ -1,4 +1,10 @@
 
+--like 
+Select *  From tbl Where name like 'saho%'
+
+-- like in :
+
+Select *  From tbl Where regexp_like(name,'^sasho$|^rags$|^shashi*');
 
 -- listagg : 
 --concate column after group by 
