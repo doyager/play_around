@@ -30,7 +30,15 @@ git branch new-branch-name
 git checkout new-branch-name
 git push -u origin new-branch-name
 
+# rename folder 
 
+Basic rename (or move):
+
+git mv <old name> <new name>
+Case sensitive rename—eg. from casesensitive to CaseSensitive—you must use a two step:
+
+git mv casesensitive tmp
+git mv tmp CaseSensitive
 
 # git rename branch
 
