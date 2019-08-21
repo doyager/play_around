@@ -1,6 +1,9 @@
 
 # ip address from hostname 
 
+ping hostname 
+64 bytes from nyk4035 (192.52.32.15): icmp_seq=0. time=0.186 ms
+
 ping -s `hostname`
 
 PING nyk4035: 56 data bytes
