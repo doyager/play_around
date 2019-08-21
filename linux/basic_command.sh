@@ -1,4 +1,17 @@
 
+# ip address from hostname 
+
+ping -s `hostname`
+
+PING nyk4035: 56 data bytes
+64 bytes from nyk4035 (192.52.32.15): icmp_seq=0. time=0.186 ms
+
+# nslookup `hostname`
+nyk4035.unix.com       canonical name = nyk4035.unix.com
+Name:   nyk4035.unix.com
+Address: 192.52.32.15
+
+
 #vi 
 
     # to view list of all setting
