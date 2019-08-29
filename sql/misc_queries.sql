@@ -1,4 +1,9 @@
 
+
+-- greater than time stamp
+
+select * from emp where CREATED_TIMESTAMP > to_timestamp('2019-08-29 01:12:40','yyyy-mm-dd hh24.mi.ss') 
+
 --like 
 Select *  From tbl Where name like 'saho%'
 
