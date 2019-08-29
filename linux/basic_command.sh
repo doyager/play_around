@@ -145,6 +145,11 @@ tail -f /proc/<pid>/fd/1
         64 bytes from dev_discovery_node.compnay.com (11.111.1.100): icmp_seq=3 ttl=64 time=0.036 ms
         64 bytes from dev_discovery_node.company.com (11.111.1.100): icmp_seq=4 ttl=64 time=0.046 ms
 
+
+# generate SSH keys - ssh 
+
+ssh-keygen
+
         
 # disk space 
 
