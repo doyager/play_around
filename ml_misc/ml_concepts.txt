@@ -3,6 +3,29 @@
 #Fscore
 
 
+
+Here we go
+A school is running a machine learning primary diabetes scan on all of its students.
+The output is either diabetic (+ve) or healthy (-ve).
+There are only 4 cases any student X could end up with.
+We’ll be using the following as a reference later, So don’t hesitate to re-read it if you get confused.
+True positive (TP): Prediction is +ve and X is diabetic, we want that
+True negative (TN): Prediction is -ve and X is healthy, we want that too
+False positive (FP): Prediction is +ve and X is healthy, false alarm, bad
+False negative (FN): Prediction is -ve and X is diabetic, the worst
+To remember that, there are 2 tricks
+- If it starts with True then the prediction was correct whether diabetic or not, so true positive is a diabetic person correctly predicted & a true negative is a healthy person correctly predicted.
+Oppositely, if it starts with False then the prediction was incorrect, so false positive is a healthy person incorrectly predicted as diabetic(+) & a false negative is a diabetic person incorrectly predicted as healthy(-).
+- Positive or negative indicates the output of our program. While true or false judges this output whether correct or incorrect.
+Before I continue, true positives & true negatives are always good. we love the news the word true brings. Which leaves false positives and false negatives.
+In our example, false positives are just a false alarm. In a 2nd more detailed scan it’ll be corrected. But a false negative label, this means that they think they’re healthy when they’re not, which is — in our problem — the worst case of the 4.
+Whether FP & FN are equally bad or if one of them is worse than the other depends on your problem. This piece of information has a great impact on your choice of the performance metric, So give it a thought before you continue.
+
+
+
+
+#precision
+
 First, let’s just look at precision, recall, and the score.
 
 Precision, which we’ll denote p for convenience, is defined as
@@ -10,6 +33,9 @@ Precision, which we’ll denote p for convenience, is defined as
 𝑝=𝑡𝑝 / 𝑡𝑝+𝑓𝑝
 
 where tp and fp are true positives and false positives respectively.
+
+
+#recall
 
 Recall, which we’ll denote as r, is defined as
 
@@ -19,6 +45,8 @@ where fn stands for false negatives.
 
 So precision is the ratio of true positives to those predicted positive, while recall is the ratio of true positives to all positives.
 
+
+#Fscore
 The 𝐹1 score is defined as the harmonic mean of p and r:
 
 𝐹1=2 * 𝑝𝑟 /[𝑝+𝑟] =⋯=2𝑡𝑝 / [2𝑡𝑝+𝑓𝑝+𝑓𝑛]
