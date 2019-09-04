@@ -1,0 +1,38 @@
+#precision
+#recall
+#Fscore
+
+
+First, let’s just look at precision, recall, and the score.
+
+Precision, which we’ll denote p for convenience, is defined as
+
+𝑝=𝑡𝑝 / 𝑡𝑝+𝑓𝑝
+
+where tp and fp are true positives and false positives respectively.
+
+Recall, which we’ll denote as r, is defined as
+
+𝑟=𝑡𝑝/ 𝑡𝑝+𝑓𝑛
+
+where fn stands for false negatives.
+
+So precision is the ratio of true positives to those predicted positive, while recall is the ratio of true positives to all positives.
+
+The 𝐹1 score is defined as the harmonic mean of p and r:
+
+𝐹1=2 * 𝑝𝑟 /[𝑝+𝑟] =⋯=2𝑡𝑝 / [2𝑡𝑝+𝑓𝑝+𝑓𝑛]
+
+which, on the surface, seems like a really strange thing to look at.
+
+So, why do we look at it?
+
+Well, obviously the precision and recall are important. But why the harmonic mean instead of the arithmetic and geometric.
+
+Well, arithmetic is best when we have things that it makes sense to sum. We tend to think in terms of this most often. I don’t think I need to give an example here.
+
+Geometric is best when we are multiplying… like, for example, calculating the true interest rate over time.
+
+And harmonic is best when we’re dealing with rates and ratios. Since precision and recall are ratios (side note: all rates are technically ratios, but let’s not get into mathematical semantics), it’s the most appropriate.
+
+Of course, the 𝐹1 score weights precision and recall equally, something that’s not always deemed a good thing (see the Wikipedia page in the question link, and, for example, a document it refers to: http://www.flinders.edu.au/scien...).
