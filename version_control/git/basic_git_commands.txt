@@ -30,6 +30,11 @@ git branch new-branch-name
 git checkout new-branch-name
 git push -u origin new-branch-name
 
+
+# Create Git branch with current changes
+
+
+
 # rename folder 
 
 Basic rename (or move):
