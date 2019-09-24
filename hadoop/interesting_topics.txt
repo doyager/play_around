@@ -1,3 +1,8 @@
+Index:
+
+Writable and WritableComparable in Hadoop
+
+
 
 #hive vs hbase:
 
@@ -350,3 +355,188 @@ We can call the primary constructor or other auxiliary constructor using this .
 What is sharding in nosql, in absolute layman's terms?
 
 A database is like a library: it holds many books. A big library does not fit into a single room. Multiple rooms and buildings are required for big libraries. Now for each couple of rooms, a special librarian person is designated to handle requests regarding those specific 2-3 rooms: requests to get books to read, or to return books. And there are other persons who get all those requests for the whole library, the big one, and they decide, ok, this book has this "hash" (sort of id), that means it must be in that building, and they forward to that building' chief. That guy looks again at the hash and decides, it must be in those rooms, let me ask 2 guys that surely know. So they get to the person actually controlling the room where indeed that book resides. Sharding is just partitioning (splitting) the data set (the set of books) into multiple smaller sets, that can be managed by a single computer.
+
+
+
+
+
+
+###############################################################
+# Writable and WritableComparable in Hadoop
+ kiran  July 28, 2017 0 8,008
+
+This blog helps those people who want to build their own custom types in Hadoop which is possible only with Writable and WritableComparable.
+
+After reading this blog you will get a clear understanding of:
+
+What are Writables?
+Importance of Writables in Hadoop
+Why are Writables introduced in Hadoop?
+What if Writables were not there in Hadoop?
+How can Writable and WritableComparable be implemented in Hadoop?
+With this knowledge you can get going with Writables and WritableComparables in Hadoop.
+
+Writables and its Importance in Hadoop
+Writable is an interface in Hadoop. Writable in Hadoop acts as a wrapper class to almost all the primitive data type of Java. That is how int of java has become IntWritable in Hadoop and String of Java has become Text in Hadoop.
+
+Writables are used for creating serialized data types in Hadoop. So, let us start by understanding what are data type, interface and serilization.
+
+Data Type
+
+A data type is a set of data with values having predefined characteristics. There are several kinds of data types in Java. For example- int, short, byte, long, char etc. These are called as primitive data types. All these primitive data types are bound to classes called as wrapper class. For example int, short, byte, long are grouped under INTEGER which is a wrapper class. These wrapper classes are predefined in the Java.
+
+Interface in Java
+
+An interface in Java is a complete abstract class. The methods within an interface are abstract methods which do not accept body and the fields within the interface are public, static and final, which means that the fields cannot be modified.
+
+The structure of an interface is most likely to be a class. We cannot create an object for an interface and the only way to use the interface is to implement it in other class by using ‘implements’ keyword.
+
+Serialization
+
+Serialization is nothing but converting the raw data into a stream of bytes which can travel along different networks and can reside in different systems. Serialization is not the only concern of Writable interface; it also has to perform compare and sorting operation in Hadoop.
+
+Why are Writables Introduced in Hadoop?
+Now the question is whether Writables are necessary for Hadoop. Hadoop framework definitely needs Writable type of interface in order to perform the following tasks:
+
+Implement serialization
+Transfer data between clusters and networks
+Store the deserialized data in the local disk of the system
+Implementation of writable is similar to implementation of interface in Java. It can be done by simply writing the keyword ‘implements’ and overriding the default writable method.
+
+Writable is a strong interface in Hadoop which while serializing the data, reduces the data size enormously, so that data can be exchanged easily within the networks. It has separate read and write fields to read data from network and write data into local disk respectively. Every data inside Hadoop should accept writable and comparable interface properties.
+
+We have seen how Writables reduces the data size overhead and make the data transfer easier in the network.
+
+Hadoop
+
+What if Writable were not there in Hadoop?
+Let us now understand what happens if Writable is not present in Hadoop.
+
+Serialization is important in Hadoop because it enables easy transfer of data. If Writable is not present in Hadoop, then it uses the serialization of Java which increases the data over-head in the network.
+
+smallInt serialized value using Java serializer
+aced0005737200116a6176612e6c616e672e496e74656765
+7212e2a0a4f781873802000149000576616c7565787200106a6176612e
+6c616e672e4e756d62657286ac951d0b94e08b020000787000000064
+smallInt serialized value using IntWritable
+00000064
+This shows the clear difference between serialization in Java and Hadoop and also the difference between ObjectInputStream and Writable interface. If the size of serialized data in Hadoop is like that of Java, then it will definitely become an overhead in the network.
+
+Also the core part of Hadoop framework i.e., shuffle and sort phase won’t be executed without using Writable.
+
+How can Writables be Implemneted in Hadoop?
+Writable variables in Hadoop have the default properties of Comparable. For example:
+
+When we write a key as IntWritable in the Mapper class and send it to the reducer class, there is an intermediate phase between the Mapper and Reducer class i.e., shuffle and sort, where each key has to be compared with many other keys. If the keys are not comparable, then shuffle and sort phase won’t be executed or may be executed with high amount of overhead.
+
+If a key is taken as IntWritable by default, then it has comparable feature because of RawComparator acting on that variable. It will compare the key taken with the other keys in the network. This cannot take place in the absence of Writable.
+
+Can we make custom Writables? The answer is definitely ‘yes’. We can make our own custom Writable type.
+
+Let us now see how to make a custom type in Java.
+
+The steps to make a custom type in Java is as follows:
+
+public class add {
+	int a;
+	int b;
+	public add() {
+		this.a = a;
+		this.b = b;
+	}
+}
+Similarly we can make a custom type in Hadoop using Writables.
+
+For implementing Writables, we need few more methods in Hadoop:
+
+public interface Writable {
+void readFields(DataInput in);
+void write(DataOutput out);
+}
+Here, readFields, reads the data from network and write will write the data into local disk. Both are necessary for transferring data through clusters. DataInput and DataOutput classes (part of java.io) contain methods to serialize the most basic types of data.
+
+Suppose we want to make a composite key in Hadoop by combining two Writables then follow the steps below:
+
+public class add implements Writable{
+public int a;
+public int b;
+public add(){
+this.a=a;
+this.b=b;
+}
+public void write(DataOutput out) throws IOException {
+    out.writeInt(a);
+    out.writeInt(b);
+  }
+public void readFields(DataInput in) throws IOException {
+    a = in.readInt();
+    b = in.readInt();
+ }
+ public String toString() {
+    return Integer.toString(a) + ", " + Integer.toString(b)
+ }
+}
+ 
+
+Thus we can create our custom Writables in a way similar to custom types in Java but with two additional methods, write and read Fields. The custom writable can travel through networks and can reside in other systems.
+
+This custom type cannot be compared with each other by default, so again we need to make them comparable with each other.
+
+Let us now discuss what is WritableComparable and the solution to the above problem.
+
+As explained above, if a key is taken as IntWritable, by default it has comparable feature because of RawComparator acting on that variable and it will compare the key taken with the other keys in network and If Writable is not there it won’t be executed.
+
+By default, IntWritable, LongWritable and Text have a RawComparator which can execute this comparable phase for them. Then, will RawComparator help the custom Writable? The answer is no. So, we need to have WritableComparable.
+
+WritableComparable can be defined as a sub interface of Writable, which has the feature of Comparable too. If we have created our custom type writable, then why do we need WritableComparable?
+
+We need to make our custom type, comparable if we want to compare this type with the other.
+
+We want to make our custom type as a key, then we should definitely make our key type as WritableComparable rather than simply Writable. This enables the custom type to be compared with other types and it is also sorted accordingly. Otherwise, the keys won’t be compared with each other and they are just passed through the network.
+
+What happens if WritableComparable is not present?
+If we have made our custom type Writable rather than WritableComparable our data won’t be compared with other data types. There is no compulsion that our custom types need to be WritableComparable until unless if it is a key. Because values don’t need to be compared with each other as keys.
+
+If our custom type is a key then we should have WritableComparable or else the data won’t be sorted.
+
+How can WritableComparable be implemented in Hadoop?
+The implementation of WritableComparable is similar to Writable but with an additional ‘CompareTo’ method inside it.
+
+public interface WritableComparable extends Writable, Comparable
+{
+    void readFields(DataInput in);
+    void write(DataOutput out);
+    int compareTo(WritableComparable o)
+}
+How to make our custom type, WritableComparable?
+We can make custom type a WritableComparable by following the method below:
+
+public class add implements WritableComparable{
+public int a;
+public int b;
+public add(){
+this.a=a;
+this.b=b;
+}
+public void write(DataOutput out) throws IOException {
+    out.writeint(a);
+    out.writeint(b);
+  }
+public void readFields(DataInput in) throws IOException {
+    a = in.readint();
+    b = in.readint();
+  }
+public int CompareTo(add c){
+int presentValue=this.value;
+int CompareValue=c.value;
+return (presentValue < CompareValue ? -1 : (presentValue==CompareValue ? 0 : 1));
+}
+public int hashCode() {
+    return Integer.IntToIntBits(a)^ Integer.IntToIntBits(b);
+  }
+}
+These read fields and write make the comparison of data faster in the network.
+
+With the use of these Writable and WritableComparables in Hadoop, we can make our serialized custom type with less difficulty. This gives the ease for developers to make their custom types based on their requirement.
+
+###############################################################
