@@ -1,4 +1,13 @@
 
+#alias
+
+        vi ~/.bashrc
+
+        alias bline="beeline -u 'jdbc:hive2://server.company.com:10000/default;principal=hive/_HOST@DEVAD.COMPANY.COM;ssl=true'"
+        save and quit
+        source ~/.bashrc
+        
+        
 # ip address from hostname 
 
 ping hostname 
