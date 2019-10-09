@@ -1,11 +1,29 @@
 
 #alias
 
+
+        # good to have alias 
+        alias pscc='ps aux | grep java | grep cc_process'
+        alias tailcc='tail -f /home/mac/team/devtest/logs/project_cc.log'
+        alias bline='beeline -u '\''jdbc:hive2://machine1.company.com:10000/default;principal=hive/_HOST@DEVENV.COMPANY.COM;ssl=true'\'''
+        
+        #to add alias
         vi ~/.bashrc
 
         alias bline="beeline -u 'jdbc:hive2://server.company.com:10000/default;principal=hive/_HOST@DEVAD.COMPANY.COM;ssl=true'"
         save and quit
         source ~/.bashrc
+        
+        
+        # to list alias
+        alias <PRESS-ENTER-BUTTON>
+        
+        alias l.='ls -d .* --color=auto'
+        alias ll='ls -l --color=auto'
+        alias ls='ls --color=auto'
+        alias pscc='ps aux | grep java | grep cc_process'
+        alias tailcc='tail -f /home/mac/team/devtest/logs/project_cc.log'
+        alias vi='vim'
         
         
 # ip address from hostname 
