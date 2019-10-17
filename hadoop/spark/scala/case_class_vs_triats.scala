@@ -190,3 +190,215 @@ final case class BodyWithVolume(id: Int,
                                 ConsistsOfMaterial
 
 
+Traits:
+
+A trait encapsulates method and field definitions, which can then be reused by mixing them into classes.
+
+"""Unlike class inheritance, in which each class must inherit from just one superclass, 
+a class can mix in any number of traits."""
+
+Traits are used to define object types by specifying the signature of the supported methods. Scala also allows traits to be partially implemented but traits may not have constructor parameters.
+
+"""A trait definition looks just like a class definition except that it uses the keyword trait.
+The following is the basic example syntax of trait."""
+
+trait Equal {
+   def isEqual(x: Any): Boolean
+   def isNotEqual(x: Any): Boolean = !isEqual(x)
+}
+
+
+
+#When to Use Traits?
+There is no firm rule, but here are few guidelines to consider −
+
+If the behavior will not be reused, then make it a concrete class. It is not reusable behavior after all.
+
+If it might be reused in multiple, unrelated classes, make it a trait. Only traits can be mixed into different parts of the class hierarchy.
+
+If you want to inherit from it in Java code, use an abstract class.
+
+If you plan to distribute it in compiled form, and you expect outside groups to write classes inheriting from it, you might lean towards using an abstract class.
+
+If efficiency is very important, lean towards using a class.
+
+
+
+#################################################
+#################################################
+"""Complete example"""
+
+#Syntax
+trait Equal {
+   def isEqual(x: Any): Boolean
+   def isNotEqual(x: Any): Boolean = !isEqual(x)
+}
+This trait consists of two methods isEqual and isNotEqual. 
+Here, we have not given any implementation for isEqual where as another method has its implementation. 
+Child classes extending a trait can give implementation for the un-implemented methods. 
+
+"""So a trait is very similar to what we have abstract classes in Java."""
+
+Let us assume an example of trait Equal contain two methods isEqual() and isNotEqual(). 
+The trait Equal contain one implemented method that is isEqual() 
+so when user defined class Point extends the trait Equal, implementation to isEqual()
+method in Point class should be provided.
+
+Here it is required to know two important method of Scala, which are used in the following example.
+
+obj.isInstanceOf [Point] To check Type of obj and Point are same are not.
+
+obj.asInstanceOf [Point] means exact casting by taking the object obj type and returns the same obj as Point type.
+
+Try the following example program to implement traits.
+
+######################
+####Example
+trait Equal {
+   def isEqual(x: Any): Boolean
+   def isNotEqual(x: Any): Boolean = !isEqual(x)
+}
+
+class Point(xc: Int, yc: Int) extends Equal {
+   var x: Int = xc
+   var y: Int = yc
+   
+   def isEqual(obj: Any) = obj.isInstanceOf[Point] && obj.asInstanceOf[Point].x == y
+}
+
+object Demo {
+   def main(args: Array[String]) {
+      val p1 = new Point(2, 3)
+      val p2 = new Point(2, 4)
+      val p3 = new Point(3, 3)
+
+      println(p1.isNotEqual(p2))
+      println(p1.isNotEqual(p3))
+      println(p1.isNotEqual(2))
+   }
+}
+Save the above program in Demo.scala. The following commands are used to compile and execute this program.
+######################
+###Command
+\>scalac Demo.scala
+\>scala Demo
+####Output
+true
+false
+true
+#################################################
+#################################################
+
+
+
+"""
+Abstract class
+In Scala, an abstract class is constructed using the abstract keyword.
+It contains both abstract and non-abstract methods and cannot support multiple inheritances.
+
+Traits
+Like a class, Traits can have methods(both abstract and non-abstract), and fields as its members. Traits are just like interfaces in Java. 
+But they are more powerful than the interface in Java because in the traits we are allowed to implement the members.
+
+                                      Traits vs Abstract class
+#1 Traits support multiple inheritance.	                 #1 Abstract class does not support multiple inheritance.
+#2We are allowed to add a trait to an object instance.	  #2 abstract class - We are not allowed to add an abstract class to an object instance.
+#3Traits does not contain constructor parameters.	       #3 Abstract class contain constructor parameters.
+#4Traits are completely interoperable only when they     #4 Abstract class are completely interoperable with Java code.
+do not contain any implementation code.	
+#5Traits are stackable.                                  #5 Abstract class is not stackable. So, super calls are statically bound.
+So, super calls are dynamically bound.	
+
+"""
+
+#################
+Abstract class:
+
+// Scala program to illustrate how to  
+// create an abstract class 
+  
+// Abstract class 
+abstract class Abstclass 
+{ 
+      
+    // Abstract and non-abstract method 
+    def portal 
+    def tutorial() 
+    {  
+        println("Scala tutorial") 
+    } 
+  
+} 
+  
+// GFG class extends abstract class 
+class GFG extends Abstclass 
+{ 
+    def portal() 
+    { 
+        println("Welcome!! GeeksforGeeks") 
+    } 
+} 
+  
+object Main  
+{ 
+      
+    // Main method 
+    def main(args: Array[String])  
+    { 
+        // object of GFG class 
+        var obj = new GFG (); 
+        obj.tutorial() 
+        obj.portal() 
+    } 
+} 
+Output:
+
+Scala tutorial
+Welcome!! GeeksforGeeks
+###################
+
+#Trait:
+
+// Scala program to illustrate how to  
+// create traits 
+  
+// traits 
+trait mytrait 
+{ 
+      
+    // Abstract and non-abstract method 
+    def portal 
+    def tutorial() 
+    {  
+        println("Scala tutorial") 
+    } 
+  
+} 
+  
+// GFG class extends trait 
+class GFG extends mytrait 
+{ 
+    def portal() 
+    { 
+        println("Welcome!! GeeksforGeeks") 
+    } 
+} 
+  
+object Main  
+{ 
+      
+    // Main method 
+    def main(args: Array[String])  
+    { 
+          
+        // object of GFG class 
+        var obj = new GFG (); 
+        obj.tutorial() 
+        obj.portal() 
+    } 
+} 
+Output:
+
+Scala tutorial
+Welcome!! GeeksforGeeks
+
