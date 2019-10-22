@@ -69,6 +69,66 @@ https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-i
 
 
 
+# val vs var vs lazy val
+
+“val” is used to define Immutable data. It’s evaluated only once at the time of definition.
+“var” is used to define Mutable data. It’s evaluated only once at the time of definition.
+Both val and var are evaluated Eagerly.
+“lazy val” is used to define Immutable data. It is evaluated only once when we access it for first time. That means it is evaluated Lazily.
+“def” is used to define Methods or Functions. It is evaluated only when we access it and evaluated every-time we access it. That means it is evaluated Lazily.
+
+
+
+
+# map vs map partitions vs flat map
+
+Map():
+
+It returns a new RDD by applying the given function to each element of the RDD. 
+The function in the map returns only one item.
+
+MapPartitions():
+
+Similar to map, but runs separately on each partition (block) of the RDD, so the function must be of type Iterator<T> ⇒ Iterator<U> when running on an RDD of type T.
+
+flatMap() 
+as compared to Map() and MapPartitions(), flatMap() neither works on a single element as map() nor it produces multiple elements of the result as mapPartitions().
+
+Let me explain you with an example. If there are 2000 row and 20 partitions, then each partition will contain the 2000/20=100 Rows.
+
+Now, when we apply map(func) method to rdd, the func() operation will be applied on each and every Row and in this particular case func() operation will be called 2000 times. i.e. time-consuming in some time-critical applications.
+
+If we call mapPartition(func) method on rdd, the func() operation will be called on each partition instead of each row. In this particular case, it will be called 20 times(number of the partition). In this way, you can prevent some processing when it comes to time-consuming application.
+
+Map() exercises function at per element level whereas MapPartitions() exercises function at the partition level.
+
+Now talking about similarity of flatMap() as compared to Map() and MapPartitions(), flatMap() neither works on a single element as map() nor it produces multiple elements of the result as mapPartitions().
+
+
+# fold vs foldleft vs foldright
+
+Now, the difference between fold, foldLeft, and foldRight.
+The primary difference is the order in which the fold operation iterates through the collection in question. foldLeft starts on the left side—the first item—and iterates to the right; foldRight starts on the right side—the last item—and iterates to the left. fold goes in no particular order.
+
+Because fold does not go in any particular order, there are constraints on the start value and thus return value (in all three folds the type of the start value must be the same as the return value).
+
+The first constraint is that the start value must be a supertype of the object you're folding. In our first example we were folding on a type List[Int] and had a start type of Int. Int is a supertype of List[Int].
+
+The second constraint of fold is that the start value must be neutral, i.e. it must not change the result. For example, the neutral value for an addition operation would be 0, 1 for multiplication, Nil lists, etc.
+
+
+
+#Spark Garbage Collection Tuning
+
+In garbage collection, tuning in Apache Spark, the first step is to gather statistics on how frequently garbage collection occurs. It also gathers the amount of time spent in garbage collection. Thus, can be achieved by adding -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps to Java option. The next time when Spark job run, a message will display in workers log whenever garbage collection occurs. These logs will be in worker node, not on drivers program.
+
+Java heap space divides into two regions Young and Old. The young generation holds short-lived objects while Old generation holds objects with longer life. The garbage collection tuning aims at, long-lived RDDs in the old generation. It also aims at the size of a young generation which is enough to store short-lived objects. With this, we can avoid full garbage collection to gather temporary object created during task execution. Some steps that may help to achieve this are:
+
+If full garbage collection is invoked several times before a task is complete this ensures that there is not enough memory to execute the task.
+In garbage collection statistics, if OldGen is near to full we can reduce the amount of memory used for caching. This can be achieved by lowering spark.memory.fraction. the better choice is to cache fewer objects than to slow down task execution. Or we can decrease the size of young generation i.e., lowering –Xmn.
+The effect of Apache Spark garbage collection tuning depends on our application and amount of memory used.
+
+
 # mapreduce combiner 
 
                   A Combiner, also known as a semi-reducer, is an optional class that operates by accepting the inputs from the Map class and thereafter passing the output key-value pairs to the Reducer class.
