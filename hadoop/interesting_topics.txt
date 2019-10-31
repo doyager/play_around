@@ -68,6 +68,17 @@ https://support.datastax.com/hc/en-us/articles/208237373-FAQ-When-is-it-a-good-i
 
 
 
+#Hadoop jar commands:
+
+-files <comma separated list of files>	
+Specify comma separated files to be copied to the map reduce cluster. Applies only to job.
+
+-libjars <comma seperated list of jars>	Specify
+comma separated jar files to include in the classpath. Applies only to job.
+
+-archives <comma separated list of archives>	
+Specify comma separated archives to be unarchived on the compute machines. Applies only to job.
+
 
 # val vs var vs lazy val
 
