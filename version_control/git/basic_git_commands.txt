@@ -45,6 +45,28 @@ Case sensitive rename—eg. from casesensitive to CaseSensitive—you must use a
 git mv casesensitive tmp
 git mv tmp CaseSensitive
 
+
+
+
+
+
+#restore file as file in develop 
+#restore a file in branch x , as the same copy in develop branch
+
+to correct the file abc.txt in branch-X , same as the contents of abc.txt in develop branch 
+
+git checkout branch_name file_name
+
+#1.checkout branch to be corrected
+git checkout branch-X
+
+#2. use checkout with branch name that has perfect/desired code as below
+git checkout develop abc.txt
+
+#3. with this contents in branch-X will be same as contents from develop branch
+
+
+
 # git rename branch
 
           
