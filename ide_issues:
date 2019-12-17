@@ -1,5 +1,11 @@
 
 
+Intellij:
+
+
+- Not recognising project setup after import, can see the files as only class files but not as loaded in java view , then 
+Sol: you have to mark your src directory as Source Root. , Right-click on the src folder and select Sources Root:
+https://stackoverflow.com/questions/30088957/intellij-doesnt-recognize-java-project-after-cloning/30091998
 
 Scala IDE :
 
