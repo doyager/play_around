@@ -2,10 +2,17 @@
 
 Intellij:
 
+-  To Import project 
+      - mvn clean and build from command line 
+           - 1.   mvn clean install -DskipTests
+           - 2.   mvn eclipse:eclipse
+       - open intellij , ffrom file menu , modedule from exisinting resource
+       - maven  -click next for 3-4 times
 
 - Not recognising project setup after import, can see the files as only class files but not as loaded in java view , then 
-Sol: you have to mark your src directory as Source Root. , Right-click on the src folder and select Sources Root:
-https://stackoverflow.com/questions/30088957/intellij-doesnt-recognize-java-project-after-cloning/30091998
+
+      Sol: you have to mark your src directory as Source Root. , Right-click on the src folder and select Sources Root:
+      https://stackoverflow.com/questions/30088957/intellij-doesnt-recognize-java-project-after-cloning/30091998
 
 Scala IDE :
 
