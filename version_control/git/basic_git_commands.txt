@@ -47,6 +47,41 @@ git mv tmp CaseSensitive
 
 
 
+#git stash & unstash
+
+1.  git status
+
+git status
+On branch feature/xsdValidation
+                    Changes not staged for commit:
+                      (use "git add <file>..." to update what will be committed)
+                      (use "git checkout -- <file>..." to discard changes in working directory)
+
+                              modified:   ../../../pom.xml
+                              
+ 2. git stash 
+
+          git stash
+          Saved working directory and index state WIP on feature/xsdValidation: 1a5e38f [artifactory-release] Next development version
+
+3. git status
+
+          git status
+          On branch feature/xsdValidation
+          nothing to commit, working tree clean
+  
+  Now you can switch from the branch 
+  
+4. To unstash git stash pop , this will revert and apply all the changes back
+
+                     git stash pop
+                    On branch feature/xsdValidation
+                    Changes not staged for commit:
+                      (use "git add <file>..." to update what will be committed)
+                      (use "git checkout -- <file>..." to discard changes in working directory)
+
+                              modified:   ../../../pom.xml
+
 
 
 
