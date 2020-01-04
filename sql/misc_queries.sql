@@ -1,5 +1,33 @@
 
 
+###NATURAL JOIN operation
+A NATURAL JOIN is a JOIN operation that creates an implicit join clause for you based on the common columns in the two tables being joined. Common columns are columns that have the same name in both tables.
+
+A NATURAL JOIN can be an INNER join, a LEFT OUTER join, or a RIGHT OUTER join. The default is INNER join.
+
+If the SELECT statement in which the NATURAL JOIN operation appears has an asterisk (*) in the select list, the asterisk will be expanded to the following list of columns (in this order):
+
+All the common columns
+Every column in the first (left) table that is not a common column
+Every column in the second (right) table that is not a common column
+An asterisk qualified by a table name (for example, COUNTRIES.*) will be expanded to every column of that table that is not a common column.
+
+If a common column is referenced without being qualified by a table name, the column reference points to the column in the first (left) table if the join is an INNER JOIN or a LEFT OUTER JOIN. If it is a RIGHT OUTER JOIN, unqualified references to a common column point to the column in the second (right) table.
+
+Syntax
+TableExpression NATURAL [ { LEFT | RIGHT } [ OUTER ] | INNER ] JOIN { TableViewOrFunctionExpression | ( TableExpression ) }
+Examples
+If the tables COUNTRIES and CITIES have two common columns named COUNTRY and COUNTRY_ISO_CODE, the following two SELECT statements are equivalent:
+
+1.  SELECT * FROM COUNTRIES NATURAL JOIN CITIES
+
+2.   SELECT * FROM COUNTRIES JOIN CITIES
+    USING (COUNTRY, COUNTRY_ISO_CODE)
+
+Both 1 and 2 are equivalent
+
+
+
 -- greater than time stamp
 
 select * from emp where CREATED_TIMESTAMP > to_timestamp('2019-08-29 01:12:40','yyyy-mm-dd hh24.mi.ss') 
