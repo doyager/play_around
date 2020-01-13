@@ -15,6 +15,28 @@ The View component is used for all the UI logic of the application. For example,
 Controller
 Controllers act as an interface between Model and View components to process all the business logic and incoming requests, manipulate data using the Model component and interact with the Views to render the final output. For example, the Customer controller will handle all the interactions and inputs from the Customer View and update the database using the Customer Model. The same controller will be used to view the Customer data.
 
+#Advantages & disadvantages
+
+Advantages:
+
+Simultaneous development – Multiple developers can work simultaneously on the model, controller and views.
+High cohesion – MVC enables logical grouping of related actions on a controller together. The views for a specific model are also grouped together.
+Loose coupling – The very nature of the MVC framework is such that there is low coupling among models, views or controllers
+Ease of modification – Because of the separation of responsibilities, future development or modification is easier
+Multiple views for a model – Models can have multiple views
+
+# Disadvantages:
+
+The disadvantages of MVC can be generally categorized as overhead for incorrectly factored software.
+
+Code navigability – The framework navigation can be complex because it introduces new layers of indirection and requires users to adapt to the decomposition criteria of MVC.
+Multi-artifact consistency – Decomposing a feature into three artifacts causes scattering. Thus, requiring developers to maintain the consistency of multiple representations at once.
+Undermined by inevitable clustering – Applications tend to have heavy interaction between what the user sees and what the user uses. Therefore each feature's computation and state tends to get clustered into one of the 3 program parts, erasing the purported advantages of MVC.
+Excessive boilerplate – Due to the application computation and state being typically clustered into one of the 3 parts, the other parts degenerate into either boilerplate shims or code-behind[16] that exists only to satisfy the MVC pattern.
+Pronounced learning curve – Knowledge on multiple technologies becomes the norm. Developers using MVC need to be skilled in multiple technologies.
+Lack of incremental benefit – UI applications are already factored into components, and achieving code reuse and independence via the component architecture, leaving no incremental benefit to MVC.
+
+
 
 ########  ASP.NET MVC
 ASP.NET supports three major development models: Web Pages, Web Forms and MVC (Model View Controller). ASP.NET MVC framework is a lightweight, highly testable presentation framework that is integrated with the existing ASP.NET features, such as master pages, authentication, etc. Within .NET, this framework is defined in the System.Web.Mvc assembly. The latest version of the MVC Framework is 5.0. We use Visual Studio to create ASP.NET MVC applications which can be added as a template in Visual Studio.
