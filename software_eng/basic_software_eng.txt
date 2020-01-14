@@ -16,6 +16,100 @@ cdc - change data capture
 ###################################################################################################################
 
 
+#### OOPs vs functional
+
+Object-oriented programming used for performing few operations which are having common behavior and different variants. Functional programming is having a stateless programming model. Object-oriented programming is having a stateful programming model.
+
+
+### OOPs
+
+OOP “is a programming paradigm based on the concept of “objects”, which may contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods. 
+
+A feature of objects is that an object’s procedures can access and often modify the data fields of the object with which they are associated (objects have a notion of “this” or “self”)”, which essentially means, altering the ‘state’ of the object.
+Furthermore, in most OOP languages, objects are instances of a class, and are seen as individual entities which interact with each other. These objects mimic the real world (to a certain degree).
+Here’s an example in Ruby:
+class Dog
+  attr_accessor :name, :favorite_treat
+  
+  def initialize(name, favorite_treat)
+    @name = name
+    @favorite_treat = favorite_treat
+  end
+
+  def change_favorite_treat(treat)
+    @favorite_treat = treat
+  end
+end
+charlie = Dog.new("Charlie", "bacon")
+We are creating a class (almost like a template, if you will) called Dog. We can assume all dogs have a name and a favorite treat, so we ‘initialize’ with a name and favorite treat parameter. We now make a new instance of the dog class, named charlie. Let’s say Charlie is a fickle dog, and his favorite treat has changed from bacon to t-bones.
+charlie.change_favorite_treat('t-bone')
+charlie.favorite_treat >> 't-bone'
+By using the change_favorite_treat method, we have successfully changed the “state” of Charlie, and now when we access his ‘favorite_treat’ attribute, we get ‘t-bone’.
+
+
+
+#### FP - FunctionalProgramming 
+
+Functional programming
+Put very simply, functional programming is a language that focuses on the computation of pure functions. The keyword there is ‘pure’ — everything revolves around keeping everything ‘pure’. What exactly do we mean by pure?
+There is a complete separation between the data of a program, and the behaviors of a program
+All objects created in functional programming are immutable (once something is created, it can’t be changed)
+Shared state is avoided (objects do not share scope with other objects)
+Adherence to pure functions (explained below)
+Pure functions
+A pure function is a function where:
+The return value only depends on the input (if you input the same value, you will always return the same value)
+There are no side effects (for example: no network or database calls which could affect the return value)
+They do not alter the data that was passed into them. We only want to describe how the input will be changed (think destructive vs non-destructive)
+Here are some examples of an impure function:
+function number(num){
+  num * Math.random()
+}
+function hello(greeting){
+  console.log(greeting)
+}
+var totalPeople = 10
+function totalVotes(votes){
+ return votes * totalPeople
+}
+The outcome of number has nothing to do with what we input into it with num, as it is multiplying the input with a random number. Not pure! With pure functions, we ONLY care about return values. So, the function hello isn’t pure in the fact that it is creating a ‘side-effect’, which is the console logging. The function totalVotes depends on a variable outside of its scope (shared state!), which is a no no!
+Here’s an example of a pure function:
+function plusTwo(num){
+  return num + 2
+}
+The outcome of plusTwo depends only on the input, num.
+OOP vs FP
+To highlight how different the approaches are in OOP and FP, I’ve borrowed this example below:
+You run a company and you just decided to give all your employees a $10,000.00 raise. How would you tackle this situation programatically?
+In OOP:
+Create Employee class which initializes with name and salary, has a change salary instance method
+Create instances of employees
+Use the each method to change salary attribute of employees by +10,000
+In FP:
+Create employees array, which is an array of arrays with name and corresponding salary
+Create a change_salary function which returns a copy of a single employee with the salary field updated
+Create a change_salaries function which maps through the employee array and delegates the calculation of the new salary to change_salary
+Use both methods to create a new dataset, named ‘happier employees’
+
+OOPs vs FP :
+
+We can see that the FP approach uses pure functions and adheres to immutability (note the use of map instead of each, where map returns a new altered dataset while each alters the attributes/state of the objects). 
+
+With OOP, we cannot easily identify if the object has had the function called on it unless we start from the beginning and track if this has happened, whereas in FP, the object itself is now a new object with a different name, which makes it considerably easier to know what changes have been made.
+(Example and explanation taken from: https://www.codenewbie.org/blogs/object-oriented-programming-vs-functional-programming)
+So, what’s the debate about?
+
+
+Quite obviously, those on team OOP argue that OOP is a better approach to creating programs, while those on team FP argue that FP is better. How so?Team OOP argues that the concept of inheritance (new objects taking on the attributes/methods of existing objects letting us reuse more code) and encapsulation (the data and methods related to a certain object being bound together, creating independent, protected entities) makes it easier to manage and manipulate data. Team FP argues that the separation of data and methods, as well as the high level of abstraction leave less room for errors.
+It seems the general consensus is that OOP and FP are better depending on the situation, so we won’t be hearing about the end of this debate anytime soon.
+
+
+
+
+
+#########################################
+
+
 #####class vs object
 
 
@@ -36,7 +130,26 @@ An object is a member or an "instance" of a class. An object has a state in whic
 This subtle conceptual difference between classes and objects shows why there is a tendency to want to use them interchangeably.
 
 
+######################################
 
+### data structures:
+
+In computer science, a data structure is a data organization, management, and storage format that enables efficient access and modification. More precisely, a data structure is a collection of data values, the relationships among them, and the functions or operations that can be applied to the data
+
+ anything that can store data can be called as a data structure, 
+ 
+ hence Integer, Float, Boolean, Char etc, all are data structures. They are known as Primitive Data Structures.
+ 
+ Some example of Abstract Data Structure are :
+Linked List.
+Tree.
+Graph.
+Stack, Queue etc.
+
+Data type: a set of values together with operations (specified as input-output behavior)
+Data structure: a physical implementation of a data type
+
+ 
 ############################
 
 Big O notation:
