@@ -13,3 +13,44 @@ garbage collection generations
 
 
 cdc - change data capture
+
+
+
+########## arraylist vs linked list
+
+ArrayList and LinkedList, both implements java.util.List interface and provide capability to store and get objects as in ordered collections using simple API methods. Both are non synchronized classes. Still they are different in many aspects and we need to understand both classes in detail to make a wise decision when to use which class.
+
+1. LinkedList vs ArrayList – Internal implementation
+Both collections allow duplicate elements and maintain the insertion order of the elements.
+
+LinkedList implements it with a doubly-linked list. ArrayList implements it with a dynamically resizing array. This will lead further differences in performance.
+
+2. LinkedList vs ArrayList – Performance
+2.1. Add operation
+Adding element in ArrayList is O(1) operation if it doesn’t require resize of Array. If array is resized then it becomes O(log(n)).
+
+Appending an element in LinkedList is O(1) operation, as it doesn’t require any navigation.
+
+2.2. Remove operation
+When we remove an element from ArrayList (in backing array), it moves all elements on right. It makes it close to O(n) in worst case (remove first element) and O(1) in best case (remove last element).
+
+LinkedList remove operation gives O(1) performance because it just need to reset the pointers of previous and next nodes. No copy or movement is required.
+
+2.3. Iteration
+Iteration is the O(n) operation for both LinkedList and ArrayList where n is a number of an element.
+
+2.4. Get operation
+ArrayList provides get(int index) method which directly find the element at given index location. It is of order O(1).
+
+LinkedList also provide get(int index) method BUT it first traverses all nodes to reach the correct node. It makes the performance variable. In best case it is O(1) and in worst case it is O(n).
+
+3. LinkedList vs ArrayList – Conclusion
+Until you are not dealing with very high volume of data, both the classes will give you same level of performance. Both provide ordered collection and both are non-synchronized as well.
+
+LinkedList implements Deque interface as well, so it provides queue like FIFO functionality through methods such as peek() and poll().
+
+As seen in performance comparison, ArrayList is better for storing and accessing data. LinkedList is better for manipulating data.
+
+That’s all for arraylist vs linkedlist in java.
+
+######################################################
