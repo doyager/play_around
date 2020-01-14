@@ -13,7 +13,52 @@ garbage collection generations
 
 
 cdc - change data capture
+###################################################################################################################
 
+
+#####class vs object
+
+
+In object-oriented terminology, 
+
+a class is a template for defining objects. 
+It specifies the names and types of variables that can exist in an object, as well as "methods"--procedures for operating on those variables. A class can be thought of as a "type", with the objects being a "variable" of that type. Multiple objects, or instances of a class can be created in a single HLU program, just as you declare multiple variables of the same type in any program.
+For example, the TextItem class is a template for creating an object that contains a text string. This object will have a particular set of text attributes such as font, size, and color. If we set the values of the object variables--resources--in a certain way, we can create the TextItem object "Hello World". Resources that are available for objects of the TextItem class include the text string ("Hello World" in this case), the type of font, the color of the characters, the size of the characters, the line width of the characters, etc. A TextItem object is thus an instance of the TextItem class with a set of values assigned to the associated resources. We can create a second TextItem object if we want to with a new set of resource values such as: "THIS IS ALSO A TEXTITEM OBJECT."
+
+Class versus object
+Many people get confused by the difference between class and object. The difference is simple and conceptual. 
+
+Class:
+A class is a template for objects. A class defines object properties including a valid range of values, and a default value. A class also describes object behavior. 
+
+Object:
+An object is a member or an "instance" of a class. An object has a state in which all of its properties have values that you either explicitly define or that are defined by default settings.
+This subtle conceptual difference between classes and objects shows why there is a tendency to want to use them interchangeably.
+
+
+
+############################
+
+Big O notation:
+
+Big O Notation
+What is the Big O Notation? Big O is the way we describe the performance efficiency or complexity of algorithms.
+
+we must first understand Big O and some of the different time complexity possibilities. Below are three different possibilities for the speed of an algorithm.
+O(1): Executes in the same time regardless of the size of the input
+O(n): Executes linearly and proportionally to the size of the input
+O(n²): Performance is directly proportional to the square of the size of the input (ex: nested iterations, loops)
+
+
+
+###############################################################
+
+
+##### data profiling
+
+Data profiling is the process of examining the data available from an existing information source (e.g. a database or a file) and collecting statistics or informative summaries about that data. The purpose of these statistics may be to: Find out whether existing data can be easily used for other purposes
+
+######################
 
 #### process vs thread  
 
@@ -132,8 +177,86 @@ That’s all about Concurrency vs. Parallelism, a very important concept in java
 
 ###########################################
 
+#### array
+In computer science, an array data structure, or simply an array, is a data structure consisting of a collection of elements, each identified by at least one array index or key. An array is stored such that the position of each element can be computed from its index tuple by a mathematical formula.
+
+
+### array Big O
+
+What is an Array? 
+An array is a collection of elements that are ideally of the same data type. When an array is created, the size of the array is specified at the time of declaration meaning it is a fixed size.
+Arrays are also stored as one large contiguous block of memory starting at an index of zero.
+This means that the elements get stored in consecutive slots of memory.
+
+For example, when accessing an array at an index of 2, we are retrieving the third element.
+
+Since the size of an array is specified at the time of declaration, part of the array contains the data, and the other portion of the array is empty so that it can store new elements if we wanted to add to it. If an array becomes too large, a new array must be created that copies over the original data and then doubles in size to create more empty space for future data to be stored. With an array, there is often memory allocated to the actual data stored and 
+memory allocated to empty slots that may be filled in the future.
+
+### big O to add/remove from array from first / last
+
+For an array, accessing elements at a specified index has a constant time of Big O(1).
+Inserting or removing from an array can come in three different forms: inserting/removing from the being, inserting/removing from the end, or inserting/removing from the middle. In order to add an element to the beginning of an array, we must shift every other element after it to a higher index. For example, If we wanted to add 2 to the beginning of the above so that it would now be at the zeroth index, 10 would now be at the first, 9 would be at the second and so on. Time taken will be proportional to the size of the list or Big O(n), n being the size of the list.
+
+Adding to the end of the array is a lot simpler in terms of speed.
+It involves adding the element to the next highest index of the array. This means that it is constant time and Big O(1) if the array is not already full. However, if the array is full it would involve having to create a new array and then copy the contents of the original into the new array which would be O(n).
+
+The third case of insertion would be adding to a position between the beginning and end of the array which would be Big O(n). The same time complexity is also true for removing from an array.
+
+
+Cost of accessing - O(1)
+
+Insert/remove from beginnning - O(n)
+
+Insert/Remove from end - O(1)
+
+Insert/Remove from middle O(n)
+
+
+
+##################################################
+
 ########## arraylist vs linked list
 
+#### array list 
+
+Java ArrayList class uses a dynamic array for storing the elements. It inherits AbstractList class and implements List interface.
+
+The important points about Java ArrayList class are:
+
+Java ArrayList class can contain duplicate elements.
+Java ArrayList class maintains insertion order.
+Java ArrayList class is non synchronized.
+Java ArrayList allows random access because array works at the index basis.
+In Java ArrayList class, manipulation is slow because a lot of shifting needs to occur if any element is removed from the array list.
+Hierarchy of ArrayList class
+As shown in the above diagram, Java ArrayList class extends AbstractList class which implements List interface. The List interface extends Collection and Iterable interfaces in hierarchical order.
+
+ArrayList class declaration
+Let's see the declaration for java.util.ArrayList class.
+
+public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable  
+
+
+###linked list
+
+Java LinkedList class uses a doubly linked list to store the elements. It provides a linked-list data structure. It inherits the AbstractList class and implements List and Deque interfaces.
+
+The important points about Java LinkedList are:
+
+Java LinkedList class can contain duplicate elements.
+Java LinkedList class maintains insertion order.
+Java LinkedList class is non synchronized.
+In Java LinkedList class, manipulation is fast because no shifting needs to occur.
+Java LinkedList class can be used as a list, stack or queue.
+Hierarchy of LinkedList class
+As shown in the above diagram, Java LinkedList class extends AbstractSequentialList class and implements List and Deque interfaces.
+
+Doubly Linked List
+In the case of a doubly linked list, we can add or remove elements from both sides.
+
+
+## differences -
 ArrayList and LinkedList, both implements java.util.List interface and provide capability to store and get objects as in ordered collections using simple API methods. Both are non synchronized classes. Still they are different in many aspects and we need to understand both classes in detail to make a wise decision when to use which class.
 
 1. LinkedList vs ArrayList – Internal implementation
