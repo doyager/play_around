@@ -21,9 +21,28 @@ Process:
 Process means any program is in execution. Process control block controls the operation of any process. Process control block contains the information about processes for example: Process priority, process id, process state, CPU, register etc. A process can creates other processes which are known as Child Processes. Process takes more time to terminate and it is isolated means it does not share memory with any other process.
 
 Thread:
+A thread is a basic unit of CPU utilization
+
 Thread is the segment of a process means a process can have multiple threads and these multiple threads are contained within a process. A thread have 3 states: running, ready, and blocked.
 
 Thread takes less time to terminate as compared to process and like process threads do not isolate.
+
+A thread is a basic unit of CPU utilization. It is also referred to as a “lightweight process”.
+
+A thread is a sequence of instructions within a process and it behaves like “a process within a process”. It differs from a process because it does not have its own Process Control Block (collection of information about the processes). Usually, multiple threads are created within a process. Threads execute within a process and processes execute within the operating system kernel.
+
+A thread comprises:
+
+thread ID
+program counter
+register set
+stack
+A thread shares resources with its peer threads (all other threads in a particular task), such as:
+
+code section
+data section
+any operating resources which are available to the task
+
 
 
 Difference between Process and Thread:
@@ -42,6 +61,35 @@ S.NO	PROCESS	THREAD
 
 ################################################
 
+
+
+### green threads  or greenlets
+
+
+Greenlets are lightweight thread-like structures that are scheduled and managed inside the process. They are references to the part of the stack that is used by the thread.
+
+In computer programming, green threads are threads that are scheduled by a runtime library or virtual machine (VM) instead of natively by the underlying operating system (OS). Green threads emulate multithreaded environments without relying on any native OS abilities, and they are managed in user space instead of kernel space, enabling them to work in environments that do not have native thread support
+
+
+Compared to POSIX threads (pthreads), there is no stack allocated up front and there is only as much stack as is actually used by the greenlet
+
+In python, we implement greenlets via the gevent package and we implement pthreads via python’s built-in threading module.
+
+Both green threads (greenlets) and POSIX threads (pthreads) are mechanisms to support multithreaded execution of programs.
+
+POSIX threads use the operating system’s native ability to manage multithreaded processes. When we run pthreads, the kernel schedules and manages the various threads that make up the process.
+
+Green threads emulate multithreaded environments without relying on any native operating system capabilities. Green threads run code in user space that manages and schedules threads.
+
+The key differences between greenlets and pthreads can be summarized as such:
+
+pthreads	greenlets
+pthreads can switch between threads pre-emptively, switching control from a running thread to a non-running thread at any time	greenlets only switch when control is explicitly given up by a thread - when using yield() or wait() - or when a thread performs a I/O blocking operation such as read or write
+On multicore machines, pthreads can run more than one thread. However python’s Global Interpreter Lock (CPython Intepreter) prevents parallelism and concurrency is only effective for I/O-bound programs	greenlets can only run on one single CPU and is useful for I/O-bound programs
+Race conditions can occur when implementing multi-threading code. Use locks to manage mutex to avoid race
+
+
+####################################################
 
 ###### concurrancy vs parallelism
 
@@ -165,3 +213,73 @@ The best approach to tuning Java garbage collection is setting flags on the JVM.
 On the other hand, the CMS garbage collector is designed to minimize pauses, making it ideal for GUI applications where responsiveness is important. Additional fine-tuning can be accomplished by changing the size of the heap or its sections and measuring garbage collection efficiency using a tool like jstat.
 
 #######################################################
+
+##### CDC - change data capture
+
+Change data capture CDC
+In databases, change data capture (CDC) is a set of software design patterns used to determine (and track) 
+the data that has changed so that action can be taken using the changed data.
+
+
+ Change Data Capture (CDC) techniques are used to identify changes. CDC can be the basis to synchronize another system with the same incremental changes, or to store an audit trail of changes. The audit trail may subsequently be used for other uses e.g. to update a data warehouse or to run analyses across the changes e.g. to identify patterns of changes. In this blog post, I will describe the four common methods to perform CDC: Date_Modified, DIFF, Triggers, and Log-Based Change Data Capture. I will also share some of the challenges with each method.
+
+Learn More About CDC
+ 
+#### Four Methods of Change Data Capture
+
+1. DATE_MODIFIED
+
+
+Many transactional applications keep track of metadata in every row including who created and/or most-recently modified the row, as well as when the row was created and last modified. The approach to CDC in such an environment is to keep track of when changes are extracted, and in a subsequent run filter on the DATE_MODIFIED column to only retrieve rows that were modified since the most recent time data was extracted. This approach has a few challenges that may or may not be a concern, depending on the application:
+
+
+
+Data deletes are a challenge because there is no DATE_MODIFIED for a deleted row (unless deletes are logical and update a flag in the row indicates the row was deleted). The extreme case of delete is truncate table which is uncommon in transactional applications but does occur sometimes.
+DATE_MODIFIED must be available on all tables and must be reliably set. Database triggers may be a good way to set the values but these may introduce overhead on the transactional application.
+Extracting the changes uses a lot of resources. Of course DATE_MODIFIED may be indexed to lower the impact of the select statement at the cost of storing (and continuously updating) the additional index.
+Using DATE_MODIFIED for CDC works well for traditional data warehouse applications that are populated using Extract, Transform and Load (ETL) jobs, when the source tables don’t process deletes.
+
+2. Diff
+
+The diff method for change data capture compares the current state of the data with previous state of the data to identify what changed. Challenges with this approach include:
+
+To perform the diff requires a lot of resources to compute the differences between the data, and resource consumption grows at least linearly with the growth in data volume.
+CDC cannot be performed in real-time because the diff realistically takes too many resources to perform all the time.
+Compared to the DATE_MODIFIED CDC method the diff method does not have the challenge with deleted rows. The diff method works well for low data volumes.
+
+3. Triggers
+
+Database triggers can be used to perform CDC in shadow tables. The shadow tables may store the entire row to keep track of every single column change, or only the primary key is stored as well as the operation type (insert, update or delete). The use of database triggers to perform CDC also has a few challenges:
+
+Firing the trigger, and storing the row changes in a shadow table, introduces overhead. In an extreme case CDC may introduce 100% overhead on the transaction i.e. instead of .1 second it may take .2 seconds to complete a transaction.
+The lower-overhead alternative to only store the primary key of the table requires a join back to the source table to retrieve the changes which (1) increases the load to retrieve the changes, and (2) loses intermediate changes if multiple changes took place on the same row.
+Should the source application perform a truncate then chances are the trigger won’t fire and changes are not recorded. Also, if changes are made to tables then triggers and shadow tables may also have to be modified, recreated and/or recompiled which introduces extra overhead to manage and maintain the database.
+CDC using database triggers lowers the overhead to extract the changes but increases the overhead to record the changes.
+
+4. Log-Based Change Data Capture
+
+
+Transactional databases store all changes in a transaction log in order to recover the committed state of the database should the database crash for whatever reason. Log-based CDC takes advantage of this aspect of the transactional database to read the changes from the log. The challenges with log-based CDC are:
+
+Interpreting the changes in the transaction log is difficult because there are no documented standards on how the changes are stored (i.e. transaction logs from different database vendors are completely different), and there are many scenarios that must all be considered and tested (e.g. consider clustered databases, rollbacks and savepoints, many different ways to perform inserts, updates and deletes, etc.).
+Database vendors may not provide an interface to the transaction logs – documented or not – and even if there is one it may be relatively slow and/or resource intensive.
+Most databases have been optimized to only use internal identifiers to recover database row changes which is insufficient to perform CDC and record the changes on a different system. Supplemental logging of primary key columns is required to retrieve the context of the updates. The introduction of supplemental logging will increase the volume of data written to the transaction logs but generally only by a small percentage, and generally, there is very little if any measurable performance impact on the transactional application.
+ 
+
+Learn More About How HVR Performs Log-Based Change Data Capture
+ 
+
+Watch Video
+ 
+
+### Benefits of Log-Based Change Data Capture
+log based change data captureThe biggest benefit of log-based change data capture is the asynchronous nature of CDC: changes are captured independent of the source application performing the changes. Dedication and smart software engineers can take care of the biggest challenges. Log-based CDC is generally considered the superior approach to change data capture that can be applied to all possible scenarios including systems with extremely high transaction volumes.
+
+HVR supports log-based CDC for all supported relational database sources. Trigger-based capture is still supported on most source databases for legacy reasons, or in scenarios when the source database does not provide the required functionality to perform log-based CDC (e.g. SQL Server Express Edition does not support supplemental logging of additional columns). Set-up of real-time data integration in HVR is simplified by a comprehensive GUI that takes care of all necessary steps to perform log-based CDC including the setup of supplemental logging as needed.
+
+###############################################################
+
+
+
+
+############################################################
