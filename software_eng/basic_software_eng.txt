@@ -54,3 +54,46 @@ As seen in performance comparison, ArrayList is better for storing and accessing
 That’s all for arraylist vs linkedlist in java.
 
 ######################################################
+
+
+#### garabage collection and generations
+
+Java garbage collection is the process by which Java programs perform automatic memory management. Java programs compile to bytecode that can be run on a Java Virtual Machine, or JVM for short. When Java programs run on the JVM, objects are created on the heap, which is a portion of memory dedicated to the program. Eventually, some objects will no longer be needed. The garbage collector finds these unused objects and deletes them to free up memory.
+
+How Java Garbage Collection Works
+Java garbage collection is an automatic process. The programmer does not need to explicitly mark objects to be deleted. The garbage collection implementation lives in the JVM. Each JVM can implement garbage collection however it pleases; the only requirement is that it meets the JVM specification. Although there are many JVMs, Oracle’s HotSpot is by far the most common. It offers a robust and mature set of garbage collection options.
+
+While HotSpot has multiple garbage collectors that are optimized for various use cases, all its garbage collectors follow the same basic process. In the first step, unreferenced objects are identified and marked as ready for garbage collection. In the second step, marked objects are deleted. Optionally, memory can be compacted after the garbage collector deletes objects, so remaining objects are in a contiguous block at the start of the heap. The compaction process makes it easier to allocate memory to new objects sequentially after the block of memory allocated to existing objects.
+
+All of HotSpot’s garbage collectors implement a generational garbage collection strategy that categorizes objects by age. The rationale behind generational garbage collection is that most objects are short-lived and will be ready for garbage collection soon after creation.
+
+Java Garbage Collection Heaps
+
+Image via Wikipedia
+
+##### The heap is divided into three sections:
+
+
+Young Generation:
+
+Newly created objects start in the Young Generation. The Young Generation is further subdivided into an Eden space, where all new objects start, and two Survivor spaces, where objects are moved from Eden after surviving one garbage collection cycle. When objects are garbage collected from the Young Generation, it is a minor garbage collection event.
+
+Old Generation: 
+
+Objects that are long-lived are eventually moved from the Young Generation to the Old Generation. When objects are garbage collected from the Old Generation, it is a major garbage collection event.
+
+Permanent Generation: 
+
+Metadata such as classes and methods are stored in the Permanent Generation. Classes that are no longer in use may be garbage collected from the Permanent Generation.
+During a full garbage collection event, unused objects in all generations are garbage collected.
+
+###Java Garbage Collection Best Practices
+For many simple applications, Java garbage collection is not something that a programmer needs to consciously consider. However, for programmers who want to advance their Java skills, it is important to understand how Java garbage collection works and the ways in which it can be tuned.
+
+Besides the basic mechanisms of garbage collection, one of the most important points to understand about garbage collection in Java is that it is non-deterministic, and there is no way to predict when garbage collection will occur at run time. It is possible to include a hint in the code to run the garbage collector with the System.gc() or Runtime.gc() methods, but they provide no guarantee that the garbage collector will actually run.
+
+The best approach to tuning Java garbage collection is setting flags on the JVM. Flags can adjust the garbage collector to be used (e.g. Serial, G1, etc.), the initial and maximum size of the heap, the size of the heap sections (e.g. Young Generation, Old Generation), and more. The nature of the application being tuned is a good initial guide to settings. For example, the Parallel garbage collector is efficient but will frequently cause “stop the world” events, making it better suited for backend processing where long pauses for garbage collection are acceptable.
+
+On the other hand, the CMS garbage collector is designed to minimize pauses, making it ideal for GUI applications where responsiveness is important. Additional fine-tuning can be accomplished by changing the size of the heap or its sections and measuring garbage collection efficiency using a tool like jstat.
+
+#######################################################
