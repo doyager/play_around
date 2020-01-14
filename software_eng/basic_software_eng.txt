@@ -216,6 +216,45 @@ Insert/Remove from middle O(n)
 
 ##################################################
 
+
+### linked list
+
+Linked Lists
+What is a linked list? 
+
+A linked list consists of nodes where each node contains data and and a reference to the next node in the list.
+Unlike an array, data is not stored in one contiguous block of memory and does not have a fixed size.
+Instead, it consists of multiple blocks of memory at different addresses. 
+
+This means that the size is variable because elements are allocated memory at runtime.
+
+We can create and free nodes when we want or need without having to worry about memory. In order to access any node or element of the list, we need the address of the head node and need to then traverse the entire list in order to get to the desired element. Unlike an array, there is no reserved or unused memory. However, extra memory is used to store addresses for the next node. The last node’s address pointer will be undefined or 0 since it is the last node of the chain and will not have anything that comes after it.
+
+Linked List Example
+
+##### Big O for linked list :
+
+When accessing elements of a linked list, speed is proportional to size of the list with Big O(n). Since we must traverse the entire list in order to get to the desired element, it is more costly compared to accessing elements of an array.
+
+
+When inserting a node into the beginning of the list, it only involves creating a new node with an address that points to the old head. The time it takes to perform this is not dependent on the size of the list. This means that it will be constant time or a Big O(1). 
+
+
+Inserting an element to the end of the list involves traversing the whole list and then creating a new node and adjusting the previous node’s address for the next node. Time taken will be proportional to the size of the list and Big O(n).
+
+
+When we are inserting node into a position between the beginning and end of the linked list, we will have to traverse the list up until the specific point and then adjust the pointers with Big O(n). The same time complexity is also true for removing nodes from a linked list.
+
+Cost of accessing - O(n)
+
+Insert/remove from beginnning - O(1)
+
+Insert/Remove from end - O(n)
+
+Insert/Remove from middle O(n)
+
+
+######################################################################
 ########## arraylist vs linked list
 
 #### array list 
