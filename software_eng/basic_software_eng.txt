@@ -1,0 +1,15 @@
+process vs thread
+parallelism vs concuranccy?
+
+what are datastructures
+What is big O notations?
+what are arrays?
+BIg O for add to start/end to array , remove from start/end from array , search an array 
+array vs linkedlist
+green threads
+greenlets
+garbage collection/
+garbage collection generations
+
+
+cdc - change data capture
