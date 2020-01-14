@@ -46,6 +46,16 @@ git mv casesensitive tmp
 git mv tmp CaseSensitive
 
 
+# create branch from feature branch
+
+      1. Checkout or change into "branch1"
+
+      git checkout branch1
+      
+      2. Now create your new branch called "subbranch_of_b1" under the "branch1" using the following command.
+
+      git checkout -b subbranch_of_b1 branch1
+
 
 #git stash & unstash
 
