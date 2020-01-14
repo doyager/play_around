@@ -15,6 +15,74 @@ garbage collection generations
 cdc - change data capture
 
 
+#### process vs thread  
+
+Process:
+Process means any program is in execution. Process control block controls the operation of any process. Process control block contains the information about processes for example: Process priority, process id, process state, CPU, register etc. A process can creates other processes which are known as Child Processes. Process takes more time to terminate and it is isolated means it does not share memory with any other process.
+
+Thread:
+Thread is the segment of a process means a process can have multiple threads and these multiple threads are contained within a process. A thread have 3 states: running, ready, and blocked.
+
+Thread takes less time to terminate as compared to process and like process threads do not isolate.
+
+
+Difference between Process and Thread:
+
+S.NO	PROCESS	THREAD
+1.	Process means any program is in execution.                  	Thread means segment of a process.
+2.	Process takes more time to terminate.	                        Thread takes less time to terminate.
+3.	It takes more time for creation.	                            Thread takes less time for creation.
+4.	It also takes more time for context switching.	              THread takes less time for context switching.
+5.	Process is less efficient in term of communication.	          Thread is more efficient in term of communication.
+6.	Process consume more resources.	                              Thread consume less resources.
+7.	Process is isolated.	                                        Threads share memory.
+
+
+
+
+################################################
+
+
+###### concurrancy vs parallelism
+
+Concurrency means multiple tasks which start, run, and complete in overlapping time periods, in no specific order.
+
+Parallelism is when multiple tasks OR several part of a unique task literally run at the same time, e.g. on a multi-core processor. Remember that Concurrency and parallelism are NOT the same thing.
+
+Let’s understand more in detail that what I mean when I say Concurrency vs. Parallelism.
+
+Concurrency
+Concurrency is essentially applicable when we talk about minimum two tasks or more. When an application is capable of executing two tasks virtually at same time, we call it concurrent application. Though here tasks run looks like simultaneously, but essentially they MAY not. They take advantage of CPU time-slicing feature of operating system where each task run part of its task and then go to waiting state. When first task is in waiting state, CPU is assigned to second task to complete it’s part of task.
+
+Operating system based on priority of tasks, thus, assigns CPU and other computing resources e.g. memory; turn by turn to all tasks and give them chance to complete. To end user, it seems that all tasks are running in parallel. This is called concurrency.
+
+Parallelism
+Parallelism does not require two tasks to exist. It literally physically run parts of tasks OR multiple tasks, at the same time using multi-core infrastructure of CPU, by assigning one core to each task or sub-task.
+
+Parallelism requires hardware with multiple processing units, essentially. In single core CPU, you may get concurrency but NOT parallelism.
+
+Differences between concurrency vs. parallelism
+Now let’s list down remarkable differences between concurrency and parallelism.
+
+Concurrency is when two tasks can start, run, and complete in overlapping time periods. Parallelism is when tasks literally run at the same time, eg. on a multi-core processor.
+
+Concurrency is the composition of independently executing processes, while parallelism is the simultaneous execution of (possibly related) computations.
+
+Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once.
+
+An application can be concurrent – but not parallel, which means that it processes more than one task at the same time, but no two tasks are executing at same time instant.
+
+An application can be parallel – but not concurrent, which means that it processes multiple sub-tasks of a task in multi-core CPU at same time.
+
+An application can be neither parallel – nor concurrent, which means that it processes all tasks one at a time, sequentially.
+
+An application can be both parallel – and concurrent, which means that it processes multiple tasks concurrently in multi-core CPU at same time .
+
+That’s all about Concurrency vs. Parallelism, a very important concept in java multi-threading concepts.
+
+
+
+###########################################
 
 ########## arraylist vs linked list
 
