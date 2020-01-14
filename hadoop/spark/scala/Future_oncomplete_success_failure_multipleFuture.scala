@@ -1,6 +1,27 @@
+- Future sequence
+- Future traverse
 - Future - on complete
 - Fututre - Success and failure
 - Multiple Futures
+
+
+
+Future sequence
+
+http://allaboutscala.com/tutorials/chapter-9-beginner-tutorial-using-scala-futures/#future-sequence
+
+In this section, we will show how to fire a bunch of future operations and
+wait for their results by using the Future.sequence() function. As noted in the Scala API documentation, 
+the sequence function is useful when you have to reduce a number of futures into a single future.
+Moreover, these futures will be non-blocking and run in parallel which also imply that the order of the 
+futures is not guaranteed as they can be interleaved.
+
+Future traverse
+
+The Future.traverse() function is fairly similar to the Future.sequence() function. As per the Scala API documentation, the traverse function also allows you to fire a bunch of future operations in parallel and wait for their results.
+The traverse function, though, has the added benefit of allowing you to apply a function over the future operations.
+
+
 
 ######future - on complete 
 # https://alvinalexander.com/scala/concurrency-with-scala-futures-tutorials-examples
