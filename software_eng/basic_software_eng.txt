@@ -15,6 +15,15 @@ garbage collection generations
 cdc - change data capture
 
 how can you make a class immutable?
+  Why Is the String Object Immutable in Java?
+·         What Is the Difference Between Final, Finally, and Finalize?
+·         What are the main 3 Object Oriented Programing (OOP) concepts?
+·         What Is the Diamond Problem? (OOP question)
+·         What Does Singleton Mean? (design pattern)
+·         What is static keyword in java?
+·         What is multithreading in java and how we can implement it ?
+·         What are checked and unchecked exception in java?
+·         What is Hash map and how it works (intermediate adv level)?
 
 ###################################################################################################################
 
@@ -686,4 +695,344 @@ public final class FinalClassExample {
 ############################################################
 
 
+#### . Why Is the String Object Immutable in Java?
 
+he string is Immutable in Java because String objects are cached in String pool. Since cached String literals are shared between multiple clients there is always a risk, where one client's action would affect all another client. For example, if one client changes the value of String "Test" to "TEST", all other clients will also see that value as explained in the first example. Since caching of String objects was important from performance reason this risk was avoided by making String class Immutable. At the same time, String was made final so that no one can compromise invariant of String class e.g. Immutability, Caching, hashcode calculation etc by extending and overriding behaviors. Another reason of why String class is immutable could die due to HashMap.
+
+Since Strings are very popular as HashMap key, it's important for them to be immutable so that they can retrieve the value object which was stored in HashMap. Since HashMap works in the principle of hashing, which requires same has value to function properly. Mutable String would produce two different hashcodes at the time of insertion and retrieval if contents of String was modified after insertion, potentially losing the value object in the map.
+
+
+Read more: https://javarevisited.blogspot.com/2010/10/why-string-is-immutable-or-final-in-java.html#ixzz6BE1wzRwP
+
+
+############################################################
+
+##### What Is the Difference Between Final, Finally, and Finalize?
+
+
+Final is a keyword. Final is used to apply restrictions on class, method and variable. Final class can't be inherited, final method can't be overridden and final variable value can't be changed.	
+
+Finally is a block. Finally is used to place important code, it will be executed whether exception is handled or not.	
+
+
+Finalize is a method. Finalize is used to perform clean up processing just before object is garbage collected.
+			
+
+############################################################
+
+######## OOPS and What are the main 3 Object Oriented Programing (OOP) concepts
+
+A programming language structure wherein the data and their associated processing ("methods") are defined as self-contained entities called "objects." The norm today, object-oriented programming (OOP) languages, such as C++ and Java, provide a formal set of rules for creating and managing objects. The data are stored in a traditional relational database or in an object database if the data have a complex structure. See O-R mapping and object database.
+
+There are three major features in object-oriented programming that makes them different than non-OOP languages: encapsulation, inheritance and polymorphism.
+
+### Encapsulation Enforces Modularity
+Encapsulation refers to the creation of self-contained modules that bind processing functions to the data. These user-defined data types are called "classes," and one instance of a class is an "object." For example, in a payroll system, a class could be Manager, and Pat and Jan could be two instances (two objects) of the Manager class. Encapsulation ensures good code modularity, which keeps routines separate and less prone to conflict with each other.
+
+### Inheritance Passes "Knowledge" Down
+Classes are created in hierarchies, and inheritance allows the structure and methods in one class to be passed down the hierarchy. That means less programming is required when adding functions to complex systems. If a step is added at the bottom of a hierarchy, only the processing and data associated with that unique step needs to be added. Everything else is inherited. The ability to reuse existing objects is considered a major advantage of object technology.
+
+### Polymorphism Takes any Shape
+Object-oriented programming allows procedures about objects to be created whose exact type is not known until runtime. For example, a screen cursor may change its shape from an arrow to a line depending on the program mode. The routine to move the cursor on screen in response to mouse movement would be written for "cursor," and polymorphism allows that cursor to take on whatever shape is required at runtime. It also allows new shapes to be easily integrated.
+
+
+
+############################################################
+
+
+########### Diamond problem in java 
+##### . What Is the Diamond Problem? (OOP question)
+
+The “diamond problem” is an ambiguity that can arise as a consequence of allowing multiple inheritance. It is a serious problem for languages (like C++) that allow for multiple inheritance of state. In Java, however, multiple inheritance is not allowed for classes, only for interfaces, and these do not contain state.
+
+Consider the following situation:
+
+    interface A {
+        default void m() { ... }        
+    }
+    interface B extends A {}
+    interface C extends A {}
+    class D implements B, C {}
+
+The rules for default method selection given on the previous page provide a straightforward interpretation of this scenario and its variants.
+
+In the initial case (the code above), the implementation of m inherited by D is unambiguously that defined by A—there is no other possibility. If the situation is changed so that B now also declares a default implementation of m, that becomes the implementation that D inherits by the “most specific implementation” rule. But if both B and C provide default implementations, then they conflict, and D must provide an overriding declaration, possibly using the syntax X.super.m(...) in the body of m to explicitly choose one of the inherited methods. All three cases are clearly covered by the rules for method resolution explained in the previous answer.
+
+Default methods are virtual, like all methods in Java. This can sometimes lead to surprising results. Given the declarations
+
+    interface A {
+        default void m() { System.out.println("hello from A"); }
+    }
+    interface B extends A {
+        default void m() { System.out.println("hello from B"); }
+    }
+    interface C extends A {}
+    class D implements B, C {}
+the code
+
+    C c = new D();
+    c.m();
+will print hello from B. The static type of c is unimportant; what counts is that it is an instance of D, whose most specific version of m is inherited from B.
+
+
+
+
+############################################################
+
+#########  What Does Singleton Mean? (design pattern)
+
+In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to one "single" instance. This is useful when exactly one object is needed to coordinate actions across the system.
+
+
+In Java the Singleton pattern will ensure that there is only one instance of a class is created in the Java Virtual Machine. It is used to provide global point of access to the object. In terms of practical use Singleton patterns are used in 
+
+logging, caches, thread pools, configuration settings, device driver objects.
+
+
+############################################################
+
+###### What is static keyword in java?
+
+In the Java programming language, the keyword static indicates that the particular member belongs to a type itself, rather than to an instance of that type. This means that only one instance of that static member is created which is shared across all instances of the class.
+
+user for :
+
+Static methods in java belong to the class (not an instance of it). They use no instance variables and will usually take input from the parameters, perform actions on it, then return some result. Instances methods are associated with objects and, as the name implies, can use instance variables
+
+
+static is a non-access modifier in Java which is applicable for the following:
+
+blocks
+variables
+methods
+nested classes
+To create a static member(block,variable,method,nested class), precede its declaration with the keyword static. When a member is declared static, it can be accessed before any objects of its class are created, and without reference to any object. For example, in below java program, we are accessing static method m1() without creating any object of Test class.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java program to demonstrate that a static member 
+// can be accessed before instantiating a class 
+class Test 
+{ 
+    // static method 
+    static void m1() 
+    { 
+        System.out.println("from m1"); 
+    } 
+  
+    public static void main(String[] args) 
+    { 
+          // calling m1 without creating 
+          // any object of class Test 
+           m1(); 
+    } 
+} 
+Output:
+
+
+
+from m1
+Static blocks
+
+If you need to do computation in order to initialize your static variables, you can declare a static block that gets executed exactly once, when the class is first loaded. Consider the following java program demonstrating use of static blocks.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java program to demonstrate use of static blocks 
+class Test 
+{ 
+    // static variable 
+    static int a = 10; 
+    static int b; 
+      
+    // static block 
+    static { 
+        System.out.println("Static block initialized."); 
+        b = a * 4; 
+    } 
+  
+    public static void main(String[] args) 
+    { 
+       System.out.println("from main"); 
+       System.out.println("Value of a : "+a); 
+       System.out.println("Value of b : "+b); 
+    } 
+} 
+Output:
+
+Static block initialized.
+from main
+Value of a : 10
+Value of b : 40
+For Detailed article on static blocks, see static blocks
+
+############################################################
+
+What is multithreading in java and how we can implement it ?
+
+Multithreading is a Java feature that allows concurrent execution of two or more parts of a program for maximum utilization of CPU. Each part of such program is called a thread. So, threads are light-weight processes within a process. Threads can be created by using two mechanisms
+
+1. Extending the Thread class
+2. Implementing the Runnable Interface
+
+ 
+Thread creation by extending the Thread class
+
+We create a class that extends the java.lang.Thread class. This class overrides the run() method available in the Thread class. A thread begins its life inside run() method. We create an object of our new class and call start() method to start the execution of a thread. Start() invokes the run() method on the Thread object.
+
+
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java code for thread creation by extending 
+// the Thread class 
+class MultithreadingDemo extends Thread 
+{ 
+    public void run() 
+    { 
+        try
+        { 
+            // Displaying the thread that is running 
+            System.out.println ("Thread " + 
+                  Thread.currentThread().getId() + 
+                  " is running"); 
+  
+        } 
+        catch (Exception e) 
+        { 
+            // Throwing an exception 
+            System.out.println ("Exception is caught"); 
+        } 
+    } 
+} 
+  
+// Main Class 
+public class Multithread 
+{ 
+    public static void main(String[] args) 
+    { 
+        int n = 8; // Number of threads 
+        for (int i=0; i<8; i++) 
+        { 
+            MultithreadingDemo object = new MultithreadingDemo(); 
+            object.start(); 
+        } 
+    } 
+} 
+Output :
+
+Thread 8 is running
+Thread 9 is running
+Thread 10 is running
+Thread 11 is running
+Thread 12 is running
+Thread 13 is running
+Thread 14 is running
+Thread 15 is running
+ 
+Thread creation by implementing the Runnable Interface
+
+We create a new class which implements java.lang.Runnable interface and override run() method. Then we instantiate a Thread object and call start() method on this object.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java code for thread creation by implementing 
+// the Runnable Interface 
+class MultithreadingDemo implements Runnable 
+{ 
+    public void run() 
+    { 
+        try
+        { 
+            // Displaying the thread that is running 
+            System.out.println ("Thread " + 
+                                Thread.currentThread().getId() + 
+                                " is running"); 
+  
+        } 
+        catch (Exception e) 
+        { 
+            // Throwing an exception 
+            System.out.println ("Exception is caught"); 
+        } 
+    } 
+} 
+  
+// Main Class 
+class Multithread 
+{ 
+    public static void main(String[] args) 
+    { 
+        int n = 8; // Number of threads 
+        for (int i=0; i<n; i++) 
+        { 
+            Thread object = new Thread(new MultithreadingDemo()); 
+            object.start(); 
+        } 
+    } 
+} 
+Output :
+
+Thread 8 is running
+Thread 9 is running
+Thread 10 is running
+Thread 11 is running
+Thread 12 is running
+Thread 13 is running
+Thread 14 is running
+Thread 15 is running
+ 
+
+Thread Class vs Runnable Interface
+
+1. If we extend the Thread class, our class cannot extend any other class because Java doesn’t support multiple inheritance. But, if we implement the Runnable interface, our class can still extend other base classes.
+
+2. We can achieve basic functionality of a thread by extending Thread class because it provides some inbuilt methods like yield(), interrupt() etc. that are not available in Runnable interface.
+
+ 
+This article is contributed by Mehak Narang. Please write comments if you find anything incorrect, or you want to share more information about the topic discussed above
+
+############################################################
+
+
+############################################################
+
+
+
+############################################################
+
+
+
+############################################################
+
+
+
+############################################################
+
+
+
+############################################################
+
+
+############################################################
+
+
+############################################################
+
+
+############################################################
+
+
+############################################################
