@@ -1007,7 +1007,328 @@ This article is contributed by Mehak Narang. Please write comments if you find a
 ############################################################
 
 
+############Checked vs Unchecked Exceptions in Java
+
+
+In Java, there are two types of exceptions:
+
+1) Checked: are the exceptions that are checked at compile time. If some code within a method throws a checked exception, then the method must either handle the exception or it must specify the exception using throws keyword.
+
+For example, consider the following Java program that opens file at location “C:\test\a.txt” and prints the first three lines of it. The program doesn’t compile, because the function main() uses FileReader() and FileReader() throws a checked exception FileNotFoundException. It also uses readLine() and close() methods, and these methods also throw checked exception IOException
+
+
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+import java.io.*; 
+  
+class Main { 
+    public static void main(String[] args) { 
+        FileReader file = new FileReader("C:\\test\\a.txt"); 
+        BufferedReader fileInput = new BufferedReader(file); 
+          
+        // Print first 3 lines of file "C:\test\a.txt" 
+        for (int counter = 0; counter < 3; counter++)  
+            System.out.println(fileInput.readLine()); 
+          
+        fileInput.close(); 
+    } 
+} 
+Output:
+
+Exception in thread "main" java.lang.RuntimeException: Uncompilable source code - 
+unreported exception java.io.FileNotFoundException; must be caught or declared to be 
+thrown
+    at Main.main(Main.java:5)
+To fix the above program, we either need to specify list of exceptions using throws, or we need to use try-catch block. We have used throws in the below program. Since FileNotFoundException is a subclass of IOException, we can just specify IOException in the throws list and make the above program compiler-error-free.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+import java.io.*; 
+  
+class Main { 
+    public static void main(String[] args) throws IOException { 
+        FileReader file = new FileReader("C:\\test\\a.txt"); 
+        BufferedReader fileInput = new BufferedReader(file); 
+          
+        // Print first 3 lines of file "C:\test\a.txt" 
+        for (int counter = 0; counter < 3; counter++)  
+            System.out.println(fileInput.readLine()); 
+          
+        fileInput.close(); 
+    } 
+} 
+Output: First three lines of file “C:\test\a.txt”
+
+2) Unchecked are the exceptions that are not checked at compiled time. In C++, all exceptions are unchecked, so it is not forced by the compiler to either handle or specify the exception. It is up to the programmers to be civilized, and specify or catch the exceptions.
+In Java exceptions under Error and RuntimeException classes are unchecked exceptions, everything else under throwable is checked.
+
+                   +-----------+
+           | Throwable |
+                   +-----------+
+                    /         \
+           /           \
+          +-------+          +-----------+
+          | Error |          | Exception |
+          +-------+          +-----------+
+       /  |  \           / |        \
+         \________/      \______/         \
+                            +------------------+
+    unchecked     checked    | RuntimeException |
+                    +------------------+
+                      /   |    |      \
+                     \_________________/
+                       
+                       unchecked
+Consider the following Java program. It compiles fine, but it throws ArithmeticException when run. The compiler allows it to compile, because ArithmeticException is an unchecked exception.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+class Main { 
+   public static void main(String args[]) { 
+      int x = 0; 
+      int y = 10; 
+      int z = y/x; 
+  } 
+} 
+Output:
+
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+    at Main.main(Main.java:5)
+Java Result: 1
+
 ############################################################
+
+
+####### .  What is Hash map and how it work
+
+
+How HashMap works in Java
+
+HashMap works on the principle of Hashing .  To understand Hashing , we should understand the three terms first   i.e  Hash Function , Hash Value and Bucket .
+
+What is Hash Function , Hash Value  and Bucket ?
+
+hashCode() function  which returns an integer value is the Hash function. The important point to note that ,  this method is present in Object class ( Mother of all class ) .
+
+This is the code for the hash function(also known as hashCode method) in Object Class :
+
+    public native int hashCode();
+
+The most important point to note from the above line :  hashCode method return  int value .
+So the Hash value is the int value returned by the hash function .
+
+
+    So summarize the terms in the diagram below :
+                  
+
+
+how hash  map works in java 
+
+
+What is bucket ?
+A bucket is used to store key value pairs . A bucket can have multiple key-value pairs . In hash map, bucket used simple linked list to store objects .
+
+
+After understanding the terms we are ready to move next step , How HashMap works in java or How get() works internally in java .
+
+
+Code inside Java Api (HashMap class internal implementation) for HashMap get(Obejct key) method
+
+1.  Public  V get(Object key)
+   {
+2.     if (key ==null)
+3.     //Some code
+    
+4.     int hash = hash(key.hashCode());
+    
+5.     // if key found in hash table then  return value
+6.     //    else return null
+   }
+
+Hash map works on the principle of hashing 
+
+HashMap get(Key k) method calls hashCode method on the key object and applies returned hashValue to its own static hash function to find a bucket location(backing array) where keys and values are stored in form of a nested class called Entry (Map.Entry) . So you have concluded that from the previous line that Both key and value is stored in the bucket as a form of  Entry object . So thinking that Only value is stored  in the bucket is not correct and will not give a good impression on the interviewer .
+
+* Whenever we call get( Key k )  method on the HashMap object . First it checks that whether key is null or not .  Note that there can only be one null key in HashMap .  
+
+If key is null , then Null keys always map to hash 0, thus index 0.
+
+If key is not null then , it will call hashfunction on the key object , see line 4 in above method i.e. key.hashCode()  ,so after key.hashCode() returns hashValue , line 4 looks like
+
+4.                int hash = hash(hashValue)
+
+ , and now ,it applies returned hashValue into its own hashing function .
+
+We might wonder why we are calculating the hashvalue again using hash(hashValue). Answer is ,It defends against poor quality hash functions.
+
+Now step 4 final  hashvalue is used to find the bucket location at which the Entry object is stored . Entry object stores in the bucket like this (hash,key,value,bucketindex) .  
+
+Interviewer:    What if  when two different keys have the same hashcode ?
+
+Solution, equals() method comes to rescue.Here candidate gets puzzled. Since bucket is one and we have two objects with the same hashcode .Candidate usually forgets that bucket is a simple linked list.
+
+The bucket is the linked list effectively . Its not a LinkedList as in a java.util.LinkedList - It's a separate (simpler) implementation just for the map .
+
+So we traverse through linked list , comparing keys in each entries using keys.equals() until it return true.  Then the corresponding entry object Value is returned .
+
+
+how hashmap works internally in java
+
+
+
+
+
+
+
+One of  our readers Jammy  asked a very good  question 
+
+When the functions 'equals' traverses through the linked list does it traverses from start to end one by one...in other words brute method. Or the linked list is sorted based on key and then it traverses?
+
+Answer is when an element is added/retrieved, same procedure follows:
+
+
+a. Using key.hashCode() [ see above step 4],determine initial hashvalue for the key
+
+b. Pass intial hashvalue as hashValue  in    hash(hashValue) function, to calculate the final hashvalue.
+
+c. Final hash value is then passed as a first parameter in the indexFor(int ,int )method .
+    The second parameter is length which is a constant in HashMap Java Api , represented by                             DEFAULT_INITIAL_CAPACITY
+
+    The default  value of DEFAULT_INITIAL_CAPACITY is 16 in HashMap Java Api .
+
+ indexFor(int,int) method  returns the first entry in the appropriate bucket. The linked list in the bucket is then iterated over - (the end is found and the element is added or the key is matched and the value is returned )
+
+
+Explanation about indexFor(int,int) is below :
+
+/**
+* Returns index for hash code h.
+*/
+static int indexFor(int h, int length) {
+    return h & (length-1);
+}
+
+
+The above function indexFor() works because Java HashMaps always have a capacity, i.e. number of buckets, as a power of 2.
+ Let's work with a capacity of 256,which is 0x100, but it could work with any power of 2. Subtracting 1
+from a power of 2 yields the exact bit mask needed to bitwise-and with the hash to get the proper bucket index, of range 0 to length - 1.
+256 - 1 = 255
+0x100 - 0x1 = 0xFF
+E.g. a hash of 257 (0x101) gets bitwise-anded with 0xFF to yield a bucket number of 1.
+
+
+
+#### Interviewer:    What if  when two  keys are same and have the same hashcode ?
+If key needs to be inserted and already inserted hashkey's hashcodes are same, and keys are also same(via reference or using equals() method)  then override the previous key value pair with the current key value pair.
+
+##### The other important point to note is that in Map ,Any class(String etc.) can serve as a key if and only if it overrides the equals() and hashCode() method .
+
+
+##### Interviewer:  How will you measure the performance of HashMap?
+
+According to Oracle Java docs,  
+
+An instance of HashMap has two parameters that affect its performance: initial capacity and load factor. 
+
+The capacity is the number of buckets in the hash table( HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.), and the initial capacity is simply the capacity at the time the hash table is created. 
+
+
+The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased. When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets.
+
+In HashMap class, the default value of load factor is (.75) .
+
+Interviewer : What is the time complexity of Hashmap get() and put() method ?
+
+The hashmap implementation provides constant time performance for (get and put) basic operations
+i.e the complexity of get() and put() is O(1) , assuming the hash function disperses the elements properly among the buckets. 
+
+Interviewer : What is the difference between HashMap and ConcurrentHashMap ?
+
+It is also one of the popular interview question on HashMap , you can find the answer here
+HashMap vs ConcurrentHashMap
+
+How HashMap works in Java 8  
+In java 8 there is a lot of changes in the inner representation of HashMap. The implementation of HashMap went from 1k lines of code in java 7 to 2k lines of code in java 8. In java 8, Node class contains the exact same information as the Entry class i.e Node class contains ( hash , key, value, bucketindex).
+Here is the implementation of the Node class in java 8.
+
+static class Node<K,V> implements Map.Entry<K,V> {
+
+        final int hash;
+        final K key;
+        V value;
+        Node<K,V> next;
+
+        Node(int hash, K key, V value, Node<K,V> next) {
+            this.hash = hash;
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+
+What’s the big difference from java 7 ?
+
+TreeNode class extends Node through LInkedHashMap.Entry<K,V>. In other words ,
+TreeNode indirectly extends Node class. A TreeNode internally implements Red-Black tree structure. It stores more information than Node class so that it can perform get(),add() or delete() operations in O(log(n)). As we know Node class contains (hash,key,value,bucketindex) where as TreeNode class contains following list of data.
+
+static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
+
+        TreeNode<K,V> parent;  // red-black tree links
+        TreeNode<K,V> left;
+        TreeNode<K,V> right;
+        TreeNode<K,V> prev;    // needed to unlink next upon deletion
+        boolean red;
+
+        TreeNode(int hash, K key, V val, Node<K,V> next) {
+            super(hash, key, val, next);
+        }
+
+What are Red Black Trees and Why they are used?
+
+According to Wikipedia,
+Red-Black trees are self-balancing binary search trees. Red-black tree makes sure that the length of the binary search trees is always log(n) despite new addition or removal of nodes. The main advantage of using Red-black tree structure is in a case where many entries are in the same bucket. For search operation,in java 7,it will take O(n) with a linked list. While in java 8 , the same search operation in a tree will cost O(log(n)).
+
+Drawbacks : Tree really takes more space than the linked list.
+
+By Inheritance, bucket can contain both Node(Entry object) and TreeNode(Red-black tree).
+
+Oracle java developers decided to use both data structures and following rules are applied.
+
+1. If for a given bucket , there are more than 8 Nodes, the linked list is converted into a
+red-black tree. This is represented by the following code in HashMap class :
+
+static final int TREEIFY_THRESHOLD = 8;
+
+2. If for a given bucket , there are less than 6 nodes, then the tree can be converted
+into a linkedlist.
+
+static final int UNTREEIFY_THRESHOLD = 6;
+
+
+The below Java 8 HashMap image shows both trees(at bucket 0) and linkedlists (at bucket 1,2 and 3). Bucket 0 is a Tree because it contains at least 8 nodes.
+
+Tree and LinkedList together in a Bucket in HashMap
+
+
+
+
+Performance Issue in Java 8
+
+In the best case scenario, put() and get() operations have a O(1) time complexity. But if you do not provide efficient hash function of the key , then you might end up with very slow get() and put() operations.
+
+The good performance of the get() and put() operations depend on the repartition of the data into the different indexes of the bucket.
+If the hash function of your key is poorly designed, then you will have a skew repartition (capacity of the bucket becomes irrelevant). All the get() and put() operations that use the biggest linked lists of entry will be really slow. It is due to the reason as the get() and put() operation need to iterate the entire lists. In the worst case scenario (when hash function of the key is poorly designed and all the entry objects are in the same buckets), you would end up with O(n) time complexity.
+
+Below are the images showing skewed HashMap and well balanced HashMap. In the case of skewed HashMap . the put() and get() operations on the bucket 0 are costlier. Getting the Entry F will cost 5 iterations.
 
 
 
