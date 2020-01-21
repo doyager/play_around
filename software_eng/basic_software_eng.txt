@@ -33,7 +33,16 @@ how can you make a class immutable?
 
 #### OOPs vs functional
 
-Object-oriented programming used for performing few operations which are having common behavior and different variants. Functional programming is having a stateless programming model. Object-oriented programming is having a stateful programming model.
+Object-oriented programming used for performing few operations which are having common behavior and different variants. 
+Functional programming is having a stateless programming model. 
+Object-oriented programming is having a stateful programming model.
+
+Functional programming is based on mathematical functions. Some of the popular functional programming languages 
+include: Lisp, Python, Erlang, Haskell, Clojure, etc. 
+Pure Functional Languages − These types of functional languages support only the functional paradigms.
+
+In computer science, functional programming is a programming paradigm—a style of building the structure and elements of 
+computer programs—that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data
 
 
 ### OOPs
