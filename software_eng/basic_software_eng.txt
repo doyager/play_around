@@ -13,6 +13,7 @@ garbage collection generations
 
 
 cache - for consistecy - write through and write back 
+NOSQL
 
 cdc - change data capture
 
@@ -1384,6 +1385,26 @@ Data is cached on the server side but an update is made in the data base , how i
 
 ############################################################
 
+Nosql
+
+NoSQL is a popular database storage method. It keeps data as key value pairs. The advantages and disadvantages of NoSQL compared with RDBMS (which uses SQL) are discussed here, using the Cassandra architecture as an example.
+
+We talk about sharding, redundancy, load balancing, compaction and some other features in NoSQL databases. This allows them to scale efficiently.
+
+- data is inserted and retrieved as a whole block of json at once, all data is contented in one block 
+- No schema / schema is easily changeblae, schema is flexible , new attribute added in RDMS you will have to add new column to SQL [put locks on 
+table and then update] , wiht nosql you can just add the field directly to the json block 
+- Built for scale[Sharding - horizontal scaling]
+
+Sharding is a database architecture pattern related to horizontal partitioning — the practice of separating one table's rows into multiple different tables, known as partitions. Each partition has the same schema and columns, but also entirely different rows
+
+- built for metrics, aggregations , analysis
+
+Cons:
+- ACID not guarnteee , hence fina
+- Not read optimized 
+- relations are not implicit
+- joins are hard [all are manual , no intelligence as they are in json form ]
 
 
 ############################################################
