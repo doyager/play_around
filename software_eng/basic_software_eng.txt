@@ -12,6 +12,8 @@ garbage collection/
 garbage collection generations
 
 
+cache - for consistecy - write through and write back 
+
 cdc - change data capture
 
 how can you make a class immutable?
@@ -1334,6 +1336,50 @@ Below are the images showing skewed HashMap and well balanced HashMap. In the ca
 
 ############################################################
 
+# Caching 
+
+Caching in distributed systems is an important aspect for designing scalable systems. We first discuss what is a cache and why we use it. We then talk about what are the key features of a cache in a distributed system.
+
+The cache management policies of LRU and Sliding Window are mentioned here. For high performance, the cache eviction policy must be chosen carefully. To keep data consistent and memory footprint low, we must choose a write through or write back consistency policy.
+
+Cache management is important because of its relation to cache hit ratios and performance. We talk about various scenarios in a distributed environment.
+
+AlgoExpert: 
+http://www.algoexpert.io/gaurav
+
+Made by engineers from Google and Uber, this site helps you build your algorithmic skills using code and white board explanations.
+Be sure to use the code ' for the discount. You get 15% off! 
+
+
+- to reduce network traffic
+- reduce load on DB
+- Faster retrival
+
+
+Caching - purging/cleaisng:- Eviction policy
+
+ cache management policies of LRU and Sliding Window are mentioned here. For high performance, the cache eviction policy must be chosen carefully
+
+- LRU - least recently used 
+
+- LFU - Least recently used 
+
+- Sliding window 
+
+Caching - Consistency issue :
+
+To keep data consistent and memory footprint low, we must choose a write through or write back consistency policy.
+
+Data is cached on the server side but an update is made in the data base , how is cache updated? 
+- Write through 
+
+      data update is made to the data in cache and then an update is made on the DB , ISSUES  - what if this data is present
+      as cache in multiple servers , so write through will not work in this case
+      write through , you can do bulk updates updates at once by just updating the cache first and then doing the DB operations all at once
+      
+- Write back 
+     We have to update the one source of truht and we have to keep updating the entires in cache, and thrash the old value in 
+     cache ,but this is slow
 
 
 ############################################################
