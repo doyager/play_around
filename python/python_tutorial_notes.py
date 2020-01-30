@@ -101,13 +101,14 @@ Condition               ----------> FILTER .  ---------> New list , [a,c]
  
  
  lst = [1,2,3,4]
- 
+ #lamda and filter
+
  print(list(filter(lambda x : x > 2, lst)))
  # here lst is the list with values , we are using lamda function, receives variable x and  to do filter greater than x>2
  # filter will apply this lambda function to each item in lst varialbe , and we have to explicity cast it to LIST
  
  
- 
+ # traditional python implementation
  def ovr_two(lst1):
   lst2 = [ x for x in lst1 if x>2]
   return lst2
@@ -144,6 +145,7 @@ i.e.
 2 * 3 = 6
 6 * 4 = 24
 
+# traditional python function
 # above reduce implementation using for loop
 def mult(list1):
   product = list[0]
