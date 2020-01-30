@@ -182,7 +182,25 @@ List : [ 1,2,"a",3.14]
             #[ expr for val1 in collection1  and val2 in collection2]
 
 
-
+#ex : print squares for list of elements
+      
+            
+    # traditionl - List based approach - 3 lines
+            
+            squares = []
+            for i in range(1,10)
+              squares.append(i**2)
+            print(squares)
+            [1,4,9,16,25,36,49,64,81,100]
+            
+            
+    # List comprehension -  based approach - is just one line
+            
+            squares2 = [ i**2 for i range(1,11)]
+            print(squres2)
+            [1,4,9,16,25,36,49,64,81,100]
+            
+            
 
 
 #########################################################################
