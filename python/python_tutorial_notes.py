@@ -1,9 +1,11 @@
 
 """
+Contents:
 1. Lambda function
 2. Map
 3. Filter
 4. Reduce
+5. List comprehension
 
 """
 
@@ -163,8 +165,21 @@ print(mult([1,2,3,4))
 #########################################################################
 
 
-##### 
+##### List comprehension
+            
+            
+ #List is collection of data , surrounded by squre brackets and separated by comma           
+List : [ 1,2,"a",3.14]
 
+
+ #Basic Form 
+            #[ expr  for val in collection]
+            
+            #[ expr for val in collection if <test>] . // only one condition
+            
+            #[ expr for val in collection if <test>] .   //mulitple conditions
+            
+            #[ expr for val1 in collection1  and val2 in collection2]
 
 
 
