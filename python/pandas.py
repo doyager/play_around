@@ -868,3 +868,17 @@ raw_data = pd.read_sql(query, conn)
 print(raw_data)
 row_dict = raw[key].drop_duplicates()  #drop d
 n_claims = row_dict.shape[0]
+
+
+
+
+# plot histogram for pandas dataframe
+import numpy as np
+import pandas as pd
+df = pd.DataFrame(
+    np.random.randint(2, 8, 5000),
+    columns = ['one'])
+df['two'] = df['one'] + np.random.randint(2, 8, 5000)
+ax = df.plot.hist(bins=12, alpha=0.5)
+
+
