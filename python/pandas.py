@@ -291,6 +291,28 @@ train.fillna(train.mean(), inplace=True)
 #########
 
 
+# group by and size , add size as new column
+
+import pandas as pd
+
+df = pd.DataFrame({'A': ['x', 'x', 'x','y','y']
+                , 'B': ['a', 'c', 'c','b','b']})
+print (df)
+   A  B
+0  x  a
+1  x  c
+2  x  c
+3  y  b
+4  y  b
+
+df = df.groupby(['A', 'B']).size().reset_index(name='Size')
+print (df)
+   A  B  Size
+0  x  a     1
+1  x  c     2
+2  y  b     2
+
+##########################
 
 
 
