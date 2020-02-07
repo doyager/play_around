@@ -202,18 +202,26 @@ Data structure: a physical implementation of a data type
 Big O notation:
 
 Big O Notation
-What is the Big O Notation? Big O is the way we describe the performance efficiency or complexity of algorithms.
-we can use Big O to analyse time and space
+What is the Big O Notation? 
+Big O is the way we describe the performance efficiency or complexity of algorithms.
+we can use Big O to analyse time and space complexities
 we can analyse 
--worst case
-- best case
-- average case
+	-worst case
+	- best case
+	- average case
 We typically look at worst case 
 
 we must first understand Big O and some of the different time complexity possibilities. Below are three different possibilities for the speed of an algorithm.
-O(1): Executes in the same time regardless of the size of the input
-O(n): Executes linearly and proportionally to the size of the input
-O(n²): Performance is directly proportional to the square of the size of the input (ex: nested iterations, loops)
+n - size of input
+Constant Time Complexity - O(1): Executes in the same time regardless of the size of the input
+Linear Time Complexity - O(n): Executes linearly and proportionally to the size of the input
+Quadratic time complexity - O(n²): Performance is directly proportional to the square of the size of the input (ex: nested iterations, loops)
+
+- Find the fastest growing term
+- take out the coefficients
+
+T = an + b = O(n)
+T = cn-sq +dn + e = O(n-sq) => first term cn-sq is fsatetst growing term
 
 
 Rules to form B O calculation 
