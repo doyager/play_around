@@ -11,6 +11,10 @@ where should be avro used?
 dataframe vs dataset?
 
 
+Hadoop - High avaliability
+Secondary vs Backup
+Compare Hadoop Files
+
 what happens when you upload a file to hdfs ? walkthrough fsimage edits etc
 managed v unmanaged table 
 secondary namenode vs stand by namenode 
@@ -108,6 +112,50 @@ sqoop import --connect jdbc:mysql://localhost/test --username root --password 'h
 
 ####################
 
+#### Hadoop - High avaliability
+Secondary vs Backup
+
+What is high availability in Hadoop? Hadoop 2.0 overcomes this SPOF shortcoming by providing support for multiple NameNodes. It introduces Hadoop 2.0 High Availability feature that brings in an extra NameNode (Passive Standby NameNode) to the Hadoop Architecture which is configured for automatic failover
+
+In a typical HA cluster, two separate machines are configured as NameNodes. At any point in time, exactly one of the NameNodes is in an Active state, and the other is in a Standbystate. The Active NameNode is responsible for all client operations in the cluster, while the Standby is simply acting as a slave, maintaining enough state to provide a fast failover if necessary.
+
+In order for the Standby node to keep its state synchronized with the Active node, both nodes communicate with a group of separate daemons called “JournalNodes” (JNs). When any namespace modification is performed by the Active node, it durably logs a record of the modification to a majority of these JNs. The Standby node is capable of reading the edits from the JNs, and is constantly watching them for changes to the edit log. As the Standby Node sees the edits, it applies them to its own namespace. In the event of a failover, the Standby will ensure that it has read all of the edits from the JounalNodes before promoting itself to the Active state. This ensures that the namespace state is fully synchronized before a failover occurs.
+
+In order to provide a fast failover, it is also necessary that the Standby node have up-to-date information regarding the location of blocks in the cluster. In order to achieve this, the DataNodes are configured with the location of both NameNodes, and send block location information and heartbeats to both.
+
+It is vital for the correct operation of an HA cluster that only one of the NameNodes be Active at a time. Otherwise, the namespace state would quickly diverge between the two, risking data loss or other incorrect results. In order to ensure this property and prevent the so-called “split-brain scenario,” the JournalNodes will only ever allow a single NameNode to be a writer at a time. During a failover, the NameNode which is to become active will simply take over the role of writing to the JournalNodes, which will effectively prevent the other NameNode from continuing in the Active state, allowing the new Active to safely proceed with failover.
+
+Reference:
+https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HDFSHighAvailabilityWithQJM.ht...
+
+#######################################
+
+
+### Secondary Name node vs back up name node
+
+But unlike Secondary NameNode or Checkpoint Node, the Backup node does not need to download fsimage and edits files from the active NameNode to create a checkpoint, as it already has an up-to-date state of the namespace in it's own main memory.
+
+Secondary NameNode in hadoop is a specially dedicated node in HDFS cluster whose main function is to take checkpoints of the file system metadata present on namenode. It is not a backup namenode. It just checkpoints namenode’s file system namespace. The Secondary NameNode is a helper to the primary NameNode but not replace for primary namenode. As the NameNode is the single point of failure in HDFS
+
+Ref: http://hadooptutorial.info/tag/secondary-namenode-functions/
+
+#############################
+
+#### Compare Hadoop Files:
+
+Look at the below post which provides an answer on how to compare 2 HDFS files. You will need to extend this for 2 folders.
+
+HDFS File Comparison
+
+You could easily do this with the Java API and create a small app:
+
+FileSystem fs = FileSystem.get(conf);
+chksum1 = fs.getFileChecksum(new Path("/path/to/file"));
+chksum2 = fs.getFileChecksum(new Path("/path/to/file2"));
+return chksum1 == chksum2;
+
+
+##########################
 
 ### Performance Tuning - Spark :
 
