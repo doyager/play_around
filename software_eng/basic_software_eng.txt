@@ -203,6 +203,12 @@ Big O notation:
 
 Big O Notation
 What is the Big O Notation? Big O is the way we describe the performance efficiency or complexity of algorithms.
+we can use Big O to analyse time and space
+we can analyse 
+-worst case
+- best case
+- average case
+We typically look at worst case 
 
 we must first understand Big O and some of the different time complexity possibilities. Below are three different possibilities for the speed of an algorithm.
 O(1): Executes in the same time regardless of the size of the input
@@ -210,6 +216,11 @@ O(n): Executes linearly and proportionally to the size of the input
 O(n²): Performance is directly proportional to the square of the size of the input (ex: nested iterations, loops)
 
 
+Rules to form B O calculation 
+- Different steps gets added
+- Drop constants , O(2N) is wrong we just need to say O(N) 
+- 
+- Drop non dominate terms[ Eg : O(n-sq) < O(n + n-sq) < O (n-sq+n-sq , => O(n-sq)]
 
 ###############################################################
 
