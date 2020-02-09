@@ -137,5 +137,107 @@ weekly = data.resample('W').sum()
 weekly.plot(style=[':','--','-']
 
 
+Resampling - Read 2 :
+# Link : https://www.dataquest.io/blog/tutorial-time-series-analysis-with-pandas/
+Resampling
+It is often useful to resample our time series data to a lower or higher frequency. Resampling to a lower frequency
+(downsampling) usually involves an aggregation operation — for example, computing monthly sales totals from daily data.
+The daily OPSD data we’re working with in this tutorial was downsampled from the original hourly time series. 
+Resampling to a higher frequency (upsampling) is less common and often involves interpolation or other data 
+filling method — for example, interpolating hourly weather data to 10 minute intervals for input to a scientific model.
+
+We will focus here on downsampling, exploring how it can help us analyze our OPSD data on various time scales. We use the DataFrame’s resample() method, which splits the DatetimeIndex into time bins and groups the data by time bin. The resample() method returns a Resampler object, similar to a pandas GroupBy object. We can then apply an aggregation method such as mean(), median(), sum(), etc., to the data group for each time bin.
+
+For example, let’s resample the data to a weekly mean time series.
+
+# Specify the data columns we want to include (i.e. exclude Year, Month, Weekday Name)
+data_columns = ['Consumption', 'Wind', 'Solar', 'Wind+Solar']
+# Resample to weekly frequency, aggregating with mean
+opsd_weekly_mean = opsd_daily[data_columns].resample('W').mean()
+opsd_weekly_mean.head(3)
+Consumption	Wind	Solar	Wind+Solar
+Date				
+2006-01-01	1069.184000	NaN	NaN	NaN
+2006-01-08	1381.300143	NaN	NaN	NaN
+2006-01-15	1486.730286	NaN	NaN	NaN
+The first row above, labelled 2006-01-01, contains the mean of all the data contained in the time bin 2006-01-01 through 2006-01-07. The second row, labelled 2006-01-08, contains the mean data for the 2006-01-08 through 2006-01-14 time bin, and so on. By default, each row of the downsampled time series is labelled with the left edge of the time bin.
+
+By construction, our weekly time series has 1/7 as many data points as the daily time series. We can confirm this by comparing the number of rows of the two DataFrames.
+
+print(opsd_daily.shape[0])
+print(opsd_weekly_mean.shape[0])
+4383
+627
+Let’s plot the daily and weekly Solar time series together over a single six-month period to compare them.
+
+# Start and end of the date range to extract
+start, end = '2017-01', '2017-06'
+# Plot daily and weekly resampled time series together
+fig, ax = plt.subplots()
+ax.plot(opsd_daily.loc[start:end, 'Solar'],
+marker='.', linestyle='-', linewidth=0.5, label='Daily')
+ax.plot(opsd_weekly_mean.loc[start:end, 'Solar'],
+marker='o', markersize=8, linestyle='-', label='Weekly Mean Resample')
+ax.set_ylabel('Solar Production (GWh)')
+ax.legend();
+time-series-pandas_66_0.png
+
+We can see that the weekly mean time series is smoother than the daily time series because higher frequency variability has been averaged out in the resampling.
+
+Now let’s resample the data to monthly frequency, aggregating with sum totals instead of the mean. Unlike aggregating with mean(), which sets the output to NaN for any period with all missing data, the default behavior of sum() will return output of 0 as the sum of missing data. We use the min_count parameter to change this behavior.
+
+# Compute the monthly sums, setting the value to NaN for any month which has
+# fewer than 28 days of data
+opsd_monthly = opsd_daily[data_columns].resample('M').sum(min_count=28)
+opsd_monthly.head(3)
+Consumption	Wind	Solar	Wind+Solar
+Date				
+2006-01-31	45304.704	NaN	NaN	NaN
+2006-02-28	41078.993	NaN	NaN	NaN
+2006-03-31	43978.124	NaN	NaN	NaN
+You might notice that the monthly resampled data is labelled with the end of each month (the right bin edge), whereas the weekly resampled data is labelled with the left bin edge. By default, resampled data is labelled with the right bin edge for monthly, quarterly, and annual frequencies, and with the left bin edge for all other frequencies. This behavior and various other options can be adjusted using the parameters listed in the resample() documentation.
+
+Now let’s explore the monthly time series by plotting the electricity consumption as a line plot, and the wind and solar power production together as a stacked area plot.
+
+fig, ax = plt.subplots()
+ax.plot(opsd_monthly['Consumption'], color='black', label='Consumption')
+opsd_monthly[['Wind', 'Solar']].plot.area(ax=ax, linewidth=0)
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.legend()
+ax.set_ylabel('Monthly Total (GWh)');
+time-series-pandas_70_0.png
+
+At this monthly time scale, we can clearly see the yearly seasonality in each time series, and it is also evident that electricity consumption has been fairly stable over time, while wind power production has been growing steadily, with wind + solar power comprising an increasing share of the electricity consumed.
+
+Let’s explore this further by resampling to annual frequency and computing the ratio of Wind+Solar to Consumption for each year.
+
+# Compute the annual sums, setting the value to NaN for any year which has
+# fewer than 360 days of data
+opsd_annual = opsd_daily[data_columns].resample('A').sum(min_count=360)
+# The default index of the resampled DataFrame is the last day of each year,
+# ('2006-12-31', '2007-12-31', etc.) so to make life easier, set the index
+# to the year component
+opsd_annual = opsd_annual.set_index(opsd_annual.index.year)
+opsd_annual.index.name = 'Year'
+# Compute the ratio of Wind+Solar to Consumption
+opsd_annual['Wind+Solar/Consumption'] = opsd_annual['Wind+Solar'] / opsd_annual['Consumption']
+opsd_annual.tail(3)
+Consumption	Wind	Solar	Wind+Solar	Wind+Solar/Consumption
+Year					
+2015	505264.56300	77468.994	34907.138	112376.132	0.222410
+2016	505927.35400	77008.126	34562.824	111570.950	0.220528
+2017	504736.36939	102667.365	35882.643	138550.008	0.274500
+Finally, let’s plot the wind + solar share of annual electricity consumption as a bar chart.
+
+# Plot from 2012 onwards, because there is no solar production data in earlier years
+ax = opsd_annual.loc[2012:, 'Wind+Solar/Consumption'].plot.bar(color='C0')
+ax.set_ylabel('Fraction')
+ax.set_ylim(0, 0.3)
+ax.set_title('Wind + Solar Share of Annual Electricity Consumption')
+plt.xticks(rotation=0);
+time-series-pandas_74_0.png
+
+We can see that wind + solar production as a share of annual electricity consumption has been increasing from about 15% in 2012 to about 27% in 2017.
+
 
 """
