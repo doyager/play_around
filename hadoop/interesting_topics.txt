@@ -10,7 +10,7 @@ Writable and WritableComparable in Hadoop
 where should be avro used?
 dataframe vs dataset?
 
-
+hdfs input split vs block size
 Hadoop - High avaliability
 Secondary vs Backup
 Compare Hadoop Files
@@ -18,6 +18,8 @@ Compare Hadoop Files
 what happens when you upload a file to hdfs ? walkthrough fsimage edits etc
 managed v unmanaged table 
 secondary namenode vs stand by namenode 
+hive static vs dynamic partioning
+hive metastore
 managed table vs unmanaged talbe 
 how spark supports puthon  , how psakr understand python given it is a jvm kind of Language
 apply vs unapply in scala 
@@ -29,6 +31,9 @@ hadoop fsimage and edit log
 who manages fsimage
 catalyst optimizer - spark ??
 advantage of case class in scala 
+
+
+MR custom partitioner 
 
 
 kafka - offset managment
@@ -207,7 +212,135 @@ The BROADCAST hint guides Spark to broadcast each specified table when joining t
 import org.apache.spark.sql.functions.broadcast
 broadcast(spark.table("src")).join(spark.table("records"), "key").show()
 
+############################
 
+# hive static vs dynamic partioning
+
+Partitioning in Hive is very useful to prune data during query to reduce query times.
+
+##static
+Partitions are created when data is inserted into table. Depending on how you load data you would need partitions. Usually when loading files (big files) into Hive tables static partitions are preferred. That saves your time in loading data compared to dynamic partition. You "statically" add a partition in table and move the file into the partition of the table. Since the files are big they are usually generated in HDFS. You can get the partition column value form the filename, day of date etc without reading the whole big file.
+
+##dynamic
+Incase of dynamic partition whole big file i.e. every row of the data is read and data is partitioned through a MR job into the destination tables depending on certain field in file. So usually dynamic partition are useful when you are doing sort of a ETL flow in your data pipeline. e.g. you load a huge file through a move command into a Table X. then you run a inert query into a Table Y and partition data based on field in table X say day , country. You may want to further run a ETL step to partition the data in country partition in Table Y into a Table Z where data is partitioned based on cities for a particular country only. etc.
+
+Thus depending on your end table or requirements for data and in what form data is produced at source you may choose static or dynamic partition.
+
+#static
+in static partitioning we need to specify the partition column value in each and every LOAD statement.
+
+suppose we are having partition on column country for table t1(userid, name,occupation, country), so each time we need to provide country value
+
+hive>LOAD DATA INPATH '/hdfs path of the file' INTO TABLE t1 PARTITION(country="US")
+hive>LOAD DATA INPATH '/hdfs path of the file' INTO TABLE t1 PARTITION(country="UK")
+
+#dynamic 
+dynamic partition allow us not to specify partition column value each time. the approach we follows is as below:
+
+create a non-partitioned table t2 and insert data into it.
+now create a table t1 partitioned on intended column(say country).
+load data in t1 from t2 as below:
+
+hive> INSERT INTO TABLE t2 PARTITION(country) SELECT * from T1;
+make sure that partitioned column is always the last one in non partitioned table(as we are having country column in t2)
+
+
+#############################
+# hive metastore
+
+What is Hive Metastore?
+
+As we know, the database is among the most important and powerful parts of any organization. It is the collection of Schema, Tables, Relationships, Queries, and Views. It is an organized collection of data.
+
+Metastore is the central repository of Apache Hive metadata. It stores metadata for Hive tables (like their schema and location) and partitions in a relational database. It provides client access to this information by using metastore service API.
+
+All Hive implementations need a metastore service, where it stores metadata. It is implemented using tables in a relational database. By default, Hive uses a built-in Derby SQL server. It provides single process storage, so when we use Derby, we cannot run instances of Hive CLI. Whenever we want to run Hive on a personal machine or for some developer task, then it is good, but when we want to use it in a cluster, then MySQL or any other similar relational database is required.
+
+
+Databases Supported by Hive
+
+Hive supports 5 backend databases which are as follows:
+
+· Derby
+
+· MySQL
+
+· MS SQL Server
+
+· Oracle
+
+· Postgres
+
+
+
+Hive metastore consists of two fundamental units:
+
+1. A service that provides metastore access to other Apache Hive services.
+
+2. Disk storage for the Hive metadata which is separate from HDFS storage.
+
+Hive Metastore Modes
+
+There are three modes for Hive Metastore deployment:
+
+· Embedded Metastore
+
+· Local Metastore
+
+· Remote Metastore
+
+1. Embedded Metastore
+
+In Hive by default, metastore service runs in the same JVM as the Hive service. It uses embedded derby database stored on the local file system in this mode. Thus both metastore service and hive service runs in the same JVM by using embedded Derby Database. But, this mode also has limitation that, as only one embedded Derby database can access the database files on disk at any one time, so only one Hive session could be open at a time.
+
+If we try to start the second session it produces an error when it attempts to open a connection to the metastore. So, to allow many services to connect the Metastore, it configures Derby as a network server. This mode is good for unit testing. But it is not good for the practical solutions.
+
+
+2 . Local Metastore
+
+Hive is the data-warehousing framework, so hive does not prefer single session. To overcome this limitation of Embedded Metastore, for Local Metastore was introduced. This mode allows us to have many Hive sessions i.e. many users can use the metastore at the same time. We can achieve by using any JDBC compliant like MySQL which runs in a separate JVM or different machines than that of the Hive service and metastore service which are running in the same JVM.
+
+Hive is the data-warehousing framework, so hive does not prefer single session. To overcome this limitation of Embedded Metastore, for Local Metastore was introduced. This mode allows us to have many Hive sessions i.e. many users can use the metastore at the same time. We can achieve by using any JDBC compliant like MySQL which runs in a separate JVM or different machines than that of the Hive service and metastore service which are running in the same JVM.
+
+
+3. Remote Metastore
+
+Moving further, another metastore configuration called Remote Metastore. In this mode, metastore runs on its own separate JVM, not in the Hive service JVM. If other processes want to communicate with the metastore server they can communicate using Thrift Network APIs. We can also have one more metastore servers in this case to provide more availability. This also brings better manageability/security because the database tier can be completely firewalled off. And the clients no longer need share database credentials with each Hiver user to access the metastore database.
+
+To use this remote metastore, you should configure Hive service by setting hive.metastore.uris to the metastore server URI(s). Metastore server URIs are of the form http://thrift://host:port, where the port corresponds to the one set by METASTORE_PORT when starting the metastore server.
+
+
+
+################################
+
+# hdfs input split vs block size
+
+2.1. What is a Block in HDFS?
+Hadoop HDFS split large files into small chunks known as Blocks. It contains a minimum amount of data that can be read or write. HDFS stores each file as blocks. The Hadoop application distributes the data block across multiple nodes. HDFS client doesn’t have any control on the block like block location, the Namenode decides all such things. Learn HDFS data Blocks in detail.
+
+2.2. What is InputSplit in Hadoop?
+It represents the data which individual mapper processes. Thus the number of map tasks is equal to the number of InputSplits. Framework divides split into records, which mapper processes.
+
+Initially input files store the data for MapReduce job. Input a file typically resides in HDFS InputFormat describes how to split up and read input files. InputFormat is responsible for creating InputSplit. Learn Hadoop InputSplit in detail. 
+
+3. Comparison Between InputSplit vs Blocks in Hadoop
+Let’s now discuss the feature wise difference between InputSplit vs Blocks in Hadoop Framework.
+
+3.1. Data Representation
+Block – HDFS Block is the physical representation of data in Hadoop.
+InputSplit – MapReduce InputSplit is the logical representation of data present in the block in Hadoop. It is basically used during data processing in MapReduce program or other processing techniques. The main thing to focus is that InputSplit doesn’t contain actual data; it is just a reference to the data.
+3.2. Size
+Block – By default, the HDFS block size is 128MB which you can change as per your requirement. All HDFS blocks are the same size except the last block, which can be either the same size or smaller. Hadoop framework break files into 128 MB blocks and then stores into the Hadoop file system.
+InputSplit – InputSplit size by default is approximately equal to block size. It is user defined. In MapReduce program the user can control split size based on the size of data.
+3.3. Example of Block and InputSplit in Hadoop
+Suppose we need to store the file in HDFS.  Hadoop HDFS stores files as blocks. Block is the smallest unit of data that can be stored or retrieved from the disk. The default size of the block is 128MB. Hadoop HDFS breaks files into blocks. Then it stores these blocks on different nodes in the cluster.
+
+For example, we have a file of 132 MB. So HDFS will break this file into 2 blocks.
+
+Now, if we want to perform a MapReduce operation on the blocks, it will not process. The reason is that 2nd block is incomplete. So, InpuSplit solves this problem. MapReduce InputSplit will form a logical grouping of blocks as a single block. As the InputSplit include a location for the next block and the byte offset of the data needed to complete the block.
+
+4. Conclusion
+Hence, InputSplit is only a logical chunk of data i.e. It has just the information about blocks address or location. While Block is the physical representation of data. Now I am sure that, you have a clearer understanding about InputSplit and HDFS Data blocks after reading this blog. If you find any other difference between InputSplit vs Blocks, so do let us know in the comment section.
 
 
 ######################
@@ -591,8 +724,279 @@ A database is like a library: it holds many books. A big library does not fit in
 
 
 
+###########################################
+# map reduce custom partitioner MR
+# https://acadgild.com/blog/mapreduce-custom-partitioner
+
+What is Custom Partitioner?
+
+Custom Partitioner is a process that allows you to store the results in different reducers, based on the user condition. By setting a partitioner to partition by the key, we can guarantee that, records for the same key will go to the same reducer. A partitioner ensures that only one reducer receives all the records for that particular key.
+
+How Partitioning is done in Hadoop?
+
+HashPartitioner is the default partitioner in Hadoop, which creates one Reduce task for each unique “key”.  All the values with the same key goes to the same instance of your reducer, in a single call to the reduce function.
+
+If user is interested to store a particular group of results in different reducers, then the user can write his own partitioner implementation. It can be general purpose or custom made to the specific data types or values that you expect to use in user application.
 
 
+mport java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+
+import org.apache.hadoop.conf.Configured;
+
+import org.apache.hadoop.fs.Path;
+
+import org.apache.hadoop.io.LongWritable;
+
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapreduce.Job;
+
+import org.apache.hadoop.mapreduce.Mapper;
+
+import org.apache.hadoop.mapreduce.Partitioner;
+
+import org.apache.hadoop.mapreduce.Reducer;
+
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+import org.apache.hadoop.util.Tool;
+
+import org.apache.hadoop.util.ToolRunner;
+
+MapPartitioner:
+
+1. public class Sp extends Configured implements Tool
+
+2. {
+
+3. public static class MapPartitioner extends Mapper<LongWritable, Text, Text, Text>
+
+4. {
+
+5. public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException
+
+6. {
+
+7. String[] tokens = value.toString().split(“,”);
+
+8. String emp_dept = tokens[2].toString();
+
+9. String emp_id_n_ds_sal = tokens[0]+”,”+tokens[1]+”,”+tokens[3]+”,”+tokens[4]+”,”+tokens[5];
+
+10. context.write(new Text(emp_dept), new Text(emp_id_n_ds_sal));
+
+11. }
+
+12. }
+
+The following is the explanation of the above mapper code:
+
+In Line 1, we are taking class by name Sp, which extends Configured class properties and implements Tool interface.
+In Line 3, the mapper default class is extended to include the arguments KeyIn as LongWritable, ValueIn as Text, KeyOut as Text and ValueOut as Text.
+In Line 5, we are overriding the map method, which will run one time for every line.
+In Line 7, we are converting our input value to string and splitting the line by using comma “,” delimiter and storing the values in a String Array, so that all the columns in a row are stored in the string array.
+In Line 8, we are storing the employee department name column, which is in the 3rd column in our input file Emp.
+In Line 9, we are storing rest of the employee information, i.e., employee id, employee name, employee designation and employee salary in a String variable emp_id_n_ds_sal.
+Hadoop
+
+DeptPartitioner:
+
+13. public static class DeptPartitioner extends Partitioner<Text, Text>
+
+14. {
+
+15. @Override
+
+16. public int getPartition(Text key, Text value, int numReduceTasks)
+
+17. {
+
+18. String emp_dept = key.toString();
+
+19. if(numReduceTasks == 0)
+
+20. return 0;
+
+21. if(key.equals(new Text(“Program Department”)))
+
+22. {
+
+23. return 0;
+
+24. }
+
+25. else if(key.equals(new Text(“Admin Department”)))
+
+26. {
+
+27. return 1 % numReduceTasks;
+
+28. }
+
+29. else
+
+30. return 2 % numReduceTasks;
+
+31. }
+
+32. }
+
+The following is the explanation of the above mapper code:
+
+In Line 13, we are taking class by name DeptPartitioner, which extends Partitioner class.
+In Line 16, the command overrides the getPartition function, which has three parameters. The key and value are the intermediate key and value produced by the map function. The numReduceTasks is the number of reducers used in the MapReduce program and is specified in the driver program.
+In Line 17, we are converting key department name from Text type to String data type and storing the key value department name in the String variable emp_dept.
+In Line 18, we are including a condition, where if the number of reduce task is zero then we exit (Line 20) or else proceed (Line 21).
+In Line 21, we are including a condition, where if the key value name equals to department name “Program Department”, then we will return to 1st reducer.
+In Line 25, we are including a condition else, where if the key value name equals to department name “Admin Department”, then we will return to 2nd reducer.
+In Line 29, we are including a condition else, where if the key value name is not equal to the department name “Program Department” and “Admin Department”, then we must return to the 3rd reducer.
+ReducePartition:
+
+33. static class ReduceParitioner extends Reducer<Text, Text, Text, Text>
+
+34. {
+
+35. @Override
+
+36. public void reduce(Text key, Iterable<Text> values, Context context)throws IOException, InterruptedException
+
+37. {
+
+38. int max_sal = Integer.MIN_VALUE;
+
+39. String emp_name = ” “;
+
+40. String emp_dept = ” “;
+
+41. String emp_des = ” “;
+
+42. String emp_id = ” “;
+
+43. int emp_sal = 0;
+
+44. for(Text val: values)
+
+45. {
+
+46. String [] valTokens = val.toString().split(“,”);
+
+47. emp_sal = Integer.parseInt(valTokens[3]);
+
+48. if(emp_sal > max_sal)
+
+49. {
+
+50. emp_id = valTokens[0];
+
+51. emp_name = valTokens[1];
+
+52. emp_des = valTokens[2];
+
+53. emp_dept =key.toString();
+
+54. max_sal = emp_sal;
+
+55. }
+
+56. }
+
+57. context.write(new Text(emp_dept), new Text(“id=>”+emp_id+”,name=>”+emp_name+”,des=>”+emp_des+”,sal=>”+max_sal));
+
+58. }
+
+59. }
+
+Line 33 extends the default Reducer class with arguments KeyIn as Text and ValueIn as Text, which are same as the outputs of the mapper class and KeyOut as Text and ValueOut as Text which will be the final outputs of our MapReduce program.
+In Line 35, we are overriding the Reduce method, which will run each time for every key.
+In Line 38, we are declaring an integer variable max_sal, which will store the highest employee salary.
+In Line 39, we are declaring a String variable emp_name, which will store the employee name.
+In Line 40, we are declaring a String variable emp_dept, which will store the employee department name.
+In Line 41, we are declaring a String variable emp_des, which will store the employee designation.
+In Line 42, we are declaring a String variable emp_id, which will store the employee id.
+In Line 43, we are declaring an integer variable emp_sal and initialized it to zero.
+In Line 44, a foreach loop is taken and will run each time for the values inside the “Iterable values” coming from the shuffle and sort phase after the mapper phase.
+In Line 46, we are converting the input value line to string and splitting the line columns by using comma “,” delimiter and storing the values in a String Array so that all the columns in a row are stored in the string array.
+In Line 47, we are converting the column 4 of the String array valTokens into integer type and storing the each value into the emp_sal variable.
+In line 48, we are including a condition, where if the employee salary is greater than max salary, then we proceed.
+In line 50, we are storing String valTokens 0th column employee id value into emp_id variable.
+In line 51, we are storing String valTokens 1st column employee name value into emp_name variable.
+In line 52, we are storing String valTokens 2nd column employee designation name value into emp_des variable.
+In line 53, we are converting the partitioned key value into String type and storing the key value into the variable emp_dept.
+In line 54, we are storing highest paid employee salary in a particular department name into the variable max_sal.
+Line 57 writes the respected key (department name) and the obtained rest of the employee details (employee id, employee name, employee designation name and employee salary) as value to the context.
+Conf Code:
+
+We are partitioning keys based on the “Department Name” category, and we have 3 different department names which are available in the dataset and hence we have partitioned number of reduce tasks to 3. Below are the details of the Driver method:
+
+60. public int run(String[] arg) throws Exception
+
+61. {
+
+62. Configuration conf = getConf();
+
+63. Job job = new Job(conf, “Maxsal”);
+
+64. job.setJarByClass(Sp.class);
+
+65. FileInputFormat.setInputPaths(job, new Path(arg[0]));
+
+66. FileOutputFormat.setOutputPath(job,new Path(arg[1]));
+
+67. job.setMapperClass(MapPartitioner.class);
+
+68. job.setMapOutputKeyClass(Text.class);
+
+69. job.setMapOutputValueClass(Text.class);
+
+70. job.setPartitionerClass(DeptPartitioner.class);
+
+71. job.setReducerClass(ReduceParitioner.class);
+
+72. job.setNumReduceTasks(3);
+
+73. job.setInputFormatClass(TextInputFormat.class);
+
+74. job.setOutputFormatClass(TextOutputFormat.class);
+
+75. job.setOutputKeyClass(Text.class);
+
+76. job.setOutputValueClass(Text.class);
+
+77. System.exit(job.waitForCompletion(true)? 0 : 1);
+
+78. return 0;
+
+79. }
+
+80. public static void main(String[] args) throws Exception
+
+81. {
+
+82. int res = ToolRunner.run(new Configuration(), new Sp(), args);
+
+83. if (args.length != 2)
+
+84. {
+
+85. System.err.println(“Usage: SamplePartitioner <in> <output>”);
+
+86. System.exit(2);
+
+87. }
+
+88. System.exit(res);
+
+89. }
+
+90. }
 
 ###############################################################
 # Writable and WritableComparable in Hadoop
