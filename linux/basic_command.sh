@@ -24,6 +24,10 @@
         alias pscc='ps aux | grep java | grep cc_process'
         alias tailcc='tail -f /home/mac/team/devtest/logs/project_cc.log'
         alias vi='vim'
+        alias cccnts=' cat log.txt | grep 'model query total output records' 
+        
+        # to sum the list of numbers coming from grep 
+        alias cccntsum = ' cat log.txt | grep 'model query total output records' | cut -d : -f5 | awk '{ SUM += $1} END { print SUM }''
         
         
 # ip address from hostname 
