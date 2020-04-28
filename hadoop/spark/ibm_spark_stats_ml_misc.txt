@@ -59,3 +59,22 @@ Mean:
    
    Standard deviation tells you how wide the data is spread around the mean. So if the standard deviation is low, then all the values are very close to the mean value,
    
+   Stand deviation = Squre root of [ 1/N * square( n - mean) ]
+   
+   sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+
+    spark = SparkSession \
+    .builder \
+    .getOrCreate()
+    
+    rdd = sc.parallelize(range(100))
+    
+    cnt = rdd.count()
+    
+    sum_val = rdd.sum()
+    
+    mean = sum_val/ float(cnt)    //to avoid loss of precision , we are using float 
+    
+    from math import sqrt
+    sqrt(rdd.map(lambda x : pow(x-mean,2)).sum()/n) //standard deviation
+    
