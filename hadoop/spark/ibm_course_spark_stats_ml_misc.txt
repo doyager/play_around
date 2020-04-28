@@ -175,3 +175,10 @@ Standard Deviation:
             kurtosis = rdd.map(lambda x : pow(x-mean,4)/pow(sd,4)).sum()
             kurtosis
             // -99.48
+            
+    Covariance and Correlation:
+    
+    
+    Now, we want to learn something about the interaction of individual columns in our data. This is where covariance matrices and correlation are kicking in.
+
+Covariance and correlation tell us how two columns are interacting with each other. So for example, consider a table containing information about different buckets of water, and two columns called volume and weight. Most likely, if the volume increases, also the weight increases. Therefore, the information content of one column is decreasing once you know the other one.
