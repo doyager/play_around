@@ -182,3 +182,100 @@ Standard Deviation:
     Now, we want to learn something about the interaction of individual columns in our data. This is where covariance matrices and correlation are kicking in.
 
 Covariance and correlation tell us how two columns are interacting with each other. So for example, consider a table containing information about different buckets of water, and two columns called volume and weight. Most likely, if the volume increases, also the weight increases. Therefore, the information content of one column is decreasing once you know the other one.
+
+        Covariance :
+
+        - measure of dependency btw two cols
+        - if both cols totally correlate , then covariance is +1
+        - no interaction between two cols , then covariance is 0
+        - if both cols interact oppositive way, then covariance is -1 , eg weight of car and m ilage 
+
+Case 1:
+        // using same list for X and Y
+        rddX = sc.parallelize(range(100))
+        rddY = sc.parallelize(range(100))
+
+        meanX = rddX.sum()/rddX.count()
+        meanY = rddY.sum()/rddY.count()
+
+        Given we haave to use both values at once , we create tuples out of this two scalars
+
+        rddXY = rddX.zip(rddY)
+        rddXY.take(3)
+        // o/p:   [(0,0),(1,1),(2,2)]
+
+        covXY = rddXY.map(lambda (x,y) : (x-meanX)*(y-meanY)).sum()/rddXY.count()
+        //833
+
+
+        sdX = sqrt(rddX.map(lambda x : pow(x-meanX,2)).sum()/rddX.count()) //standard deviation
+
+        sdY = sqrt(rddY.map(lambda x : pow(x-meanY,2)).sum()/rddY.count()) //standard deviation
+
+        //correlation:
+        //correlation = covariance of X,Y divided by mulitpicaiton of St.dev of X and St.dev of Y
+
+        //correlation
+        corrXY = covXY/(sdX *sdY)
+        // first data set : 1.0 , so they are totally correlated
+
+Case 2:
+
+        //reverese the data inputs , so rddY is 99,98....
+
+        rddX = sc.parallelize(range(100))
+        rddY = sc.parallelize(reversed(range(100))). // we are reversing rddY
+
+        meanX = rddX.sum()/rddX.count()
+        meanY = rddY.sum()/rddY.count()
+
+        Given we haave to use both values at once , we create tuples out of this two scalars
+
+        rddXY = rddX.zip(rddY)
+        rddXY.take(3)
+        // o/p:   [(0,99),(1,98),(2,97)]
+
+        //covariance
+        covXY = rddXY.map(lambda (x,y) : (x-meanX)*(y-meanY)).sum()/rddXY.count()
+
+
+        //standard deviation
+        sdX = sqrt(rddX.map(lambda x : pow(x-meanX,2)).sum()/rddX.count()) //standard deviation
+        sdY = sqrt(rddY.map(lambda x : pow(x-meanY,2)).sum()/rddY.count()) //standard deviation
+
+        //correlation:
+        //correlation = covariance of X,Y divided by mulitpicaiton of St.dev of X and St.dev of Y
+
+        //correlation
+        corrXY = covXY/(sdX *sdY)
+        // corr for reversed list is -1
+
+case 3:
+        //using two random lists
+
+        rddX = sc.parallelize(random.sample(range(100),100))
+        rddY = sc.parallelize(random.sample(range(100),100))
+
+        meanX = rddX.sum()/rddX.count()
+        meanY = rddY.sum()/rddY.count()
+
+        Given we haave to use both values at once , we create tuples out of this two scalars
+
+        rddXY = rddX.zip(rddY)
+        rddXY.take(3)
+        // o/p:   [(0,99),(1,98),(2,97)]
+
+        //covariance
+        covXY = rddXY.map(lambda (x,y) : (x-meanX)*(y-meanY)).sum()/rddXY.count()
+
+
+        //standard deviation
+        sdX = sqrt(rddX.map(lambda x : pow(x-meanX,2)).sum()/rddX.count()) //standard deviation
+        sdY = sqrt(rddY.map(lambda x : pow(x-meanY,2)).sum()/rddY.count()) //standard deviation
+
+        //correlation:
+        //correlation = covariance of X,Y divided by mulitpicaiton of St.dev of X and St.dev of Y
+
+        //correlation
+        corrXY = covXY/(sdX *sdY)
+        // corr for reversed list is -1
