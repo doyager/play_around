@@ -55,5 +55,7 @@ Mean:
        print (val1+val2)/2
     
    
+   Standard Deviation:
    
+   Standard deviation tells you how wide the data is spread around the mean. So if the standard deviation is low, then all the values are very close to the mean value,
    
