@@ -127,4 +127,8 @@ Standard Deviation:
             n = float(n)
             skewness = rdd.map(lambda x : pow(x-mean,3)/pow(sd,3)).sum()
             // 0.053589 for range(100)
-            //
+          
+  Kurtosis
+  
+          Kurtosis basically tells you something about the shape of your data when plotted using a histogram.
+          It tells you about the outlier content or in other words, the length of the tails of the histogram. The higher the kurtosis measure is, the more outliers are present and the longer the tails of the distribution in the histogram are
