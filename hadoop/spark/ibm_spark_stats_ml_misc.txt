@@ -1,0 +1,59 @@
+
+
+
+Mean:
+
+    from pyspark import SparkContext, Spar
+    from pyspark import SparkContext, SparkConf
+    from pyspark.sql import SparkSession
+    
+    sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+
+    spark = SparkSession \
+    .builder \
+    .getOrCreate()
+    
+    rdd = sc.parallelize(range(100))
+    
+    cnt = rdd.count()
+    
+    sum_val = rdd.sum()
+    
+    mean = sum_val/ cnt 
+    
+    
+   Median:
+   
+   
+    sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+
+    spark = SparkSession \
+    .builder \
+    .getOrCreate()
+    
+    rdd = sc.parallelize([102]+ range(100)). //we are adding a random value to the list to check if sorting is working
+    
+    rdd.sortBy(lambda x : x ).collect // just to sort
+    
+    //zipWithIndex will add index , but the index is added as second elemtn in the set , so we are using map to make index as the 
+    // first element
+    sortedAndIndexed = rdd.sortBy(lambda x : x ).zipWithIndex().map(lambda (value,key) : (key,value))
+    n = sortedAndIndexed.count()
+    
+    if(n %2 ==1):
+      print "odd case"
+      index = (n-1)/2
+      print "median :"
+      print sortAndIndexed.lookup(index)
+     else:
+       print "even case"
+       index1 = (n-1)/2
+       index2 = n/2
+       val1 = sortAndIndexed.lookup(index1)
+       val2 = sortAndIndexed.lookup(index2)
+       print "median :"
+       print (val1+val2)/2
+    
+   
+   
+   
