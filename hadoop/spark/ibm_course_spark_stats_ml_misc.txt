@@ -132,3 +132,46 @@ Standard Deviation:
   
           Kurtosis basically tells you something about the shape of your data when plotted using a histogram.
           It tells you about the outlier content or in other words, the length of the tails of the histogram. The higher the kurtosis measure is, the more outliers are present and the longer the tails of the distribution in the histogram are
+          
+          Formula:
+          
+           Summation of 1/N * ( power of 4 of (Xj - mean) / power of 4 of  standar deviation )
+           
+           
+           
+           
+                Xj are the individual values. X double bar is the mean we've previously calculated. Note that we have to take                   it to the power of three. N is number of elemetns i.e. is the normalization factor
+
+                The same holds for the standard deviation, which we've already computed and also have to take it to the power                   of three.
+
+
+            sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+
+            spark = SparkSession \
+            .builder \
+            .getOrCreate()
+
+            rdd = sc.parallelize(range(100))
+            
+            // for positive skew value ,we are adding value -1000 for 10K times 
+            //.        rdd = sc.parallelize(range(100)+[-1000]*10000) 
+           
+            
+           
+            // for negative skew value we are adding value 1000 for 10,000 times ,
+            //.    rdd = sc.parallelize(range(100)+ [1000]*10000) 
+           
+
+            cnt = rdd.count()
+
+            sum_val = rdd.sum()
+
+            mean = sum_val/ float(cnt)    //to avoid loss of precision , we are using float 
+
+            from math import sqrt
+            sd = sqrt(rdd.map(lambda x : pow(x-mean,2)).sum()/n) //standard deviation
+            
+            n = float(n)
+            kurtosis = rdd.map(lambda x : pow(x-mean,4)/pow(sd,4)).sum()
+            kurtosis
+            // -99.48
