@@ -253,6 +253,7 @@ Case 2:
 case 3:
         //using two random lists
 
+        import random
         rddX = sc.parallelize(random.sample(range(100),100))
         rddY = sc.parallelize(random.sample(range(100),100))
 
@@ -263,7 +264,7 @@ case 3:
 
         rddXY = rddX.zip(rddY)
         rddXY.take(3)
-        // o/p:   [(0,99),(1,98),(2,97)]
+        
 
         //covariance
         covXY = rddXY.map(lambda (x,y) : (x-meanX)*(y-meanY)).sum()/rddXY.count()
@@ -278,4 +279,4 @@ case 3:
 
         //correlation
         corrXY = covXY/(sdX *sdY)
-        // corr for reversed list is -1
+        // corr for reversed list is -0.05
