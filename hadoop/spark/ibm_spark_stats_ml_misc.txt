@@ -76,7 +76,8 @@ Standard Deviation:
             mean = sum_val/ float(cnt)    //to avoid loss of precision , we are using float 
 
             from math import sqrt
-            sqrt(rdd.map(lambda x : pow(x-mean,2)).sum()/n) //standard deviation
+            sd = sqrt(rdd.map(lambda x : pow(x-mean,2)).sum()/n) //standard deviation
+            print(sd)
    
    
  Skewness :
@@ -85,4 +86,45 @@ Standard Deviation:
         In this case, we see a right tail on the right hand side, so we talk about positive skew. The measure does tell us         about the asymmetry but not about a shape. So we can't distinguish between a long and flat tail, or a short and             thick tail using this measure.
 
         If the tail is on the left hand side, we talk about negative skew.Note that incase we have a long tailed, thin left         skew, and a short tailed, thick right skew, they might cancel out if you obtain a value close to zero for the               skewness measure.So it is always worth it to plug your data in addition to calculate statistical moments.
+        
+        Formula : 
+        
+        Summation of 1/N * ( cube of (Xj - mean) / Cube of standar deviation )
+        
+        
+        
+                Xj are the individual values. X double bar is the mean we've previously calculated. Note that we have to take                   it to the power of three. N is number of elemetns
 
+                The same holds for the standard deviation, which we've already computed and also have to take it to the power                   of three.
+
+
+            sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+
+            spark = SparkSession \
+            .builder \
+            .getOrCreate()
+
+            rdd = sc.parallelize(range(100))
+            
+            // for positive skew value ,we are adding value -1000 for 10K times 
+            //.        rdd = sc.parallelize(range(100)+[-1000]*10000) 
+            // skewness  -> 9.92
+            
+           
+            // for negative skew value we are adding value 1000 for 10,000 times ,
+            //.    rdd = sc.parallelize(range(100)+ [1000]*10000) 
+            //.     skewness -> -9.897818
+
+            cnt = rdd.count()
+
+            sum_val = rdd.sum()
+
+            mean = sum_val/ float(cnt)    //to avoid loss of precision , we are using float 
+
+            from math import sqrt
+            sd = sqrt(rdd.map(lambda x : pow(x-mean,2)).sum()/n) //standard deviation
+            
+            n = float(n)
+            skewness = rdd.map(lambda x : pow(x-mean,3)/pow(sd,3)).sum()
+            // 0.053589 for range(100)
+            //
