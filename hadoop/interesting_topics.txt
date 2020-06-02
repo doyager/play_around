@@ -1204,6 +1204,42 @@ impala:
 
 Impala - Architecture. Impala is an MPP (Massive Parallel Processing) query execution engine that runs on a number of systems in the Hadoop cluster.It has three main components namely, Impala daemon (Impalad), Impala Statestore, and Impala metadata or metastore.
 
+The architecture is similar to the other distributed databases like Netezza, Greenplum etc. Hadoop impala consists of different daemon processes that run on specific hosts within your CDH cluster.
+
+- Cloudera Hadoop Impala Architecture Overview::::::::::
+https://dwgeek.com/introduction-hadoop-impala-architecture.html/
+
+SQL Interface ->Goes to Both [1. HDFSNN, Hivemetastore,StateStore] , [2. then to Data node Imapala demon , where it does query planning coordination , and executions on local HDFS DN and others]
+
+- On each Data node 
+	[<Query Planner > -> <Query Coordinator> -> <Query Exec Engine> -> HDFS DN]
+	
+The Hadoop impala is consists of three components: The Impala Daemon, Impala Statestore and Impala Catalog Services:
+
+- The Impala Daemon :
+	Impala Daemon is the important and core component of the Hadoop Impala. 
+		-> This daemon runs on every node in the CDH cluster. 
+	This is identified by the impalad process. 
+	It reads and writes the data files. It also accepts the queries transmitted from impala-shell command, ODBC, JDBC or Hue.
+
+	You can connect and submit the query to the Impala Daemon running on any Datanode and that instance of Daemon serves as coordinator. The Daemon which accepts the queries acts as a coordinator, that parallizes the queries and distributes the workload across the Hadoop cluster. It also collects the results back from all nodes.
+
+	Impala Daemon will always be communicating to statestore to confirm which node is healthy and accepts the new work. Each Daemon will also receive the broadcasted message whenever any Impala node in cluster create, alter, drops any object or any statement like insert, load data is processed.
+
+
+-The Impala Statestore : -
+
+	This component checks health of all Impala Daemons on all the datanodes in the Hadoop cluster. It is physically represented by the process statestored. 
+			-> Only one such process is required on one host in the Hadoop cluster.
+			-> If an Impala Daemon goes down, statestore informs all the Impala Daemons so that they can avoid the failed node while distributing future queries.
+
+- The impala Catalog Service:-
+		This component of the Hadoop Impala tells metadata changes from Impala SQL statements to all the Datanodes in Hadoop cluster. It is physically rhaepresented by Daemon process catalogd.
+		 -> Only one such process is required on one host in the Hadoop cluster. U
+		 -> Usually, statestored and catalogd process will be running on same host as catalog services are passed through statestored.
+
+		The catalog service avoids the need to issue REFRESH and INVALIDATE METADATA statements when the metadata changes are performed by statements issued through Impala.
+
 Why is it used? 
 Impala gives parallel processing database technology on top of Hadoop eco-system. It allows users to perform low latency queries interactively. Hive MapReduce job will take some minimum time in launching and processing queries where as impala gives results in seconds.
 
