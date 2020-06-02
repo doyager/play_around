@@ -6,6 +6,7 @@ Writable and WritableComparable in Hadoop
 
 #hive vs hbase:
 
+hive vs impala:
 
 where should be avro used?
 dataframe vs dataset?
@@ -1177,3 +1178,38 @@ These read fields and write make the comparison of data faster in the network.
 With the use of these Writable and WritableComparables in Hadoop, we can make our serialized custom type with less difficulty. This gives the ease for developers to make their custom types based on their requirement.
 
 ###############################################################
+
+hive vs impala:
+
+
+Key Difference Between Hive and Impala
+- Hive is written in Java but Impala is written in C++. 
+- Query processing speed in Hive is slow but Impala is 6-69 times faster than Hive.
+- Hive supports complex type but Impala does not support complex types.
+-Hive is batch-based Hadoop MapReduce but Impala is MPP database.
+
+What is the advantage of using Impala over hive?
+Cloudera Impala was developed to resolve the limitations posed by low interaction of Hadoop Sql.
+Cloudera Impala provides low latency high performance SQL like queries to process and analyze data with only one
+condition that the data be stored on Hadoop clusters
+
+Why is Impala faster than Hive?
+- Why Impala is faster than Hive in query processing. ... While processing SQL-like queries, Impala does not write intermediate results on disk; instead full SQL processing is done in memory, which makes it faster.
+- While processing SQL-like queries, Impala does not write intermediate results on disk; instead full SQL processing is done in memory, which makes it faster.
+- With Impala, the query starts its execution instantly compared to MapReduce, which may take significant time to start processing larger SQL queries and this adds more time in processing.
+- Impala Query Planner uses smart algorithms to execute queries in multiple stages ..
+
+################################
+impala:
+
+Impala - Architecture. Impala is an MPP (Massive Parallel Processing) query execution engine that runs on a number of systems in the Hadoop cluster.It has three main components namely, Impala daemon (Impalad), Impala Statestore, and Impala metadata or metastore.
+
+Why is it used? 
+Impala gives parallel processing database technology on top of Hadoop eco-system. It allows users to perform low latency queries interactively. Hive MapReduce job will take some minimum time in launching and processing queries where as impala gives results in seconds.
+
+Does Impala use MapReduce?
+Impala does not make use of Mapreduce as it contains its own pre-defined daemon process to run a job. It sits on top of only the Hadoop Distributed File System (HDFS) as it uses the same to merely store the data. Therefore, we prefer calling it as simply “SQL on HDFS”
+
+Why is impala not Tolerant?
+If you run a query on hive there is starttime overhead on queries run on mapreduce but not on impala. Hive is fault tolerant where as impala is not. For e.g. if you run a query in hive mapreduce and while the query is running one of your datanode goes down still the output would be produced as its fault tolerant.
+
