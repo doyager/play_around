@@ -1177,6 +1177,12 @@ These read fields and write make the comparison of data faster in the network.
 
 With the use of these Writable and WritableComparables in Hadoop, we can make our serialized custom type with less difficulty. This gives the ease for developers to make their custom types based on their requirement.
 
+############################
+MPP:
+
+https://www.dezyre.com/article/impala-vs-hive-difference-between-sql-on-hadoop-components/180
+
+
 ###############################################################
 
 hive vs impala:
@@ -1204,6 +1210,32 @@ impala:
 
 Impala - Architecture. Impala is an MPP (Massive Parallel Processing) query execution engine that runs on a number of systems in the Hadoop cluster.It has three main components namely, Impala daemon (Impalad), Impala Statestore, and Impala metadata or metastore.
 
+https://www.dezyre.com/article/impala-vs-hive-difference-between-sql-on-hadoop-components/180
+Impala massively improves on the performance parameters as it eliminates the need to migrate huge data sets to dedicated processing systems or convert data formats prior to analysis. Salient features of Impala include:
+
+Hadoop Distributed File System (HDFS) and Apache HBase storage support
+Recognizes Hadoop file formats, text, LZO, SequenceFile, Avro, RCFile and Parquet
+Supports Hadoop Security (Kerberos authentication)
+Fine – grained, role-based authorization with Apache Sentry
+Can easily read metadata, ODBC driver and SQL syntax from Apache Hive
+Impala’s rise within a short span of little over 2 years can be gauged from the fact that Amazon Web Services and MapR have both added support for it.
+
+https://www.dezyre.com/article/impala-vs-hive-difference-between-sql-on-hadoop-components/180
+- What is Impala? :::::::
+Step aside, the SQL engines claiming to do parallel processing! Impala’s open source Massively Parallel Processing (MPP) SQL engine is here, armed with all the power to push you aside. The only condition it needs is data be stored in a cluster of computers running Apache Hadoop, which, given Hadoop’s dominance in data warehousing, isn’t uncommon. Cloudera Impala was announced on the world stage in October 2012 and after a successful beta run, was made available to the general public in May 2013.
+
+
+Cloudera Impala is an excellent choice for programmers for running queries on HDFS and Apache HBase as it doesn’t require data to be moved or transformed prior to processing. Cloudera Impala easily integrates with Hadoop ecosystem, as its file and data formats, metadata, security and resource management frameworks are same as those used by MapReduce, Apache Hive, Apache Pig and other Hadoop software. It is architected specifically to assimilate the strengths of Hadoop and the familiarity of SQL support and multi user performance of traditional database. Its unified resource management across frameworks has made it the de facto standard for open source interactive business intelligence tasks.
+
+Cloudera Impala has the following two technologies that give other processing languages a run for their money:
+
+	1. Columnar Storage::::::::::
+	Data is stored in columnar fashion which achieves high compression ratio and efficient scanning.
+	2. Tree Architecture::::::::
+	This is fundamental to attaining a massively parallel distributed multi – level serving tree for pushing down a query to the tree and then aggregating the results from the leaves
+
+
+- ans 2 :
 The architecture is similar to the other distributed databases like Netezza, Greenplum etc. Hadoop impala consists of different daemon processes that run on specific hosts within your CDH cluster.
 
 - Cloudera Hadoop Impala Architecture Overview::::::::::
