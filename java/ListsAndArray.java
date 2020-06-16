@@ -30,4 +30,30 @@ public class Test {
            System.out.println(StringUtils.join(intList, "|"));
            // o/p: 1|2|3
     }
+    
+    public static String buildCommaSeperatedNumStringFromIntList(List<Integer> intList) {
+
+		StringBuilder strBuilder = new StringBuilder("");
+		if (!CollectionUtils.isEmpty(intList)) {
+
+			for (Integer i : intList) {
+				strBuilder.append(i).append(",");
+			}
+		}
+		return strBuilder.length() > 2 ? strBuilder.substring(0, strBuilder.length() - 1) : strBuilder.toString();
+
+	}
+	
+	public static String buildCommaSeperatedStringWithQuotesFromList(List<String> stringList) {
+
+		StringBuilder strBuilder = new StringBuilder("");
+		if (!CollectionUtils.isEmpty(stringList)) {
+
+			for (String str : stringList) {
+				strBuilder.append("'" + str.replace(",", "','") + "'").append(",");
+			}
+		}
+		return strBuilder.length() > 2 ? strBuilder.substring(0, strBuilder.length() - 1) : strBuilder.toString();
+
+	}
 }
