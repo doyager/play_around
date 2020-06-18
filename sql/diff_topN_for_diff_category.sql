@@ -1,5 +1,6 @@
-
-ith cat_topN as (SELECT *
+-- we want to show different top N values for each group , given top N for each category is adhoc we are creating a temp 
+-- table using dual table concept 
+with cat_topN as (SELECT *
 FROM (
 SELECT 'C1' Category, 3 topN FROM dual
 UNION ALL
