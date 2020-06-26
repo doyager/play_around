@@ -1,0 +1,26 @@
+
+
+-- vlook [To find if value in col A exist in column B]
+
+- Mark Yes or No , if value A2 is found in the range of D2 to D3
+IF(ISNA(VLOOKUP(A2,$D$2:$D$4,1,FALSE)), "No", "Yes")
+
+- Mark True or False , if value A2 is found in the range of D2 to D3
+IF(ISNA(VLOOKUP(A2,$D$2:$D$4,1,FALSE)), "False", "True")
+
+
+----------------------------------------------------
+
+-- Match [To find if value in col A exist in column B]
+
+Check if one column value exists in another column using MATCH
+You can use the MATCH() function to check if the values in column A also exist in column B. 
+MATCH() returns the position of a cell in a row or column.
+The syntax for MATCH() is =MATCH(lookup_value, lookup_array, [match_type]).
+Using MATCH, you can look up a value both horizontally and vertically.
+
+Example using MATCH
+To solve the problem in the previous example with MATCH(), you need to follow the following steps:
+
+Select cell C2 by clicking on it.
+Insert the formula in"=NOT(ISERROR(MATCH(A2,$B$2:$B$1001,0)))” the formula bar.
