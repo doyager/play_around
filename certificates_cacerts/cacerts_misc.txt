@@ -1,0 +1,18 @@
+
+
+Artifactory:
+- delete current cert:
+keytool -delete -keystore carets -alias alias-artifactory
+- add new cert:
+      -
+      keytool -keystore cacerts -importcert -alias alias-artifactory -file /Users/username/Downloads/artifactory.company.com.cer
+      -
+      keytool -noprompt -storepass changeit -trustcacerts -importcert -alias mongoCert -file  ~/workspace/project/project_misc/mongodb_misc/aa10tlvmdb123.company.com.cer -keystore cacerts
+
+-  list all certs:
+  keytool -list -keystore cacerts
+  - grep on alias name
+    keytool -list -keystore cacerts | grep art
+
+- view patricular cert with alias mongoCert :
+keytool -list -v -storepass changeit -alias mongoCert -keystore cacerts
