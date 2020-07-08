@@ -1,0 +1,82 @@
+
+
+
+####Document:[aka... record in sql ]
+      A record in MongoDB is a document, which is a data structure composed of field and value pairs. 
+      MongoDB documents are similar to JSON objects. The values of fields may include other documents, arrays, and arrays of documents.
+
+
+      The advantages of using documents are:
+
+      Documents (i.e. objects) correspond to native data types in many programming languages.
+      Embedded documents and arrays reduce need for expensive joins.
+      Dynamic schema supports fluent polymorphism.
+      Collections/Views/On-Demand Materialized Views
+
+
+####Collections: [aka ... Tables in sql]
+    MongoDB stores documents in collections. Collections are analogous to tables in relational databases.
+
+    In addition to collections, MongoDB supports:
+
+    Read-only Views (Starting in MongoDB 3.4)
+    On-Demand Materialized Views (Starting in MongoDB 4.2).
+    
+    
+#####Key Features of MongoDB:
+
+
+      ###High Performance
+          MongoDB provides high performance data persistence. In particular,
+
+          Support for embedded data models reduces I/O activity on database system.
+          Indexes support faster queries and can include keys from embedded documents and arrays.
+
+      ###Rich Query Language
+          MongoDB supports a rich query language to support read and write operations (CRUD) as well as:
+
+      ###Data Aggregation
+          Text Search and Geospatial Queries.
+          SEE ALSO
+
+          SQL to MongoDB Mapping Chart
+          SQL to Aggregation Mapping Chart
+      ###High Availability
+          MongoDB’s replication facility, called replica set, provides:
+
+          automatic failover
+          data redundancy.
+
+          #### Replica Set : 
+          A replica set is a group of MongoDB servers that maintain the same data set, providing redundancy and increasing data availability.
+
+      ###Horizontal Scalability
+          MongoDB provides horizontal scalability as part of its core functionality:
+
+      ###Sharding distributes data across a cluster of machines.
+          Starting in 3.4, MongoDB supports creating zones of data based on the shard key. 
+          In a balanced cluster, MongoDB directs reads and writes covered by a zone only to those shards inside the zone. 
+          See the Zones manual page for more information.
+      ###Support for Multiple Storage Engines
+          MongoDB supports multiple storage engines:
+
+          WiredTiger Storage Engine (including support for Encryption at Rest)
+          In-Memory Storage Engine.
+
+
+
+Aggregations:
+Aggregations are used in MongoDB to analyze data and derive meaningful information out of it.
+
+These are usually performed in various stages, and the stages form a pipeline – such that the output of one stage is passed on as input to the next stage.
+
+The most commonly used stages can be summarized as:
+
+###Stage	SQL Equivalent	Description:::::::::::
+     project --->	SELECT --->	selects only the required fields, can also be used to compute and add derived fields to the collection
+     match	---> WHERE --->	filters the collection as per specified criteria
+     group	---> GROUP BY	---> gathers input together as per the specified criteria (e.g. count, sum) to return a document for each distinct grouping
+     sort	  ---> ORDER BY	---> sorts the results in ascending or descending order of a given field
+     count	---> COUNT --->	counts the documents the collection contains
+     limit	---> LIMIT --->	limits the result to a specified number of documents, instead of returning the entire collection
+     out	  ---> SELECT ---> INTO NEW_TABLE	writes the result to a named collection; this stage is only acceptable as the last in a pipeline
