@@ -1,0 +1,46 @@
+
+
+- truncate vs delete
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Difference between DELETE and TRUNCATE
+
+1. DELETE :
+DELETE is a DML(Data Manipulation Language) command and is used when we specify the row(tuple)
+that we want to remove or delete from the table or relation. The DELETE command can contain a WHERE clause. 
+If WHERE clause is used with DELETE command then it remove or delete only those rows(tuple) that
+satisfy the condition otherwise by default it removes all the tuples(rows) from the table.
+
+Syntax of DELETE command :
+                  DELETE FROM TableName 
+                  WHERE condition; 
+
+2. TRUNCATE :
+TRUNCATE is a DDL(Data Definition Language) command and is used to delete all the rows or tuples from a table. 
+Unlike the DELETE command, TRUNCATE command does not contain a WHERE clause. In the TRUNCATE command,
+the transaction log for each deleted data page is recorded. Unlike the DELETE command, 
+the TRUNCATE command is fast and we can’t rollback the data after using the TRUNCATE command.
+
+Syntax of TRUNCATE command:-
+          TRUNCATE TABLE  TableName; 
+
+Let’s see the difference between DELETE and TRUNCATE command:-
+
+S.NO	                          DELETE                                                      	TRUNCATE
+1.	The DELETE command is used to delete specified rows(one or more).     	While this command is used to delete all the rows from a table.
+2.	It is a DML(Data Manipulation Language) command.	                      While it is a DDL(Data Definition Language) command.
+3.	There may be WHERE clause in DELETE command in order                    While there may not be WHERE clause in TRUNCATE command.
+to filter the records.	
+4.	In the DELETE command, a tuple is locked before removing it.          	While in this command, data page is locked before removing the table data.
+5.	We can rollback the data even after using DELETE command.	              While in this command, we can’t rollback.
+6.	DELETE command is slower than TRUNCATE command.	                        While TRUNCATE command is faster than DELETE command.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
