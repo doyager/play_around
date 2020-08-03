@@ -19,6 +19,13 @@ Leaders, and
 Followers. 
 This simplified UML diagram describes the ways these components relate to one another:
 
+These are four main parts in a Kafka system:
+
+Broker: Handles all requests from clients (produce, consume, and metadata) and keeps data replicated within the cluster. There can be one or more brokers in a cluster.
+Zookeeper: Keeps the state of the cluster (brokers, topics, users).
+Producer: Sends records to a broker.
+Consumer: Consumes batches of records from the broker.
+
 
 ![](images/uml_diagram)
 
@@ -110,6 +117,35 @@ the full list of partitions that you want to consume.
  Kafka is able to failover to such idle consumers in cases where an active consumer dies, or 
  when a new partition is added:
  
+
+<h3> Kafka Broker</h3>
+A Kafka cluster consists of one or more servers (Kafka brokers) running Kafka. Producers are processes that push records into Kafka topics within the broker. A consumer pulls records off a Kafka topic.
+Running a single Kafka broker is possible but it doesn’t give all the benefits that Kafka in a cluster can give, for example, data replication.
+Kafka Broker
+Management of the brokers in the cluster is performed by Zookeeper. There may be multiple Zookeepers in a cluster, in fact the recommendation is three to five, keeping an odd number so that there is always a majority and the number as low as possible to conserve overhead resources.
+
+
+<h3> Consumers and consumer groups </h3>
+
+Consumers can read messages starting from a specific offset and are allowed to read from any offset point they choose. This allows consumers to join the cluster at any point in time.
+
+<h2>Low-level consumers</h2>
+
+    There are two types of consumers in Kafka. First, the low-level consumer, where topics and partitions are specified as is the offset from which to read, either fixed position, at the beginning or at the end. This can, of course, be cumbersome to keep track of which offsets are consumed so the same records aren’t read more than once. So Kafka added another easier way of consuming with:
+
+<h2>High-level consumer</h2>
+
+      The high-level consumer (more known as consumer groups) consists of one or more consumers. Here a consumer group is created by adding the property “group.id” to a consumer. Giving the same group id to another consumer means it will join the same group.
+
+      The broker will distribute according to which consumer should read from which partitions and it also keeps track of which offset the group is at for each partition. It tracks this by having all consumers committing which offset they have handled.
+
+      Every time a consumer is added or removed from a group the consumption is rebalanced between the group. All consumers are stopped on every rebalance, so clients that time out or are restarted often will decrease the throughput. Make the consumers stateless since the consumer might get different partitions assigned on a rebalance.
+
+      Consumers pull messages from topic partitions. Different consumers can be responsible for different partitions. Kafka can support a large number of consumers and retain large amounts of data with very little overhead. By using consumer groups, consumers can be parallelized so that multiple consumers can read from multiple partitions on a topic, allowing a very high message processing throughput. The number of partitions impacts the maximum parallelism of consumers as there cannot be more consumers than partitions.
+
+<h3>Records are never pushed out to consumers, the consumer will ask for messages when the consumer is ready to handle the message.</h3>
+
+The consumers will never overload themselves with lots of data or lose any data since all records are being queued up in Kafka. If the consumer is behind during message processing, it has the option to eventually catch up and get back to handle data in real-time.
 
 
 
