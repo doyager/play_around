@@ -8,3 +8,9 @@ from table
 
 -- adding unique series name based on metric id
 CONCAT('series',TRIM(DENSE_RANK () OVER (order by mtrc.MTRC_ID) )) AS MTRC_SERIES_KEY  
+                     
+                     
+                     
+-- 30 day cumulative sum from current data
+count( distinct (case when Date_DTM between current_date() - INTERVAL '30' DAY and current_date() and EMPLOYEE_IND='Y' then employee end) ) as empCountsThirtyDayCumSum,
+
