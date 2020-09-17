@@ -1,4 +1,13 @@
 
+-- calculate total num of occurances of empid , no of 'Y' for each empid , no of 'N' for each empid
+
+  select EMP_ID , COUNT(EMP_ID),
+  case when FRCST_IND = 'N' then count(  EMP_ID) else 0 end as  numOfN
+  ,case when FRCST_IND = 'Y' then count( EMP_ID) else 0 end as  numOfY
+  from SCHEMA1.EMPLOYEE_DATA_TABL
+  group by EMP_ID,FRCST_IND;
+  
+  
 
 -- get sum of members per week at state level for symptom of 'FEVER' for company id = ABC123
 -- weekly sum of members at state level using state_nm and state_cd
