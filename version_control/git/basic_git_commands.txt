@@ -30,6 +30,23 @@ git branch new-branch-name
 git checkout new-branch-name
 git push -u origin new-branch-name
 
+# Checkout remote develop
+git checkout -b remotes/origin/develop
+
+# Push from one local to two remotes 
+            Suppose your git remotes are set up like this:
+
+            git remote add github git@github.com:muccg/my-project.git
+            git remote add bb git@bitbucket.org:ccgmurdoch/my-project.git
+
+            git remote set-url --add --push origin git@github.com:muccg/my-project.git
+            git remote set-url --add --push origin git@bitbucket.org:ccgmurdoch/my-project.git
+
+            It will change the remote.origin.pushurl config entry. Now pushes will send to both of these destinations, rather than the fetch URL.
+            Check it out by running:
+
+            git remote show origin
+
 
 # Create Git branch with current changes
 
