@@ -33,6 +33,12 @@ git push -u origin new-branch-name
 # Checkout remote develop
 git checkout -b remotes/origin/develop
 
+# to checkout branch from remote
+            1. First, fetch the remote branches:
+                        git fetch origin
+            2. Next, checkout the branch you want. In this case, the branch we want is called “branchxyz”.
+                        git checkout -b branchxyz origin/branchxyz
+
 # Push from one local to two remotes 
             Suppose your git remotes are set up like this:
 
