@@ -1,0 +1,60 @@
+
+
+SOLID:
+
+In object-oriented computer programming, 
+SOLID is a mnemonic acronym for five design principles intended to make software designs more understandable, 
+flexible and maintainable. It is not related to the GRASP software design principles. The principles are a subset 
+of many principles promoted by American software engineer and instructor Robert C. Martin.[1][2][3] Though they apply to any object-oriented design,
+the SOLID principles can also form a core philosophy for methodologies such as agile development or adaptive software development.[3]
+The theory of SOLID principles was introduced by Martin in his 2000 paper Design Principles and Design Patterns,[2][4]
+although the SOLID acronym was introduced later by Michael Feathers.[5]
+
+Concepts
+Single-responsibility principle[6]
+      A class should only have a single responsibility, that is, only changes to one part of the
+      software's specification should be able to affect the specification of the class.
+      The single-responsibility principle (SRP) is a computer-programming principle that 
+      states that every module, class or function in a computer program should have responsibility 
+      over a single part of that program's functionality, which it should encapsulate.
+Open–closed principle[7]
+    "Software entities ... should be open for extension, but closed for modification."
+    
+Liskov substitution principle[8]
+      "Objects in a program should be replaceable with instances of their
+      subtypes without altering the correctness of that program." See also design by contract.
+      Substitutability is a principle in object-oriented programming stating that, 
+      in a computer program, if S is a subtype of T, then objects of type T may be replaced with objects of type S
+      (i.e. an object of type T may be substituted with any object of a subtype S) without altering any of the
+      desirable properties of the program (correctness, task performed, etc.).
+
+Interface segregation principle[9]
+      "Many client-specific interfaces are better than one general-purpose interface."[4]
+      In the field of software engineering, the interface-segregation principle (ISP) states
+      that no client should be forced to depend on methods it does not use. ISP splits interfaces
+      that are very large into smaller and more specific ones so that clients will only have to
+      know about the methods that are of interest to them.
+      
+Dependency inversion principle[10]
+      One should "depend upon abstractions, [not] concretions."[4]
+      In object-oriented design, the dependency inversion principle is a specific form of decoupling software modules. 
+      When following this principle, the conventional dependency relationships established from high-level, policy-setting modules 
+      to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details.
+
+
+Open–closed principle 
+
+      In object-oriented programming, the open–closed principle states "software entities (classes, modules, functions, etc.) 
+      should be open for extension, but closed for modification";[1] that is, such an entity can allow its behaviour to be
+       extended without modifying its source code.
+
+      The name open–closed principle has been used in two ways. Both ways use generalizations
+      (for instance, inheritance or delegate functions) to resolve the apparent dilemma, but the goals, techniques, and results are different.
+
+      Open–closed principle is one of the five SOLID principles of object-oriented design.
+
+      In Typescript or Javascript, these same principles apply. When creating a
+      Class component for a View (in Angular, React, or a Web Component) the View should have a single concern.
+      To display what is requested. Once the View is "done" then it should be closed for modification. 
+      In these two languages, the "Function is a first-class citizen, which allows for aggregation of behaviors outside of the class. 
+      By doing this, the open-closed principle is followed.
