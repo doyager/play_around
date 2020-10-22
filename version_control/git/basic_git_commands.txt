@@ -1,3 +1,7 @@
+# Checkout remote develop
+git fetch origin                                # to fertch all the remote branches
+git branch -r                                   # to list all remote branches
+git checkout -b develop origin/develop          # to check develop branch from remote
 
 #clone
 git clone  https://username@bitbucket.company.com/scm/master-project/child-project.git
@@ -30,8 +34,7 @@ git branch new-branch-name
 git checkout new-branch-name
 git push -u origin new-branch-name
 
-# Checkout remote develop
-git checkout -b remotes/origin/develop
+
 
 # to checkout branch from remote
             1. First, fetch the remote branches:
