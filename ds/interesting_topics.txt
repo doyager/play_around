@@ -66,10 +66,12 @@ that are from different normal distributions.
             these scores to be very far from the mean.
 
 
-
+The 99th percentile in a normal distribution is 2.3263 standard deviations above the mean; 
+99 is 49 more than 50—thus 49 points above the mean; 49/2.3263 = 21.06.
 
 ###################################################################################################
 
+Percentile
 
 
 
