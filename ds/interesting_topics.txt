@@ -34,6 +34,9 @@ In statistics, the standard score is the number of standard deviations by which 
 below the mean value of what is being observed or measured. Raw scores above the mean have positive standard scores, 
 while those below the mean have negative standard scores
 
+Tells us how many SD away is the value from Mean 
+    z = (i-mean)/std 
+
 The standard score (more commonly referred to as a z-score) is a very useful statistic because it (a) allows us to 
 calculate the probability of a score occurring within our normal distribution and (b) enables us to compare two scores
 that are from different normal distributions.
@@ -68,6 +71,23 @@ that are from different normal distributions.
 
 The 99th percentile in a normal distribution is 2.3263 standard deviations above the mean; 
 99 is 49 more than 50—thus 49 points above the mean; 49/2.3263 = 21.06.
+
+    #1.Calculate mean, standard deviation
+        import numpy as np
+        data = [1, 2, 2, 2, 3, 1, 1, 15, 2, 2, 2, 3, 1, 1, 2] 
+        mean = np.mean(data) 
+        std = np.std(data) 
+        print('mean of the dataset is', mean) 
+        print('std. deviation is', std) 
+    #2. Caluclate Z-score
+        threshold = 3
+        outlier = [] 
+        for i in data: 
+            z = (i-mean)/std 
+            if z > threshold: 
+                outlier.append(i) 
+        print('outlier in dataset is', outlier) 
+        #outlier in dataset is [15]
 
 ###################################################################################################
 
