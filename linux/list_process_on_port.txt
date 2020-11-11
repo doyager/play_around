@@ -1,0 +1,15 @@
+List process running on port 8080
+
+Method 1:
+lsof command (LiSt Open Files) is used to list all open files on a Linux system. To install it on your system, type the command below.
+lsof -i :8080   
+
+
+Method 2:
+netstat (network statistics) command is used to display information concerning network connections, routing tables, interface stats and beyond.
+It is available on all Unix-like operating systems including Linux and also on Windows OS.
+netstat -ltnp | grep -w ':8080'
+
+method 3:
+fuser command shows the PIDs of processes using the specified files or file systems in Linux.
+fuser 8080/tcp
