@@ -1,0 +1,10 @@
+
+
+
+Eclipse:
+Text Search : Option + Command + G
+shift+cmd+G. Search references in workspace.
+shift+cmd+K. Find previous.
+cmd+F. Find and replace.
+
+
