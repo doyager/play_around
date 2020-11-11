@@ -1,0 +1,3 @@
+zip interventions.zip --out interventions_new.zip -s 200m
+
+zip -s0 interventions_new.zip --out interventions.zip
