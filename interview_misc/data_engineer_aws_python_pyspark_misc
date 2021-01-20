@@ -112,7 +112,77 @@ inserts references into it to the objects
  found in the original.
  
  
- Difference b/w def function and class function in python
+ -   Difference b/w def function and class function[i.e. method] in python
+     # function vs method 
+       Method is called by its name, but it is associated to an object (dependent)
+      Function is block of code that is also called by its name. (independent)
+      
+     Here, key differences between Method and Function in Python are explained. Java is also an OOP language, but their is no concept of Function in it. But Python has both concept of Method and Function.
+
+                          Python Method
+
+                          Method is called by its name, but it is associated to an object (dependent).
+                          A method is implicitly passed the object on which it is invoked.
+                          It may or may not return any data.
+                          A method can operate on the data (instance variables) that is contained by the corresponding class
+                          Basic Method Structure in Python :
+
+                          filter_none
+                          brightness_4
+                          # Basic Python method  
+                          class class_name 
+                              def method_name () : 
+                                  ...... 
+                                  # method body 
+                                  ......    
+                          Python 3 User-Defined Method :
+
+                          filter_none
+                          edit
+                          play_arrow
+
+                          brightness_4
+                          # Python 3  User-Defined  Method 
+                          class ABC : 
+                              def method_abc (self): 
+                                  print("I am in method_abc of ABC class. ") 
+
+                          class_ref = ABC() # object of ABC class 
+                          class_ref.method_abc() 
+
+
+                             Functions
+
+                             Function is block of code that is also called by its name. (independent)
+                             The function can have different parameters or may not have any at all. If any data (parameters) are passed, they are passed explicitly.
+                             It may or may not return any data.
+                             Function does not deal with Class and its instance concept.
+                             Basic Function Structure in Python :
+
+                             filter_none
+                             brightness_4
+                             def function_name ( arg1, arg2, ...) : 
+                                 ...... 
+                                 # function body 
+                                 ......    
+
+                             Python 3 User-Defined Function :
+
+                             filter_none
+                             edit
+                             play_arrow
+
+                             brightness_4
+                             def Subtract (a, b): 
+                                 return (a-b) 
+
+                             print( Subtract(10, 12) ) # prints -2 
+
+                             print( Subtract(15, 6) ) # prints 9 
+                             Output:
+
+                             -2
+                             9
 
 
 
