@@ -1,0 +1,106 @@
+
+
+
+
+How do you use two version of python in same machine?
+How do you do dependency management in python?
+How do install particular version of pandas?
+
+How do you check spark job performance ?
+What do you do if a spark job is taking time?
+What is spark persist?
+Diff between tranformations and actions?
+How do you do spark submit in EMR
+Tell me few transformations you used 
+What do you do when you have large file that has to be available in every worker node?
+How do you calculate best values for spark submit options , like executor memoy, core etc?
+
+Explain flat map in spark ? 
+Diff btw map and flat map?
+
+
+Spark sql – function to work on previous row ?
+Get and use previous row (Lag)
+LAG is a function in SQL which is used to access previous row values in current row. This is useful when we have use cases like comparison with previous value. LAG in Spark dataframes is available in Window functions
+lag(Column e, int offset)
+Window function: returns the value that is offset rows before the current row, and null if there is less than offset rows before the current row.
+
+
+import org.apache.spark.sql.expressions.Window
+//order by Salary Date to get previous salary.
+//For first row we will get NULL
+val window = Window.orderBy("SalaryDate")
+//use lag to get previous row value for salary, 1 is the offset
+val lagCol = lag(col("Salary"), 1).over(window)
+myDF.withColumn("LagCol", lagCol).show()
+
++-----+-------+------+----------+------+
+|EmpId|EmpName|Salary|SalaryDate|LagCol|
++-----+-------+------+----------+------+
+| 1| John|1000.0|2016-01-01| null|
+| 1| John|2000.0|2016-02-01|1000.0|
+| 1| John|1000.0|2016-03-01|2000.0|
+| 1| John|2000.0|2016-04-01|1000.0|
+| 1| John|3000.0|2016-05-01|2000.0|
+| 1| John|1000.0|2016-06-01|3000.0|
++-----+-------+------+----------+------+
+Get and use next row (Lead)
+LEAD is a function in SQL which is used to access next row values in current row. This is useful when we have usecases like comparison with next value. LEAD in Spark dataframes is available in Window functions
+lead(Column e, int offset)
+Window function: returns the value that is offset rows after the current row, and null if there is less than offset rows after the current row.
+
+
+import org.apache.spark.sql.expressions.Window
+//order by Salary Date to get previous salary. F
+//or first row we will get NULL
+val window = Window.orderBy("SalaryDate")
+//use lag to get previous row value for salary, 1 is the offset
+val leadCol = lead(col("Salary"), 1).over(window)
+myDF.withColumn("LeadCol", leadCol).show()
+
+
+
+
+
++-----+-------+------+----------+-------+
+|EmpId|EmpName|Salary|SalaryDate|LeadCol|
++-----+-------+------+----------+-------+
+| 1| John|1000.0|2016-01-01| 1000.0|
+| 1| John|1000.0|2016-03-01| 1000.0|
+| 1| John|1000.0|2016-06-01| 2000.0|
+| 1| John|2000.0|2016-02-01| 2000.0|
+| 1| John|2000.0|2016-04-01| 3000.0|
+| 1| John|3000.0|2016-05-01| null|
++-----+-------+------+----------+-------+
+
+
+Spark sql : window functions 
+Window functions - Sort, Lead, Lag , Rank , Trend Analysis
+
+
+What version control you used?\
+
+Diff between spark and python df?
+The few differences between Pandas and PySpark DataFrame are: Operation on Pyspark DataFrame run parallel on different nodes in cluster but, in case of pandas it is not possible. ... Still pandas API is more powerful than Spark. Complex operations in pandas are easier to perform than Pyspark DataFrame.
+
+What is parquet format ? what are engine and compression used?
+engine{‘auto’, ‘pyarrow’, ‘fastparquet’}, default ‘auto’
+compression{‘snappy’, ‘gzip’, ‘brotli’, None}, default ‘snappy’
+
+shallow copy vs deep copy?
+A shallow copy constructs a new compound
+ object and then (to the extent possible) 
+inserts references into it to the objects
+ found in the original. A deep copy
+ constructs a new compound object and then,
+ recursively, inserts copies into it of the objects
+ found in the original.
+
+Diff between repartition vs coalesces 
+
+Tell me spark submit options ?
+Tell me how do you decide on how many executors to use, how to decide on executor memory and cores?
+How do you set up CONDA environment ?
+Python unit testing best practices?
+Python – diff between list and tuple ?
+
