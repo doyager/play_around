@@ -1,10 +1,6 @@
 
 
-
-
-How do you use two version of python in same machine?
-How do you do dependency management in python?
-How do install particular version of pandas?
+Spark :
 
 How do you check spark job performance ?
 What do you do if a spark job is taking time?
@@ -77,6 +73,13 @@ myDF.withColumn("LeadCol", leadCol).show()
 Spark sql : window functions 
 Window functions - Sort, Lead, Lag , Rank , Trend Analysis
 
+Tell me spark submit options ?
+Tell me how do you decide on how many executors to use, how to decide on executor memory and cores?
+Persist: If you have large data sets like 10G does persist works.
+Performance tuning of spark. How will you increase Broadcast variable size , if you have 10G file that has to be used by all worker nodes
+
+Diff between repartition vs coalesces 
+
 
 What version control you used?\
 
@@ -87,6 +90,18 @@ What is parquet format ? what are engine and compression used?
 engine{‘auto’, ‘pyarrow’, ‘fastparquet’}, default ‘auto’
 compression{‘snappy’, ‘gzip’, ‘brotli’, None}, default ‘snappy’
 
+
++-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------+
+Python:
+
+How do you use two version of python in same machine?
+How do you do dependency management in python?
+How do install particular version of pandas?
+If we have old version of python then how will you run the Python 2 and python 3 versions in the same terminal.
+
+Diff between spark and python df?
+The few differences between Pandas and PySpark DataFrame are: Operation on Pyspark DataFrame run parallel on different nodes in cluster but, in case of pandas it is not possible. ... Still pandas API is more powerful than Spark. Complex operations in pandas are easier to perform than Pyspark DataFrame.
+
 shallow copy vs deep copy?
 A shallow copy constructs a new compound
  object and then (to the extent possible) 
@@ -95,12 +110,28 @@ inserts references into it to the objects
  constructs a new compound object and then,
  recursively, inserts copies into it of the objects
  found in the original.
+ 
+ 
+ Difference b/w def function and class function in python
 
-Diff between repartition vs coalesces 
 
-Tell me spark submit options ?
-Tell me how do you decide on how many executors to use, how to decide on executor memory and cores?
-How do you set up CONDA environment ?
+
+If we don’t have internet how do you test the python script that has to be deployed to AWS or S3
+
+How do you set up CONDA environment ?commands to do that
 Python unit testing best practices?
 Python – diff between list and tuple ?
+
++-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------+
+AWS:
+
+What is EMR?
+how to do spark submit in EMR?
+where do you store code for spark in EMR?
+How do you manage python dependencies in EMR?
+Copy to S3?
+S3 to redshift?
+
+
+
 
