@@ -8,3 +8,7 @@ shift+cmd+K. Find previous.
 cmd+F. Find and replace.
 
 
+#list all process on port 8080
+lsof -i :8080
+
+
