@@ -1,0 +1,34 @@
+
+-snowflake vs redshift
+
+
+
+
+#####################################################################################
+# snowflake vs redshift
+
+Snowflake vs. Redshift
+How do these two cloud data warehouse solutions compare? Here's a quick guide:
+
+Snowflake:
+
+Pay separately for compute and storage
+More robust support for JSON-based functions
+Tier-based packages
+Security and compliance options vary by tier
+Unique architecture designed to scale on the web
+More automated database maintenance features
+
+Redshift:
+
+Deep discounts on long-term commitments
+More unified offer package
+Security and compliance enforced in a comprehensive fashion for all users
+Machine learning engine
+More hands-on maintenance
+
+Bottom line: 
+Snowflake is a better platform to start and grow with.
+Redshift is a solid cost-efficient solution for enterprise-level implementations. This said — do your homework!
+
+#####################################################################################
