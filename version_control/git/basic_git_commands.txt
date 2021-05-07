@@ -3,6 +3,24 @@ git fetch origin                                # to fertch all the remote branc
 git branch -r                                   # to list all remote branches
 git checkout -b develop origin/develop          # to check develop branch from remote
 
+
+1. First, fetch the remote branches:
+
+git fetch origin
+
+2 . Next, checkout the branch you want. In this case, the branch we want is called “branchxyz”.
+
+            git checkout -b branchxyz origin/branchxyz
+
+                        Or you can use:
+            git branch branchxyz origin/branchxyz
+                             OR 
+
+            With newer versions, you can simply use:
+                        git fetch
+                        git checkout branchxyz
+
+--------------
 #clone
 git clone  https://username@bitbucket.company.com/scm/master-project/child-project.git
 
