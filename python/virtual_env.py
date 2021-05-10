@@ -10,7 +10,7 @@ Eg : python3 -m venv venv
 source venv/bin/activate
 
 
-#request libraries / requirements of the virtual env
+#To capture list of request libraries / requirements of the virtual env with all specific versions
 
 pip freeze > requirements.txt
 
@@ -21,3 +21,4 @@ pip install -r requirements.txt -t .
 #deactivate virtual env
 deactivate
 
+#
