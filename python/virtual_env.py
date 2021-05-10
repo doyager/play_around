@@ -10,3 +10,14 @@ Eg : python3 -m venv venv
 source venv/bin/activate
 
 
+#request libraries / requirements of the virtual env
+
+pip freeze > requirements.txt
+
+#install the dependenciesn , -t is option to specify the location and . is for current dir
+pip install -r requirements.txt -t .
+
+
+#deactivate virtual env
+deactivate
+
