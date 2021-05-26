@@ -2,6 +2,7 @@
 '''
 code to accept 'n' number input and print so many numbers in fibonacci serries
  
+ time complexity : O(n)
 '''
 
 print("How many numbers of Fibonacci have to printed, please enter a valid number non negative number")
