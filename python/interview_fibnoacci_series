@@ -1,0 +1,41 @@
+
+'''
+code to accept 'n' number input and print so many numbers in fibonacci serries
+ 
+'''
+
+print("How many numbers of Fibonacci have to printed, please enter a valid number non negative number")
+
+
+try: 
+ n = int(input())
+ print("Fibonacci Series",n," Numbers will be printed !!")
+ fir=0
+ sec=1
+
+ print("Fibonacci Series 1 Number : ",fir)
+ print("Fibonacci Series 2 Number : ",sec)
+ for i in range(3,n+1):
+    num = fir + sec 
+    fir = sec
+    sec = num 
+    print("Fibonacci Series ",i,"Number : ",num)
+except: 
+  print("Excecption occured !!")
+    
+ 
+
+Output:
+How many numbers of Fibonacci have to printed, please enter a valid number non negative number
+10
+Fibonacci Series 10  Numbers will be printed !!
+Fibonacci Series 1 Number :  0
+Fibonacci Series 2 Number :  1
+Fibonacci Series  3 Number :  1
+Fibonacci Series  4 Number :  2
+Fibonacci Series  5 Number :  3
+Fibonacci Series  6 Number :  5
+Fibonacci Series  7 Number :  8
+Fibonacci Series  8 Number :  13
+Fibonacci Series  9 Number :  21
+Fibonacci Series  10 Number :  34
