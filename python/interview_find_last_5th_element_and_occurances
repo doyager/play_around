@@ -1,0 +1,37 @@
+'''
+Find the 5th element from end and count of occurance of that word in the file
+'''
+
+txt = "welcome to the jungle, and I want to count the workd count of the occurance of 5th element from the last , end of file . And the is the fight elemnent in the file .  hence the conclusion of the  argument"
+
+x = txt.split()
+
+print(x)
+print("No of word : ",len(x))
+
+print("5th word from last : ",x[len(x)-5])
+
+findEle = x[len(x)-5]
+
+print("Find occuran of word '",findEle,"'")
+
+#method-1
+counter=0
+for i in x:
+    if i.lower()==findEle.lower():
+        counter+=1
+print("Method-1: No of Occurances of word '",findEle,"' :",counter)
+
+#method-2
+print("Method-2: No of Occurances of word '",findEle,"' :",x.count(findEle))
+
+
+
+output:
+
+['welcome', 'to', 'the', 'jungle,', 'and', 'I', 'want', 'to', 'count', 'the', 'workd', 'count', 'of', 'the', 'occurance', 'of', '5th', 'element', 'from', 'the', 'last', ',', 'end', 'of', 'file', '.', 'And', 'the', 'is', 'the', 'fight', 'elemnent', 'in', 'the', 'file', '.', 'hence', 'the', 'conclusion', 'of', 'the', 'argument']
+No of word :  42
+5th word from last :  the
+Find occuran of word ' the '
+Method-1: No of Occurances of word ' the ' : 9
+Method-2: No of Occurances of word ' the ' : 9
