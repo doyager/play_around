@@ -1,5 +1,20 @@
 
 
+
+------------------------------------------------------
+
+Eclipse:
+
+- if once you import you maven project into eclipse and you see the java project package are appearing as folders , 
+      Solution: then go to project root in shell and run mmvn eclipse:eclipse , after successful build , go to eclipse and refresh ,
+                   we should see them as java packages
+
+
+
+
+
+------------------------------------------------------
+
 Intellij:
 
 -  To Import project 
