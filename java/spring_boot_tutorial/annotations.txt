@@ -1,0 +1,107 @@
+
+- ApiOperation
+- ApiResponses
+- ApiParam
+
+
+
+
+
+--------------------------------------------------------------------------------
+@ApiOperation-
+
+This annotation is used to describe the exposed REST API. It describes an operation or typically a HTTP method against a specific path.
+It takes the following parameters-
+
+Annotation Parameter	Description :
+value	- The value of the annotation is a short description on the API. Since this is displayed in the list of operations in Swagger-UI and the location is limited in size, this should be kept short (preferably shorter than 120 characters)
+notes - 	The notes allows you to give significantly more details about the operations (e.g. you can include request samples and responses here)
+nickname - The nickname for this API.
+
+Example: 
+
+@ApiOperation(value = "getGreeting", notes="get greeting",nickname = "getGreeting")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/javainuse")
+	public <Hello> sayHello() {
+		ArrayList<Hello> arrayList= new ArrayList<>();
+			arrayList.add(new Hello());
+		return arrayList;
+	}
+	
+  
+  @ApiOperation(value = "search", notes = "Searches for members")
+
+--------------------------------------------------------------------------------
+
+@ApiResponses-
+
+This annotation is used to describe the expected responses for the REST API. 
+The @ApiResponse describes a concrete possible response. It cannot be used directly on the method and needs to be included
+in the array value of @ApiResponses (whether there's one response or more). It takes the following parameters-
+
+Annotation Parameter	Description :
+ApiResponse	 - The @ApiResponse describes a concrete possible response
+
+The code will be as follows for the hello method-
+
+@ApiOperation(value = "getGreeting", nickname = "getGreeting")
+	 @ApiResponses(value = {
+		        @ApiResponse(code = 500, message = "Server error"),
+		         @ApiResponse(code = 404, message = "Service not found"),
+		        @ApiResponse(code = 200, message = "Successful retrieval",
+		            response = Hello.class, responseContainer = "List") })
+	@RequestMapping(method = RequestMethod.GET, value = "/api/javainuse")
+	public <Hello> sayHello() {
+			ArrayList<Hello> arrayList= new ArrayList<>();
+			arrayList.add(new Hello());
+		return arrayList;
+	}
+
+
+--------------------------------------------------------------------------------
+
+@ApiParam-
+
+This annotation is used to describe the exposed REST API. It takes the following parameters-
+
+Annotation Parameter	Description :
+value - 	The value is a short description of the parameter
+required	- If the parameter is optional or required.
+defaultValue - 	Specify defaultValue of the parameter.
+
+
+The code will be as follows for the hello method-
+	@ApiOperation(value = "getGreeting", nickname = "getGreeting")
+	 @ApiResponses(value = {
+		        @ApiResponse(code = 500, message = "Server error"),
+		        @ApiResponse(code = 200, message = "Successful retrieval",
+		            response = Hello.class, responseContainer = "List") })
+	@RequestMapping(method = RequestMethod.GET, value = "/api/javainuse")
+	public List<Hello> sayHello(
+  
+  @ApiParam(value = "testId",
+	        required = true, defaultValue = "111")  @PathVariable(ID) final int institutuionId) {
+		return new Hello();
+	}
+ 
+ 
+--------------------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------
