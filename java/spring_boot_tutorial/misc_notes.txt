@@ -1,3 +1,32 @@
 
+- Hikari
+-------------------------------------------------------------------------------------------
 
 -  Spring framwork is old , spring boot is the latest one which does all automatically.
+
+-------------------------------------------------------------------------------------------
+Hikari is a JDBC DataSource implementation that provides a connection pooling mechanism.
+
+HikariCP:
+HikariCP is solid high-performance JDBC connection pool. A connection pool is a cache of database connections maintained so that the connections can be reused when future requests to the database are required. Connection pools may significantly reduce the overall resource usage
+
+
+-----
+:::: Log warning: Thread starvation or clock leap detected (housekeeper delta=springHikariConnectionPool). :::
+--------
+
+This runs on the housekeeper thread, which executes every 30 seconds. If you are on Mac OS X, the clockSource is System.currentTimeMillis(), any other platform the clockSource is System.nanoTime(). Both in theory are monotonically increasing, but various things can affect that such as NTP servers. Most OSes are designed to handle backward NTP time adjustments to preserve the illusion of the forward flow of time.
+
+This code is saying, if time moves backwards (now < previous), or if time has "jumped forward" more than two housekeeping periods (more than 60 seconds), then something strange is likely going on.
+
+A couple of things might be going on:
+
+You could be running in a virtual container (VMWare, AWS, etc.) that for some reason is doing a particularly poor job of maintaining the illusion of the forward flow of time.
+
+Because other things occur in the housekeeper thread -- specifically, closing idle connections -- it is possible that for some reason closing connections is blocking the housekeeper thread for more than two housekeeping periods (60 seconds).
+
+The server is so busy, with all CPUs pegged, that thread starvation is occurring, which is preventing the housekeeper thread from running for more than two housekeeping periods.
+
+- Reason 3 is also occuring when you are debugging your application and are waiting longer than two housekeeping periods (60 seconds) at one breakpoint.
+
+-------------------------------------------------------------------------------------------
