@@ -14,3 +14,9 @@
       #btw, there are a bunch of other interesting things you can get from sysctl. Try:
 
       sysctl -a | grep cpu
+
+
+
+Mac open two eclipse instances
+- go to installation dir in terminal , cd /Users/user1/workspace/softwares/repo/eclipse_dump/
+-  run command "open -n Eclipse.app/"
