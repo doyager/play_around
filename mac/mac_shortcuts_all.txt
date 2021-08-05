@@ -8,6 +8,14 @@ shift+cmd+K. Find previous.
 cmd+F. Find and replace.
 cmd+shift+r : to open resource [ find a class]
 
+⇧⌘K Find previous
+⌘F Find and replace
+⇧⌘G   Search references in workspace
+⇧⌘U  Show occurrences in file quick menu
+⌃H    Open search dialog
+⌥⌘G  Find text in work space
+
+
 #list all process on port 8080
 lsof -i :8080
 
