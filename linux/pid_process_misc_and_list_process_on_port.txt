@@ -13,3 +13,25 @@ netstat -ltnp | grep -w ':8080'
 method 3:
 fuser command shows the PIDs of processes using the specified files or file systems in Linux.
 fuser 8080/tcp
+
+
+
+-------------------------------------------------------------
+#get NAME of process running with pid 2051
+ps -p 2051
+
+ PID TTY          TIME CMD
+ 2051 ?        00:00:00 execute_analyti
+-------------------------------------------------------------
+
+#get STATUS of process using process name
+
+ps aux | grep {execute_analyti}
+
+srccctr+ 19109  0.0  0.0 112812   980 pts/31   S+   13:00   0:00 grep --color=auto {execute_analyti}
+------------------------------------------------------------------
+# TAIL a process using PID 
+
+tail -f /proc/<PID>/fd/1
+
+tail -f /proc/2051/fd/1
