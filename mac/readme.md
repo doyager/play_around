@@ -1,4 +1,9 @@
 
+# change default screenshot location from terminal
+
+defaults write com.apple.screencapture location /Users/user1/workspace/screenshots
+
+
 
 # cpu and memory command:
 
