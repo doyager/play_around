@@ -1,5 +1,8 @@
 
 
+Intellij:
+[press shift twice ] shift + shift : to search everyplace 
+
 
 Eclipse:
 Text Search : Option + Command + G
