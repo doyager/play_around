@@ -4,6 +4,10 @@
 defaults write com.apple.screencapture location /Users/user1/workspace/screenshots
 
 
+#Excel :
+
+      Command + Shift + Down array - to select data in a column 
+      Command + Shift + Down array + side arrow = select whole data
 
 # cpu and memory command:
 
