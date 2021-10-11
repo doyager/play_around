@@ -8,6 +8,9 @@ defaults write com.apple.screencapture location /Users/user1/workspace/screensho
 
       Command + Shift + Down array - to select data in a column 
       Command + Shift + Down array + side arrow = select whole data
+      
+      To select a range : go to the top left corner and type in A1:A10000 to select first 10k values in column A 
+      similary A100001:A150000 to select values from 100001 to 150000
 
 # cpu and memory command:
 
