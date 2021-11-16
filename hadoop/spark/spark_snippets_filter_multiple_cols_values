@@ -1,7 +1,10 @@
 
 - 1.spark filter 
 - 2. spark filter 
---3. spark order by 
+--3. order a df , spark order by column 
+--4.  spark filer null value rows for a column
+--5. spark window function 1
+--6. spark window function with multiple order by complex order by 
 
 -------------------------------------------------------------------------
 1. //to filter on column val and check nulls , multiple conditions
@@ -49,6 +52,91 @@ df_filter = df.filter(col("col_name").isInCollection(CONST_PAYOUT_FILTER_VALUES)
 
 -------------------------------------------------------------------------
 
-3. // 
+3. //  order a df , spark order by column 
 
 df_ordered = df.orderBy("idUser")
+
+-------------------------------------------------------------------------
+
+4. //  filter a df on a column and  pick all null value rows
+
+// 
+
+df_notnull = df.filter(col("manager_id").isNull) 
+
+
+
+-------------------------------------------------------------------------
+
+5. // spark window function
+
+
+
+
+// windows function , to get the latest pay date for each user group from a full snapshot data set 
+
+val latestPayDateWindowSpec = Window.partitionBy($"idUser").orderBy($"payDate".desc, $"create_ds".desc)
+
+  val dataWithLatestPayDate =
+    prevsData
+      .withColumn("latestRow", row_number().over(latestPayDateWindowSpec))  // adding row number for all idUser groups orderded in the descending order pay_date and date
+      .filter("latestRow == 1")  // just taking row-number 1 columns ,that is latest rows 
+      .drop("latestRow")   // this will drop the newly added row_number column 
+      .as[UserPayDateDataFormat]   // final format of the data frame 
+
+
+
+-------------------------------------------------------------------------
+
+6. // spark windows funciton with compplex order by - row number - analytics function
+
+
+
+  val EMP_ALL_DESIGNATIONS = Set(
+    "SE1",
+    "SE2",
+    "SE3",
+    "Arch1",
+    "Director1",
+    "Director2",
+    "VP",
+    "SVP","CFO","CTO","CIO","CEO"
+  )
+
+  val EMP_ALL_CHIEFS= Set(
+  "CFO","CTO","CIO","CEO"
+  )
+  
+
+val latestPayDateWindowSpec = {
+    Window.partitionBy($"department", $"role")
+      .orderBy(
+        //order by column is dependent on the date range, IF date range satisfyed then consider "tsPayEmittedAt" else take col "tsPayCreatedAt"
+        when($"dsEvent" >= "2019-02-01" && "dsEvent" <= "2019-06-30", $"tsPayEmittedAt")
+        .otherwise($"tsPayCreatedAt").desc
+        , $"tsPaymentCreditedAt".desc
+        , $"create_ds".desc)
+    }
+
+    
+    val dataWithAllRowsGroupdBy =
+     prevsData
+     //additional filters : dont consider cheif officers
+     .filter($"role".isInCollection(EMP_ALL_DESIGNATIONS -- EMP_ALL_CHIEFS) )
+      .withColumn("latestRow",
+        row_number().over(payoutReturnsDedupeWindowSpec))
+
+
+          //.filter($"role".isInCollection(Const.PAYOUT_NEGATIVE_EVENTS_SET -- Set("PAYOUT_REVERSAL_RESPONSE")) && !$"dimIdTrasancation" )
+
+-------------------------------------------------------------------------
+
+7. // 
+
+
+
+-------------------------------------------------------------------------
+
+8. // 
+
+
