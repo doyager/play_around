@@ -7,6 +7,7 @@
 --6. spark window function with multiple order by complex order by 
 --7. add cast , cast to decimal type 
 -- 8. spark filter - non null values, get rwos with non null value 
+--9. spark filter not null and join , filter on join key is NOT null and then join with the dataframe
 
 -------------------------------------------------------------------------
 1. //to filter on column val and check nulls , multiple conditions
@@ -175,5 +176,85 @@ public static DecimalType createDecimalType(int precision, int scale) {
 
     // Filter out rows with missing  Token
     val dfFiltered = df.filter(col("Token").isNotNull)
+    
+  
+  
+
+-------------------------------------------------------------------------
+
+9.    // filter on JOIN KEY is NOT NULL and THEN JOIN 
+    
+     val joinedDF = df1
+      .filter(col("token").isNotNull)
+      .joinWith(
+        df2,
+        df1("token") === df2("token"),
+        "leftouter"
+      )
 
 
+
+-------------------------------------------------------------------------
+
+10. // multiple join , broadcast join , leftanti join , left anti , important
+
+// join 3 dataframes , to filter out df2 and df3 out of df1 based on the join column 
+//left anti join - takes all the records in left df that dont have a join in right df 
+// boradcast df2 
+
+
+ val fullSnapShotDF = df1
+      .join(
+        broadcast(df_credit_events), // Filter for credit events
+        df1("idToken") === df_credit_events("idToken"),
+        "leftanti"
+      )
+      .join(df3, //Filter for Debug Cleanup
+        df1("idEvent") === df3("idEvent")
+          &&
+          df1("tsEventCreatedAt") <      debugCleanUpData("tsEventCreatedAt"),
+        "leftanti")
+      .as[PaymentSchema]
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
+
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
+
+
+
+
+-------------------------------------------------------------------------
+
+8.
