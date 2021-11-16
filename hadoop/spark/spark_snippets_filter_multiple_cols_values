@@ -1,0 +1,54 @@
+
+- 1.spark filter 
+- 2. spark filter 
+--3. spark order by 
+
+-------------------------------------------------------------------------
+1. //to filter on column val and check nulls , multiple conditions
+
+df_filtered = df.filter(
+
+//condition-1
+col("ds_event_date" >="2022-10-10"
+
+&&
+
+//condition-2 : to pick colus with nulls values
+col("dim_stragtegy").isNull
+
+&&
+//condition-3 : with 3 parts in it
+( col("reference_pay").isNull 
+          or 
+               // not equal sign is different 
+  lower(col("reference_name"))   =!="payout"
+          or
+          //equal to has 3 = signs
+   lower(col("active_ind")) === "Y"
+   
+ )
+ && 
+ //conditio-4 : split a column on PIPE and pick zero index and compare value
+  (
+  split(col("employers"), "\\|")(0)      =!=.   "company_1"
+  )
+
+
+)
+
+-------------------------------------------------------------------------
+2. //to filter one column on mulitple values
+
+//define list of values
+val CONST_PAYOUT_FILTER_VALUES= Set("FILTER_VAL1","FILTER_VAL2")
+
+//filter condition
+df_filter = df.filter(col("col_name").isInCollection(CONST_PAYOUT_FILTER_VALUES))
+
+
+
+-------------------------------------------------------------------------
+
+3. // 
+
+df_ordered = df.orderBy("idUser")
