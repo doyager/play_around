@@ -8,6 +8,8 @@
 --7. add cast , cast to decimal type 
 -- 8. spark filter - non null values, get rwos with non null value 
 --9. spark filter not null and join , filter on join key is NOT null and then join with the dataframe
+--10. spark join multiple dfs , left anti 
+-- 11. spark union data frames , based on boolean value 
 
 -------------------------------------------------------------------------
 1. //to filter on column val and check nulls , multiple conditions
@@ -221,7 +223,18 @@ public static DecimalType createDecimalType(int precision, int scale) {
 
 -------------------------------------------------------------------------
 
-8.
+-- 11. spark union data frames , based on boolean value 
+
+
+
+  var getPreviousDataFlag = true //Set flag to false for first run when table doesn't exist.
+
+ // Union previous data with incremental
+    val fullData =
+      if (getPreviousDataFlag) incrementalData.union(previousData)
+      else incrementalData
+    DebugHelper.printDataset("fullData ", fullData.orderBy("idUser"))
+
 
 
 
