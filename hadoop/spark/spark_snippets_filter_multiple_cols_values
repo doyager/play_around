@@ -2,10 +2,11 @@
 - 1.spark filter 
 - 2. spark filter 
 --3. order a df , spark order by column 
---4.  spark filer null value rows for a column
+--4.  spark filter - null values, get rows with null value 
 --5. spark window function 1
 --6. spark window function with multiple order by complex order by 
 --7. add cast , cast to decimal type 
+-- 8. spark filter - non null values, get rwos with non null value 
 
 -------------------------------------------------------------------------
 1. //to filter on column val and check nulls , multiple conditions
@@ -59,10 +60,10 @@ df_ordered = df.orderBy("idUser")
 
 -------------------------------------------------------------------------
 
-4. //  filter a df on a column and  pick all null value rows
+4. // get NULL values
+//filter a df on a column and  pick all null value rows
 
-// 
-
+// picks all records with manager id null 
 df_notnull = df.filter(col("manager_id").isNull) 
 
 
@@ -169,6 +170,10 @@ public static DecimalType createDecimalType(int precision, int scale) {
 
 -------------------------------------------------------------------------
 
-8. // 
+8. // get only non null values 
+
+
+    // Filter out rows with missing  Token
+    val dfFiltered = df.filter(col("Token").isNotNull)
 
 
