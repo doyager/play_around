@@ -10,6 +10,7 @@
 --9. spark filter not null and join , filter on join key is NOT null and then join with the dataframe
 --10. spark join multiple dfs , left anti 
 -- 11. spark union data frames , based on boolean value 
+-- 12. Important spark :  filter for just NOT NULL join key , join df , pick columns from df2 if df2 is not null 
 
 -------------------------------------------------------------------------
 1. //to filter on column val and check nulls , multiple conditions
@@ -239,11 +240,29 @@ public static DecimalType createDecimalType(int precision, int scale) {
 
 
 
--------------------------------------------------------------------------
+--------------------------------------------------------------------------- 
 
-8.
+12. Important spark :  filter for just NOT NULL join key , join df , pick columns from df2 if df2 is not null 
 
-
+// 
+    val incrementalPayoutsJoinedWithBills = incrementalNewData
+      .filter(col("idBill").isNotNull)  //filtering to take only non null JOIN Key records 
+      .joinWith(
+        oldSnapshotData,
+        incrementalNewData("idBill") === oldSnapshotData("idBill"),
+        "leftouter"
+      )
+      .map {
+        case (ind, null) => po
+        case (ind, osd) =>
+          ind.copy(
+            dimPayoutAction = osd.dimPayoutAction,
+            dimBillPayoutStatusDesc = osd.dimBillPayoutStatusDesc,
+            dimBillBookingSttsDesc = osd.dimBillBookingSttsDesc,
+            tsBillCreatedAt = bpd.tsBillCreatedAt,
+            tsBillVersion = osd.tsBillVersion
+          )
+      }
 
 
 -------------------------------------------------------------------------
