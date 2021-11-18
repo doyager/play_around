@@ -1,0 +1,22 @@
+
+
+
+select * from
+(
+select count(*) as cnt_a from table_a where ds='2020-01-10'
+)
+CROSS JOIN
+(
+select count(*) as cnt_b from table_b where ds='2020-01-10'
+)
+CROSS JOIN
+(
+select count(*) as cnt_c from table_c where ds='2020-01-10'
+)
+
+
+o/p: 
+//one row with all table counts 
+
+cnt_a |  cnt_b | cnt_c 
+10000   2000      5000 
