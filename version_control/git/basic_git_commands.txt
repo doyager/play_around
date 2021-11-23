@@ -4,6 +4,15 @@ git branch -r                                   # to list all remote branches
 git checkout -b develop origin/develop          # to check develop branch from remote
 
 
+
+------------
+- update a file [myplugin.js] from master into branch_xyz , checkout from MASTER into
+- to get myplugin.js version from master into my branch_xyz
+#checkout branch_xyz
+git checkout master -- myplugin.js
+git commit -m "Update myplugin.js from master"
+
+--------
 1. First, fetch the remote branches:
 
 git fetch origin
