@@ -1,0 +1,14 @@
+# to get a column value from ROW type , when you know the column name or column index 
+
+
+Here "ce" is ROW type , get value of column `token` or index 4
+
+1. 
+val ceToken = if (ce == null || ce.isNullAt(ce.fieldIndex("token"))) null else ce
+            .getString(ce.fieldIndex("token"))
+2. 
+ val ceToken = if (ce == null || ce.isNullAt(ce.fieldIndex("token"))) "Null" else ce
+            .getString(ce.fieldIndex("token"))
+3.
+
+val ceToken = if (ce == null || ce.isNullAt(4)) "Null" else ce.getString(4)
