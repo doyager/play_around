@@ -29,6 +29,13 @@ list but in the negative index, Python reads elements from the end of an array o
 6
 
 
+>>>names = ['Chris', 'Jack', 'John', 'Daman']
+>>>print(names[-1][-1])
+A) The output is: n
+
+
+
+
 --------------------------------------------------------------------------------------------------
 2. coding 
 
