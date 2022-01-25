@@ -24,7 +24,18 @@ weekdays = ['sun','mon','tue','wed','thu','fri','sun','mon','mon']
 print([[x,weekdays.count(x)] for x in set(weekdays)])
 output: [[‘wed’, 1], [‘sun’, 2], [‘thu’, 1], [‘tue’, 1], [‘mon’, 3], [‘fri’, 1]]
 
+Example # 3:
 
+weekdays = ['sun','mon','tue','wed','thu','fri','sun','mon','mon']
+d={}
+for x in weekdays:
+...     if x in d.keys():
+...             d[x]+=1
+...     else:
+...             d[x]=1
+... 
+>>> print(d)
+{'wed': 1, 'sun': 2, 'thu': 1, 'tue': 1, 'mon': 3, 'fri': 1}
 --------------------------------------------------------------------------------------------------
 1. yield 
 
