@@ -1,8 +1,32 @@
 
 1. yield
 2. count occurnaces
+3. negative indexes
 
 
+
+
+--------------------------------------------------------------------------------------------------
+
+3. negative indexes
+
+Python has a special feature like a negative index in Arrays and Lists.
+Positive index reads the elements from the starting of an array or
+list but in the negative index, Python reads elements from the end of an array or list.
+
+>>> a=[1,5,6]
+>>> print(a[1])
+5
+>>> print(a[-1])
+6
+>>> print(a[-2])
+5
+>>> print(a[-3])
+1
+>>> print(a[0])
+1
+>>> print(a[2])
+6
 
 
 --------------------------------------------------------------------------------------------------
