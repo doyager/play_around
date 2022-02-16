@@ -33,3 +33,17 @@ Updated application properties file with kafka bootstrap server value,
 /agent/src/main/resources/application.properties
 
 kafka.bootstrap.server=host1dev01.company.com:9093
+
+
+
+#3:
+Error: Could not find or load main class eclipse
+
+
+- delete project in eclipse
+- In CLI run below commands 
+mvn eclipse:clean
+mvn clean install -DskipTests
+mvn eclipse:eclipse
+- Reimport into eclipse
+- Run as JAVA Application
