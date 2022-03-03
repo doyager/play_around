@@ -1,7 +1,8 @@
 #### spark application UI port : 4040 
 
-#### Explaining Spark query plan :
+#### Explaining Spark query plan : [ physical plan red : bottom to top ]
 
+*********** Here number in parentheses i.e. (6),(5),(1) represents the steps. We usually read Physical Plan from Bottom to Top.
 
 Task
 A Task is a single operation applied to a single partition. Each task is executed as a single thread in an executor. 
