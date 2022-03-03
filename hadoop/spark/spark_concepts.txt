@@ -28,9 +28,10 @@ Spark Driver contains various components – DAGScheduler, TaskScheduler, Backen
 
 *** Where in Application Master is
 
-The Application Master is responsible for the execution of a single application. It asks for containers from the Resource Scheduler (Resource Manager) and executes specific programs on the obtained containers. Application Master is just a broker that negotiates resources with the Resource Manager and then after getting some container it make sure to launch tasks(which are picked from scheduler queue) on containers.
+The Application Master is responsible for the execution of a single application. It asks for containers from the Resource Scheduler (Resource Manager) and executes specific programs on the obtained containers. 
+*** Application Master is just a broker that negotiates resources with the Resource Manager and then after getting some container it make sure to launch tasks(which are picked from scheduler queue) on containers.
 
-In a nutshell Driver program will translate your custom logic into stages, job and task.. and your application master will make sure to get enough resources from RM And also make sure to check the status of your tasks running in a container.
+****** In a nutshell Driver program will translate your custom logic into stages, job and task.. and your application master will make sure to get enough resources from RM And also make sure to check the status of your tasks running in a container.
 
 as it is already said in your provided references the only different between client and cluster mode is
 
