@@ -17,6 +17,28 @@ Job
 A Job is a sequence of stages, triggered by an action such as count(), foreachRdd(), collect(), read() or write().
 
 
+######## Catalyst optimizer:
+
+At the core of Spark SQL is the Catalyst optimizer, which leverages advanced programming language features (e.g. Scala’s pattern matching and quasi quotes) in a novel way to build an extensible query optimizer. Catalyst is based on functional programming constructs in Scala and designed with these key two purposes:
+
+Easily add new optimization techniques and features to Spark SQL
+Enable external developers to extend the optimizer (e.g. adding data source specific rules, support for new data types, etc.)
+
+Catalyst contains a general library for representing trees and applying rules to manipulate them. On top of this framework, it has libraries specific to relational query processing (e.g., expressions, logical query plans), and several sets of rules that handle different phases of query execution: analysis, logical optimization, physical planning, and code generation to compile parts of queries to Java bytecode. For the latter, it uses another Scala feature, quasiquotes, that makes it easy to generate code at runtime from composable expressions. Catalyst also offers several public extension points, including external data sources and user-defined types. As well, Catalyst supports both rule-based and cost-based optimization.
+
+########## spark deploy modes - client vs cluster :
+https://techvidvan.com/tutorials/spark-modes-of-deployment/
+
+**** Spark Client Mode
+As we discussed earlier, the behaviour of spark job depends on the “driver” component. So here,”driver” component of spark job will run on the machine from which job is submitted. Hence, this spark mode is basically “client mode”.
+
+- When job submitting machine is within or near to “spark infrastructure”. Since there is no high network latency of data movement for final result generation between “spark infrastructure” and “driver”, then, this mode works very fine.
+- When job submitting machine is very remote to “spark infrastructure”, also have high network latency. Hence, in that case, this spark mode does not work in a good manner.
+
+**** Spark Cluster Mode
+Similarly, here “driver” component of spark job will not run on the local machine from which job is submitted. Hence, this spark mode is basically “cluster mode”. In addition, here spark job will launch “driver” component inside the cluster.
+- When job submitting machine is remote from “spark infrastructure”. Since, within “spark infrastructure”, “driver” component will be running. Thus, it reduces data movement between job submitting machine and “spark infrastructure”. In such case, This mode works totally fine.
+-While we work with this spark mode, the chance of network disconnection between “driver” and “spark infrastructure”  reduces. Since they reside in the same infrastructure. Also, reduces the chance of job failure.
 -----------------
 
 #Window functions
