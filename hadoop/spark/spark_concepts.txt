@@ -1,22 +1,5 @@
 #### spark application UI port : 4040 
 
-#### Explaining Spark query plan : [ physical plan red : bottom to top ]
-
-*********** Here number in parentheses i.e. (6),(5),(1) represents the steps. We usually read Physical Plan from Bottom to Top.
-
-Task
-A Task is a single operation applied to a single partition. Each task is executed as a single thread in an executor. 
-
-****** So, if your dataset has 2 partitions, an operation such as a filter() will trigger 2 tasks, one for each partition.
-
-Stage
-A Stage is a sequence of tasks that can all be run together, in parallel, without a shuffle. The number of tasks in a stage also depends upon the number of partitions your datasets have.
-
-******** The number of tasks in a stage also depends upon the number of partitions your datasets have.
-
-Job
-A Job is a sequence of stages, triggered by an action such as count(), foreachRdd(), collect(), read() or write().
-
 
 ******* Spark driver vs application master :
 
@@ -44,7 +27,69 @@ In cluster mode driver run inside application master, it means the application h
 
 
 
+Task
+A Task is a single operation applied to a single partition. Each task is executed as a single thread in an executor. 
+
+****** So, if your dataset has 2 partitions, an operation such as a filter() will trigger 2 tasks, one for each partition.
+
+Stage
+A Stage is a sequence of tasks that can all be run together, in parallel, without a shuffle. The number of tasks in a stage also depends upon the number of partitions your datasets have.
+
+******** The number of tasks in a stage also depends upon the number of partitions your datasets have.
+
+Job
+A Job is a sequence of stages, triggered by an action such as count(), foreachRdd(), collect(), read() or write().
+
+
+#### Explaining Spark query plan : [ physical plan red : bottom to top ]
+- https://towardsdev.com/decoding-spark-query-physical-plan-9b9682815173 [ ********** BEST explanation ******* ]
+- https://blog.clairvoyantsoft.com/spark-logical-and-physical-plans-469a0c061d9e
+
+*********** Here number in parentheses i.e. (6),(5),(1) represents the steps. We usually read Physical Plan from Bottom to Top.
+
+- Unresolved/Parsed Logical plan : Syntax check
+- Resolved/Analyzed Logical plan : symantic check .. table names & column name 
+- Optimized logical Plan : catalyst optimizer ... decies how execution has to perfromed 
+- Physical plan : Physical Plan is an internal enhancement or optimization for Spark. It is generated after creation of the Optimized Logical Plan .
+
+*** First part: Unresolved/Parsed Logical plan generation
+The first step contributes to the generation of an Unresolved Logical Plan.
+We call it an Unresolved Logical Plan because the column or table names may be inaccurate or may not even exist even when we have a valid code and correct syntax. So, it can be concluded that Spark creates a blank Logical Plan at this step where there are no checks for the column name, table name, etc.
+This plan is generated post verifying that everything is correct on the syntactic field. Next, the first version of a logical plan is produced where the relation name and columns are not specifically resolved after the semantic analysis is executed. This produces a result as provided below:
+
+*** Second part: Resolved/Analyzed Logical plan generation
+After the generation of an unresolved plan, it will resolve everything that is unresolved yet by accessing an internal Spark structure mentioned as “Catalog” in the previous schema.
+“Catalog” is a repository of Spark table, DataFrame and DataSet. The data from meta-store is pulled into an internal storage component of Spark (also know as Catalog).
+“Analyzer” helps us to resolve/verify the semantics, column name, table name by cross-checking with the Catalog. DataFrame/DataSet starts performing analysis without action at the time of the creation of the Logical Plan. That’s why DataFrame/DataSet follows a Semi-lazy evaluation. Let’s take an example: dataFrame.select(“price”) //Column “price” may not even exist.
+The analyzer can reject the Unresolved Logical Plan when it is not able to resolve them (column name, table name, etc.). It creates a Resolved Logical Plan if it is able to resolve them.
+Upon successful completion of everything, the plan is marked as “Analyzed Logical Plan” and will be formatted as shown below:
+
+*** Third part: Optimized logical Plan:
+In order to resolve the Analyzed logical plans, they are sent through a series of rules. The optimized logical plan is produced as a result. Spark is normally allowed to plug in a set of optimization rules by the optimized logical plan.
+The Resolved Logical plan will be passed on to a “Catalyst Optimizer” after it is generated. Catalyst Optimizer will try to optimize the plan after applying its own rule. Basically, the Catalyst Optimizer is responsible to perform logical optimization. For example,
+1) It checks all the tasks which can be performed and computed together in one Stage.
+2) It decides the order of execution of queries for better performance in the case of a multi-join query.
+3) It tries to optimize the query by evaluating the filter clause before any project.
+Optimized Logical Plan is generated as a result.
+In case of a specific business use case, it is possible to create our own customized Catalyst Optimizer to perform custom optimization after specific rules are defined/applied to it.
+
+*** What exactly does Physical Plan do?
+Suppose, there’s a join query between two tables. In that join operation, one of them is a large table and the other one is a small table with a different number of partitions scattered in different nodes across the cluster (it can be in a single rack or a different rack). Spark decides which partitions should be joined at the start (order of joining), the type of join, etc. for better optimization.
+Physical Plan is limited to Spark operation and for this, it will do an evaluation of multiple physical plans and finalize the suitable optimal physical plan. And ultimately, the finest Physical Plan runs.
+Once the finest Physical Plan is selected, executable code (DAG of RDDs) for the query is created which needs to be executed in a distributed manner on the cluster.
+This entire process is known as Codegen and that is the task of Spark’s Tungsten Execution Engine.
+
+*** Physical plan is:
+A bridge between Logical Plans and RDDs
+It is a tree
+Contains more specific description of how things (execution) should happen (specific choice of algorithm)
+User lower-level primitives (RDDs)
+
+
 ######## Catalyst optimizer:
+
+Catalyst Optimizer in Spark generates different kinds of execution strategies/plans and then compare them with “Cost Model”.
+“Cost Model” estimates the execution time and resources required by each strategy/plan. Finally, whichever strategy/plan is going to be the best optimal one is selected as the “Best Physical Plan”.
 
 At the core of Spark SQL is the Catalyst optimizer, which leverages advanced programming language features (e.g. Scala’s pattern matching and quasi quotes) in a novel way to build an extensible query optimizer. Catalyst is based on functional programming constructs in Scala and designed with these key two purposes:
 
