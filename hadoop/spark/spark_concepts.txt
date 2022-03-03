@@ -17,6 +17,31 @@ Job
 A Job is a sequence of stages, triggered by an action such as count(), foreachRdd(), collect(), read() or write().
 
 
+******* Spark driver vs application master :
+
+*** Spark Driver :
+
+The Driver(aka driver program) is responsible for converting a user application to smaller execution units called tasks and then schedules them to run with a cluster manager on executors. The driver is also responsible for executing the Spark application and returning the status/results to the user.
+
+Spark Driver contains various components – DAGScheduler, TaskScheduler, BackendScheduler and BlockManager. They are responsible for the translation of user code into actual Spark jobs executed on the cluster.
+
+
+*** Where in Application Master is
+
+The Application Master is responsible for the execution of a single application. It asks for containers from the Resource Scheduler (Resource Manager) and executes specific programs on the obtained containers. Application Master is just a broker that negotiates resources with the Resource Manager and then after getting some container it make sure to launch tasks(which are picked from scheduler queue) on containers.
+
+In a nutshell Driver program will translate your custom logic into stages, job and task.. and your application master will make sure to get enough resources from RM And also make sure to check the status of your tasks running in a container.
+
+as it is already said in your provided references the only different between client and cluster mode is
+
+In client, mode driver will run on the machine where we have executed/run spark application/job and AM runs in one of the cluster nodes.
+
+(AND)
+
+In cluster mode driver run inside application master, it means the application has much more responsibility.
+
+
+
 ######## Catalyst optimizer:
 
 At the core of Spark SQL is the Catalyst optimizer, which leverages advanced programming language features (e.g. Scala’s pattern matching and quasi quotes) in a novel way to build an extensible query optimizer. Catalyst is based on functional programming constructs in Scala and designed with these key two purposes:
@@ -39,6 +64,37 @@ As we discussed earlier, the behaviour of spark job depends on the “driver” 
 Similarly, here “driver” component of spark job will not run on the local machine from which job is submitted. Hence, this spark mode is basically “cluster mode”. In addition, here spark job will launch “driver” component inside the cluster.
 - When job submitting machine is remote from “spark infrastructure”. Since, within “spark infrastructure”, “driver” component will be running. Thus, it reduces data movement between job submitting machine and “spark infrastructure”. In such case, This mode works totally fine.
 -While we work with this spark mode, the chance of network disconnection between “driver” and “spark infrastructure”  reduces. Since they reside in the same infrastructure. Also, reduces the chance of job failure.
+
+##### Spark presist vs cache :
+
+cache - by default memory only storage level 
+persist - we can choose our storage level 
+
+We can make persisted RDD through cache() and persist() methods. When we use the cache() method we can store all the RDD in-memory. We can persist the RDD in memory and use it efficiently across parallel operations.
+
+******* The difference between cache() and persist() is that using cache() the default storage level is MEMORY_ONLY while using persist() we can use various storage levels (described below). It is a key tool for an interactive algorithm. Because, when we persist RDD each node stores any partition of it that it computes in memory and makes it reusable for future use. This process speeds up the further computation ten times.
+
+#### Spark storage levels:
+
+Storage levels of Persisted RDDs
+Using persist() we can use various storage levels to Store Persisted RDDs in Apache Spark. Let’s discuss each RDD storage level one by one-
+
+a. MEMORY_ONLY
+In this storage level, RDD is stored as deserialized Java object in the JVM. If the size of RDD is greater than memory, It will not cache some partition and recompute them next time whenever needed. In this level the space used for storage is very high, the CPU computation time is low, the data is stored in-memory. It does not make use of the disk.
+
+b. MEMORY_AND_DISK
+In this level, RDD is stored as deserialized Java object in the JVM. When the size of RDD is greater than the size of memory, it stores the excess partition on the disk, and retrieve from disk whenever required. In this level the space used for storage is high, the CPU computation time is medium, it makes use of both in-memory and on disk storage.
+
+c. MEMORY_ONLY_SER
+This level of Spark store the RDD as serialized Java object (one-byte array per partition). It is more space efficient as compared to deserialized objects, especially when it uses fast serializer. But it increases the overhead on CPU. In this level the storage space is low, the CPU computation time is high and the data is stored in-memory. It does not make use of the disk.
+
+d. MEMORY_AND_DISK_SER
+
+It is similar to MEMORY_ONLY_SER, but it drops the partition that does not fits into memory to disk, rather than recomputing each time it is needed. In this storage level, The space used for storage is low, the CPU computation time is high, it makes use of both in-memory and on disk storage.
+
+e. DISK_ONLY
+In this storage level, RDD is stored only on disk. The space used for storage is low, the CPU computation time is high and it makes use of on disk storage.
+
 -----------------
 
 #Window functions
