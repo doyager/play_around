@@ -6,7 +6,8 @@ Intellij:
 
 Eclipse:
 Text Search : Option + Command + G
-shift+cmd+G. Search references in workspace.
+*** Cmd+shift H : search for class, it opens up search box .... example : use ESSI for EmployeeSalaryServiceImpl 
+*** shift+cmd+G. Search references in workspace [select a variable or method, it gives all the references for ti ]
 shift+cmd+K. Find previous.
 cmd+F. Find and replace.
 cmd+shift+r : to open resource [ find a class]
