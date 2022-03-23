@@ -97,3 +97,114 @@ Output:
 2
 3
 --------------------------------------------------------------------------------------------------
+
+
+# Online Python compiler (interpreter) to run Python online.
+# Write Python 3 code in this online editor and run it.
+print("Hello world")
+
+b =  [ [2,3],[3,4],[5]]
+a = [[1, 2, 3, 4], [5, 6], [7, 8, 9]]
+for row in a:
+    for elem in row:
+        print(elem, end=' ')
+    print()
+
+car = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+
+x = car.keys()
+
+car["color"] = "white"
+
+print(x)
+#########
+# Python3 Program to check whether a 
+# given key already exists in a dictionary.
+  
+# Function to print sum
+def checkKey(dict, key):
+      
+    if key in dict.keys():
+        print("Present, ", end =" ")
+        print("value =", dict[key])
+    else:
+        print("Not present")
+  
+# Driver Code
+dict = {'a': 100, 'b':200, 'c':300}
+  
+key = 'b'
+checkKey(dict, key)
+  
+key = 'w'
+checkKey(dict, key)
+#########
+
+#In this method, we will use conditions 
+#for checking the key and then append the list into the dictionary.
+
+
+Details = {}
+Details["Age"] = [20]
+print(Details)
+  
+if "Age" in Details:
+    Details["Age"].append("Twenty")
+    print(Details)
+
+#########
+# using list comprehension
+# to get first and last element of list
+# initializing list 
+test_list = [1, 5, 6, 7, 4]
+res =  [ test_list[i] for i in (0, -1) ]
+
+########
+# Python3 code to demonstrate 
+# to get first and last element of list
+# using List slicing
+  
+# initializing list 
+test_list = [1, 5, 6, 7, 4]
+  
+# printing original list 
+print ("The original list is : " +  str(test_list))
+  
+# using List slicing
+# to get first and last element of list
+res = test_list[::len(test_list)-1] 
+  
+# printing result
+print ("The first and last element of list are : " +  str(res))
+
+
+##########
+## List get all values but first value 
+
+#You can just do [1:]. This will work on both versions.
+
+#########
+###### initialize a set 
+# initialize a with set()
+a = set()
+# check data type of a
+print(type(a))
+#o/p: <class 'set'>
+#########
+
+frnds_dict = {}
+for row in b:
+    for ele in row[1:] :
+            #frnds_dict[row[0]].append(ele)
+            frnds_dict[row[0]].add(ele)
+        #if row[0] in frnds_dict.keys():
+        #else:
+            
+            
+            
+
+        
