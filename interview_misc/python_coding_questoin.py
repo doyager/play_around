@@ -43,7 +43,10 @@ Given two sentences, you have to print the words those are not present in either
 #frnds_dict = {}
 # import defaultdict module
 from collections import defaultdict
-  
+
+
+#input two D list 
+b=[ [2,3],[3,4],[5]] 
 # create an empty set of dictionary
 frnds_dict = defaultdict(set)
 for row in b:
