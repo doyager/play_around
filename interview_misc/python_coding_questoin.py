@@ -36,24 +36,33 @@ Given two sentences, you have to print the words those are not present in either
 
 
 #########################
-# 1.  Given a two dimensional list, for example [ [2,3],[3,4],[5]] 
+# 1.  Given a two dimensional list, for example [ [2,3],[3,4],[5],[2,3],[3,7],[3,6]]
 # person 2 is friends with 3 etc, find how many friends each person has. Note, one person has no friends
 
 
+## caculate the number of unique frineds for each and print the count for each name(number)
+## assumption input will be LIST of LISTs, where inside list will be either 1 0r 2 number
+## [5] : means 5 has no friend in this tuple 
+## [3,4] : means 3 & 4 are friends
 #frnds_dict = {}
 # import defaultdict module
+
 from collections import defaultdict
-
-
-#input two D list 
-b=[ [2,3],[3,4],[5]] 
+b =  [ [2,3],[3,4],[5],[2,3],[3,7],[3,6]]
 # create an empty set of dictionary
 frnds_dict = defaultdict(set)
 for row in b:
-    if row[0] not in frnds_dict.keys():
-        frnds_dict[row[0]] = set()
-    for ele in row[1:] :
-        frnds_dict[row[0]].add(ele)
+    if len(row) ==2:
+        if row[0] not in frnds_dict.keys():
+            frnds_dict[row[0]] = set()
+        if row[1] not in frnds_dict.keys():
+            frnds_dict[row[1]] = set()
+        
+            frnds_dict[row[0]].add(row[1])
+            frnds_dict[row[1]].add(row[0])
+    elif len(row) ==1:
+        if row[0] not in frnds_dict.keys():
+            frnds_dict[row[0]] = set()
         
         
 print(frnds_dict)
@@ -68,10 +77,13 @@ for key, value in frnds_dict.items():
     print(f"{key} -  {cnt}")
     
 o/p:
-defaultdict(<class 'set'>, {2: {3}, 3: {4}, 5: set()})
+defaultdict(<class 'set'>, {2: {3}, 3: {2, 4, 6, 7}, 4: {3}, 5: set(), 7: {3}, 6: {3}})
 Friends count : 
 2 -  1
-3 -  1
+3 -  4
+4 -  1
 5 -  0
+7 -  1
+6 -  1
 
 #################
