@@ -53,3 +53,34 @@ BBEDIT :
              bbedit-pretty-json.sh
             #!/bin/bash
             python -c "import sys, json; print json.dumps(json.load(sys.stdin), indent=2)"
+            
+ 
+ # Mac Setup : 
+ 
+ ### Instal Homebrew :
+ 
+           you can install the latest version of Homebrew by running this command:
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ 
+ ### Install latst python : 
+ 
+ 
+ ### Install Pip 
+ 
+       1. Use the following command to download pip directly,
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            
+       2. Now execute the downloaded file using below command
+            python3 get-pip.py
+ 
+ ### Install jupyterlab
+  
+  
+      1. Install JupyterLab with pip:
+
+            pip install jupyterlab
+      Note: If you install JupyterLab with conda or mamba, we recommend using the conda-forge channel.
+
+      2. Once installed, launch JupyterLab with:
+
+            jupyter-lab
