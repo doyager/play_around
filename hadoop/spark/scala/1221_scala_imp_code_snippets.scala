@@ -1,5 +1,18 @@
 
 
+-----------------
+
+// filter data frame to get just values equalt to cat 
+
+val dfFilter_catOnly = df.filter($"animal_name" === "CAT")
+
+
+// filter data frame to get  values OTHER THAN cat 
+
+val dfFilter_notCat = df.filter($"animal_name" =!= "CAT")
+# !== is deprecated , so we use =!= instead of !==
+-----------------
+
 //to add colum, filter based on conditions ( list of values for col , date time , hour , date ) value of 
  sparkSession.udf.register("ensureTimestampInRange", HelperTools.standardizeToEpochMilliseconds _)
 .withColumn(
