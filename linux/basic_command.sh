@@ -92,6 +92,11 @@ Address: 192.52.32.15
 
 
 
+# delete all files older than 180 days 
+
+find ./* -mtime +180 -delete
+find /home/test/folder/* -mtime +180 -delete
+
 #reading file content
 file1_content=$(cat $file1)
 
