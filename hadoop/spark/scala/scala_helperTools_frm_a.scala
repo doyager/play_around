@@ -61,7 +61,32 @@ def fromEpochToStringTimestamp( ts: Option[Long], format: String ): String = {
 
  
   def objectToJsonString[T](obj : T): String = { org.json4s.JsonMethods.mapper.writeValueAsString(obj)}
-                
+
+  def stringToJson(jsonStr: String) : JValue = {
+  if (Option(jsonString).getOrElse("") == "") { return JNull}
+  org.json4s.jackson.JsonMethods.parse(jsonStr)
+  }
+  
+  def jsonExtractPath (json: Jvalue, path: Seq[String], returnAsJsonStr : Boolean= false): String = {
+  var node = json
+    
+    path.foreach(p => node = node \ p)
+    if (node == JNothing) { null }
+    else if (node = JNull ) { null }
+    else {
+      if (!returnAsJsonString) { node.values.toString()}
+      else { objectToJsonString(node) }
+    }
+  
+  }
+
+ def jsonStringToMap(inputStr: String): Map[String,String] = {
+  implicit val formats = DefaultFormats
+
+  val inputJson = HelperTools.stringToJson(inputString)
+  if (inputJson == JNull || inputJson == JNothing) return null 
+  else { return HelperTools.mapCleanEmptyEntries(inputJson.extract[Map[String, String]]). } 
+ }
                 
  def coalesceValue(x: String , y: String): String = { if (x != "") x else y}
  def coalesceValue(x: Null , y: String ): String = { y }
