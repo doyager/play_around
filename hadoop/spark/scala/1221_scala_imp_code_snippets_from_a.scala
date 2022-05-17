@@ -1,5 +1,15 @@
 
 
+//dedupe using row number logic 
+
+val df = dfRaw.withColumn("latestRow",
+                              row_number().over(
+                              Window
+                              .partitionBy( $"idDept")
+                              .orderBy($"tsLastUpdateAt".desc)
+                           )
+                          ).filter("latestRow == 1")
+                         .drop("latestRow")
 -----------------
 
 // filter data frame to get just values equalt to cat 
