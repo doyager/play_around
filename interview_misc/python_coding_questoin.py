@@ -1,6 +1,27 @@
 
+#######
+# write a fucntion to return reverse of number , should be able to handle negative number
+def rev_fun(x):
+    sign=0
+    reversed_num = 0
+    if(x>0):
+        sign=1
+    else:
+        sign=-1
+        x=x*sign
+        
+    while x !=0:
+        tmp = x % 10
+        reversed_num = reversed_num * 10 + tmp
+        x //= 10
+    #print(reversed_num*sign)
+    return reversed_num*sign
 
-
+print(rev_fun(-456))
+o/p:
+ -654
+ 
+######
 Given a two dimensional list, for example [ [2,3],[3,4],[5]] person 2 is friends with 3 etc, find how many friends each person has. Note, one person has no friends
 Can you do the following without using subquery?: {1,None,1,2,None} --> [1,1,1,2,2] Ensure you take care of case input[None] which means None object
 Complete a function that returns a list containing all the mismatched words (case sensitive) between two given input strings # For example: # - string 1 : "Firstly this is the first string" # - string 2 : "Next is the second string" # # - output : ['Firstly', 'this', 'first', 'Next', 'second']
