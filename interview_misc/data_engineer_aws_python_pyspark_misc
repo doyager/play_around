@@ -90,6 +90,12 @@ What is parquet format ? what are engine and compression used?
 engine{‘auto’, ‘pyarrow’, ‘fastparquet’}, default ‘auto’
 compression{‘snappy’, ‘gzip’, ‘brotli’, None}, default ‘snappy’
 
+---
+# spark difference of two data frames
+
+df1.subtract(df2) //column names hsould be same
+or
+df1.join(df2,ON='join_columns', how='left_anti') // left_anti join will give everything in df1 but not in df2 
 
 +-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------++-----+-------+------+----------+------+
 Python:
