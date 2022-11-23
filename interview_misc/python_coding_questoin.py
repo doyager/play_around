@@ -1,5 +1,62 @@
+################################################################################################
+# write a function to check brackets or parentheses
+# OR brackets in string are correctly matched 
 
-#######
+#Solution-2 : for only one type of parenthesis 
+def check(myStr):
+    stack = []
+    for i in myStr:
+        if i == '(':
+            stack.append(i)
+        elif i == ')':
+            if ((len(stack) > 0)):
+                stack.pop()
+            else:
+                return "Unbalanced"
+    if len(stack) == 0:
+        return "Balanced"
+    else:
+        return "Unbalanced"
+ 
+#If the question has more than one type of parenthesis
+# Function to check parentheses
+def check(myStr):
+    open_list = ["[","{","("]
+    close_list = ["]","}",")"]
+    stack = []
+    for i in myStr:
+        if i in open_list:
+            stack.append(i)
+        elif i in close_list:
+            pos = close_list.index(i)
+             # Here we are checking if we encountered the correct closing bracket, 
+             # so we check the corresponding open bracket is the last one in the list by checking the current last element in the list
+            if ((len(stack) > 0) and
+                (open_list[pos] == stack[len(stack)-1])):   
+                stack.pop()
+            else:
+                return "Unbalanced"
+    if len(stack) == 0:
+        return "Balanced"
+    else:
+        return "Unbalanced"
+
+# Driver code
+string = "{[]{()}}"
+print(string,"-", check(string))
+  
+string = "[{}{})(]"
+print(string,"-", check(string))
+  
+string = "((()"
+print(string,"-",check(string))
+
+o/p:
+{[]{()}} - Balanced
+[{}{})(] - Unbalanced
+((() - Unbalanced
+    
+################################################################################################
 # write a fucntion to return reverse of number , should be able to handle negative number
 def rev_fun(x):
     sign=0
